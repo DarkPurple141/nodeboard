@@ -11,31 +11,34 @@ function shuffle(a) {
     }
 }
 
-const Deck = function() {
+function Deck() {
   this.cards = [0, 0, 0, 1, 1, 1, 2, 2, 2, 3];
+  this.init = () => { shuffle(this.cards); console.log (this.cards); console.log(this.card) };
 }
 
 Deck.prototype = {
-  get card() { return cards.pop() },
-  init: () => { shuffle(cards) }
+  get card() { return this.cards.pop() }
 }
 
-const Deck1 = function () {
+const DeckOne = function () {
   Deck.call(this);
 }
 
-const Deck2 = function () {
+const DeckTwo = function () {
   Deck.call(this);
 }
 
-const Deck3 = function () {
+const DeckThree = function () {
   Deck.call(this);
 }
 
+DeckOne.prototype = new Deck();
+DeckTwo.prototype = new Deck();
+DeckThree.prototype = new Deck();
 
 const Game = function (id) {
     const _id = id
-    const _cards = [new Deck1(), new Deck2(), new Deck3()]
+    const _cards = [new DeckOne(), new DeckTwo(), new DeckThree()]
     const _cardIndex = 0
     const _round = 0
 
@@ -45,14 +48,14 @@ const Game = function (id) {
       set cardIndex(val) { _cardIndex = (_cardIndex + val) % _cards.length},
       init : () => {
         // initialise decks
-        for (let deck in this._cards) {
-          deck.init();
+        for (let deck in _cards) {
+          _cards[deck].init();
         }
         /*Do some more stuff*/
       },
 
       draw : () => {
-        return cards[cardIndex++].card;
+        return _cards[cardIndex++].card;
       }
     }
 }
