@@ -294,3 +294,9 @@ sup {
 		word-wrap: break-word;
 	}
 }
+
+/* My own alterations*/
+div.region {
+  float: left;
+  margin: 0.5em;
+}
