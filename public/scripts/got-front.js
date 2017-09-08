@@ -9,7 +9,7 @@ Please avert your eyes.
 
 // import {regions, Game} from "logic/engine.js"
 
-const socket = io.connect('http://localhost:3000');
+const socket = io.connect('/got');
 const game = new Game(socket);
 
 // network stuff
@@ -19,6 +19,7 @@ socket.on('news', function (data) {
 });
 
 socket.on('update', function (data) {
+
   console.log("updating!");
 });
 

@@ -64,8 +64,9 @@ const gameServer = function (io) {
 
   const players = {};
   const games = [];
+  const nsp = io.of('/got');
 
-  io.on('connection', function (socket) {
+  nsp.on('connection', function (socket) {
 
     players[socket.id] = socket;
     socket.emit('news', { hello: 'world' });
@@ -100,7 +101,7 @@ const gameServer = function (io) {
 
     socket.on('chat message', function(msg){
       console.log('message: ' + msg);
-      socket.broadcast.emit('chat message', msg);
+      socket.broadcast.emit('chat message', msg) ;
     });
   });
 
