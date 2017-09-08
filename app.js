@@ -12,13 +12,16 @@ handlebars = require('express-handlebars').create(
 // routes
 const index = require('./routes/index');
 const got = require('./routes/got');
+const squares = require('./routes/squares');
 
 // app
 const app = express();
 app.locals.site = {
-  title: "SiteName",
+  title: "NodeBoard",
   github_username: "DarkPurple141",
+  github_username_other: "ZAIN",
   email: "alex.hinds141@gmail.com",
+  email_other: "ZAIN",
   twitter_username: "al_hinds"
 };
 
@@ -37,7 +40,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // routes
 app.use('/', index);
-app.use('/got', got);
+app.use('/got/', got);
+app.use('/squares/', squares);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
