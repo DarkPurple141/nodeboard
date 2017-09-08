@@ -105,6 +105,11 @@ const gameServer = function (io) {
     });
   });
 
+  const server = {
+    this.connection = nsp;
+  }
+
+  return server;
 }
 
 module.exports = gameServer;
