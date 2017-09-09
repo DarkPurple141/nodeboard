@@ -106,7 +106,7 @@ const gameServer = function (io) {
   });
 
   const server = {
-    this.connection = nsp;
+    connection : nsp
   }
 
   return server;
