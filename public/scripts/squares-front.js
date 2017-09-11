@@ -6,16 +6,14 @@ const game = Squares(socket);
 // game related logic
 function Squares(socket) {
 
-    socket.on('update', (data) =>
-    {
+    socket.on('update', data =>
       game.updateState(data)
       console.log(data)
-    })
+    )
 
-    socket.on('hi', (msg) =>
-    {
+    socket.on('hi', msg =>
       console.log(msg)
-    })
+    )
 
     socket.sendTurn = (data) => socket.emit('update', data);
 
@@ -26,6 +24,7 @@ function Squares(socket) {
       updateState : function(data) {
         //  { x: 401, y: 1, width: 50, height: 50, click: 1 }
         this.turn = !this.turn;
+        console.log(data, this)
         let toUpdate = this.hash[data.id];
         toUpdate.x = data.x;
         toUpdate.y = data.y;
@@ -52,8 +51,9 @@ function gridData() {
     hash.data = data;
 
     // iterate for rows
-    for (let row = 0; row < 10; row++) {
-        data.push( new Array() );
+    for (let row = 0; row < 10; row++)
+    {
+        data.push( new Array() )
 
         // iterate for cells/columns inside rows
         for (var column = 0; column < 10; column++) {
@@ -67,24 +67,31 @@ function gridData() {
             }
             data[row].push(toAdd)
             hash[toAdd.id] = toAdd
-            counter++;
+            counter++
             // increment the x position. I.e. move it over by 50 (width variable)
-            xpos += width;
+            xpos += width
         }
         // reset the x position after a row is complete
-        xpos = 1;
+        xpos = 1
         // increment the y position for the next row. Move it down 50 (height variable)
-        ypos += height;
+        ypos += height
     }
     return hash;
 }
 
 function updateCSS(el, count) {
   // change colour based on selector
-  if ((count)%4 == 0 ) { el.style("fill","#fff"); }
-  if ((count)%4 == 1 ) { el.style("fill","#2C93E8"); }
-  if ((count)%4 == 2 ) { el.style("fill","#F56C4E"); }
-  if ((count)%4 == 3 ) { el.style("fill","#838690"); }
+  switch (count % 4)
+  {
+    case 0: el.style("fill","#fff")
+      break
+    case 1: el.style("fill","#2C93E8")
+      break
+    case 2: el.style("fill","#F56C4E")
+      break
+    case 3: el.style("fill","#838690")
+      break
+  }
 }
 
 window.onload = () => {
@@ -100,17 +107,17 @@ window.onload = () => {
   	.attr("class", "row");
 
   let column = row.selectAll(".square")
-  	.data(function(d) { return d; })
+  	.data( d => d )
   	.enter().append("rect")
   	.attr("class", "square")
-    .attr("id", function(d) { return d.id; })
-  	.attr("x", function(d) { return d.x; })
-  	.attr("y", function(d) { return d.y; })
-  	.attr("width", function(d) { return d.width; })
-  	.attr("height", function(d) { return d.height; })
+    .attr("id", d => d.id )
+  	.attr("x", d => d.x )
+  	.attr("y", d => d.y )
+  	.attr("width", d => d.width)
+  	.attr("height", d => d.height)
   	.style("fill", "#fff")
   	.style("stroke", "#222")
-  	.on('click', function(d, i) {
+  	.on('click', function(d, i) { // can't use arrow here as we need this
        if (game.turn === false) {
          alert("Not your turn fam.");
          return;
@@ -118,6 +125,5 @@ window.onload = () => {
        d.click++;
        game.connection.sendTurn( d );
        updateCSS(d3.select(this), d.click);
-
-     })
+    })
 }

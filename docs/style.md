@@ -55,18 +55,26 @@ const ClassName = (parameter) =>
   }
 }
 
+
 // functions
 const helloWorld = () =>
 {
   console.log("Hello, Jeff")
 }
 
+// also valid
+const greet = name => console.log("Hey " + name)
+
 // non-trivial variable
 let age = getAge()
 let name = "Zain"
 
-// inline arrays do not need new lines
-let numbers = ["One", "Two", "Three"]
+// arrays
+let numbers = [
+  "One",
+  "Two",
+  "Three"
+]
 
 ```
 
@@ -86,4 +94,9 @@ If you can't answer these questions clearly, and concisely, then you may need to
 
 The future is here and old school javascript syntax really doesn't have a place in the codebase. That's not to say go crazy with the newest and latest, but certainly anything in ECMA 2015 should be incorporated.
 
-`let` and `const` go without saying. (more)
+`let` and `const` go without saying.
+
+That said there are occasions where the use of arrow functions may cause confusion.
+To clarify, arrow functions do not bind to an object they're called and thus the use of `this`, for example in the context of an object field will not behave as expected. Here, it's better to use old school function declarations.
+
+More on that [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions). (Mozilla)

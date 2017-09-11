@@ -78,12 +78,15 @@ const regions = [
 ]
 
 function Game(socket) {
-  this.userName = "Anon";
-  this.socket = socket;
-  this.players = [];
+  this.userName = "Anon"
+  this.socket = socket
+  this.players = []
 }
 
 Game.prototype.x = function () {
-  console.log("load");
-  this.socket.emit('game-event', {gameState: "Nice" });
-};
+  console.log("load")
+  this.socket.emit('game-event',
+  {
+    gameState: "Nice"
+  })
+}

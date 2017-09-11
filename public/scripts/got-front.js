@@ -9,19 +9,15 @@ Please avert your eyes.
 
 // import {regions, Game} from "logic/engine.js"
 
-const socket = io.connect('/got');
-const game = new Game(socket);
+const socket = io.connect('/got')
+const game = new Game(socket)
 
 // network stuff
-socket.on('news', function (data) {
-  console.log(data);
-  //socket.emit('my other event', { my: 'data' });
-});
+socket.on('news',
+  data => console.log(data))
 
-socket.on('update', function (data) {
-
-  console.log("updating!");
-});
+socket.on('update',
+  data => console.log("updating!"))
 
 /// eventuall this will create the svg map
 $(document).ready(
@@ -36,8 +32,8 @@ $(document).ready(
         id: curr['id'],
         "class": "region"
       });
-      div.text(curr['name']);
-      map.append(div);
+      div.text(curr['name'])
+      map.append(div)
     }
 })
 
