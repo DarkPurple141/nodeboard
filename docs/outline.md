@@ -1,5 +1,7 @@
-# TO DO
----
+TO DO
+====
+
+## BACKEND
 
 1. Middleware router which deals with sessions
 2. User Authentication
@@ -10,7 +12,7 @@
 4. Game engine should hold some state -> generic to any game
     a. May instead use mongo. We'll see on this API first.
 
-## FRONT END
+## FRONTEND
 
 1. move to react (sidelined)
 2. set up pages
