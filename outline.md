@@ -2,12 +2,12 @@
 ---
 
 1. Middleware router which deals with sessions
-2. user authentication
-    a. Facebook?
-    b. single sign on
-    c. passport
+2. User Authentication
+    a. SSO (Single Sign-On) // oauth2
+    b. [passport](http://passportjs.org/docs)
+    c. Express-Sessions
 3. Router to game engine x
-4. game engine should hold some state -> generic to any game
+4. Game engine should hold some state -> generic to any game
     a. May instead use mongo. We'll see on this API first.
 
 ## FRONT END
