@@ -6,12 +6,14 @@ const game = Squares(socket);
 // game related logic
 function Squares(socket) {
 
-    socket.on('update', (data) => {
+    socket.on('update', (data) =>
+    {
       game.updateState(data)
       console.log(data)
     })
 
-    socket.on('hi', (msg) => {
+    socket.on('hi', (msg) =>
+    {
       console.log(msg)
     })
 

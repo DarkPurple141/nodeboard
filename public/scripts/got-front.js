@@ -27,12 +27,16 @@ socket.on('update', function (data) {
 $(document).ready(
   () => {
     let map = $('div#map');
-    for (let reg in regions) {
+
+    for (let reg in regions)
+    {
       let curr = regions[reg];
       console.log(curr);
-      let div = $("<div>", { id: curr['id'], "class": "region"} );
+      let div = $("<div>", {
+        id: curr['id'],
+        "class": "region"
+      });
       div.text(curr['name']);
-      //map.append(div);
       map.append(div);
     }
 })
