@@ -8,8 +8,6 @@ cookieParser = require('cookie-parser'),
 bodyParser = require('body-parser'),
 handlebars = require('express-handlebars').create(
   {defaultLayout: 'main'});
-passport = require('passport');
-FacebookStrategy = require('passport-facebook').Strategy;
 
 // routes
 const index = require('./routes/index');
@@ -17,6 +15,7 @@ const got = require('./routes/got');
 const squares = require('./routes/squares');
 const login = require('./routes/login');
 const api = require('./routes/api');
+const auth = require('./routes/auth');
 // app
 const app = express();
 app.locals.site = {
@@ -47,6 +46,8 @@ app.use('/got/', got);
 app.use('/squares/', squares);
 app.use('/login/', login);
 app.use('/api/', api);
+app.use('/auth/',auth)
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   let err = new Error('Not Found');
@@ -64,8 +65,5 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error', {layout: false});
 });
-
-// passport stuff
-
 
 module.exports = app;

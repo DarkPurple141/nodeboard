@@ -19,3 +19,7 @@ TO DO
     a. home for auth / dashboard showing (b)
     b. gamelist for finding game
     c. create or join for each game.  
+
+## MISC
+
+1. Have error message for failed facebook auth

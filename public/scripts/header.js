@@ -1,3 +1,4 @@
+// Ugly but works for now
 window.onload = initHome();
 
 function initHome(){
