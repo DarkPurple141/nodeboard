@@ -114,7 +114,7 @@ window.onload = () => {
          return;
        }
        d.click++;
-       game.connection.sendTurn(function() { return d; }());
+       game.connection.sendTurn( d );
        updateCSS(d3.select(this), d.click);
 
      })
