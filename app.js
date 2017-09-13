@@ -7,7 +7,9 @@ logger = require('morgan'),
 cookieParser = require('cookie-parser'),
 bodyParser = require('body-parser'),
 handlebars = require('express-handlebars').create(
-  {defaultLayout: 'main'});
+  {defaultLayout: 'main'}),
+passport = require('passport'),
+session = require('express-session');
 
 // routes
 const index = require('./routes/index');
@@ -37,9 +39,10 @@ app.set('view engine', 'handlebars');
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-
+app.use(cookieParser());
+app.use(passport.initialize());
+app.use(passport.session());
 // routes
 app.use('/', index);
 app.use('/got/', got);
@@ -52,7 +55,7 @@ app.use('/auth/',auth)
 app.use(function(req, res, next) {
   let err = new Error('Not Found');
   err.status = 404;
-  next(err);
+  next(err);  
 });
 
 // error handler

@@ -19,10 +19,10 @@ passport.deserializeUser( function( obj, done) {
 passport.use(new FacebookStrategy({
     clientID: '351111758660502',
     clientSecret: '46edebe1b6919e49142218485ca704e4',
-    callbackURL: "http://127.0.0.1:3000/"
+    callbackURL: "http://127.0.0.1:3000/auth/facebook/callback"
   },
   function(accessToken, refreshToken, profile, done) {
-    // This function i called once facebook finishes
+    // This function is called once facebook finishes
     // verifying. Here we store info into some database
     // so the api can grab the name and stuff!
     return done(null,profile);
@@ -36,7 +36,8 @@ router.get('/facebook', passport.authenticate('facebook'));
 // Facebook will redirect the user to this URL after approval.
 router.get('/facebook/callback',
   passport.authenticate('facebook', { successRedirect: '/',
-                                      failureRedirect: '/login' }));
+                                      failureRedirect: '/login',
+                                      failureFlash: true }));
 
 
 module.exports = router;
