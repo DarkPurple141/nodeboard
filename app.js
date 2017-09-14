@@ -17,8 +17,8 @@ const got = require('./routes/got');
 const squares = require('./routes/squares');
 const login = require('./routes/login');
 const api = require('./routes/api');
-const auth = require('./routes/auth');
 
+const logout = require('./routes/logout');
 // app
 const app = express();
 app.locals.site = {
@@ -29,7 +29,7 @@ app.locals.site = {
   email_other: "zain.afz@gmail.com",
   twitter_username: "al_hinds"
 };
-
+const auth = require('./routes/auth')(app, passport);
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.engine('handlebars', handlebars.engine);
@@ -57,7 +57,7 @@ app.use('/squares/', squares);
 app.use('/login/', login);
 app.use('/api/', api);
 app.use('/auth/',auth)
-
+app.use('/logout/',logout)
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   let err = new Error('Not Found');

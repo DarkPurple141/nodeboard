@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const passport = require('passport');
+
 /* GET user listing. */
 router.get('/user', function(req, res, next) {
   // processes info from passport.js
@@ -11,7 +11,7 @@ router.get('/user', function(req, res, next) {
 	  response.success = true;
 	  response.name = "KNOWN";
   }else{
-	  response.success = true;
+	  response.success = false;
 	  response.name = "UNKNOWN";
   }
   res.send(response);
