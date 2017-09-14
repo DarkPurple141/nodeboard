@@ -18,6 +18,7 @@ const squares = require('./routes/squares');
 const login = require('./routes/login');
 const api = require('./routes/api');
 const auth = require('./routes/auth');
+
 // app
 const app = express();
 app.locals.site = {
@@ -40,9 +41,15 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(cookieParser());
+app.use(cookieParser('memes'));
+app.use(session({
+  secret: 'memes',
+  resave: false,
+  saveUninitialized: true
+}));
 app.use(passport.initialize());
 app.use(passport.session());
+
 // routes
 app.use('/', index);
 app.use('/got/', got);
@@ -55,7 +62,7 @@ app.use('/auth/',auth)
 app.use(function(req, res, next) {
   let err = new Error('Not Found');
   err.status = 404;
-  next(err);  
+  next(err);
 });
 
 // error handler
