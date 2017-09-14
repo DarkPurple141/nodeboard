@@ -10,8 +10,8 @@ router.get('/user', function(req, res, next) {
   if(req.isAuthenticated){
     console.log(req.session);
 	  response.success = true;
-	  response.name = "KNOWN";
-  }else{
+	  response.name = req.user.displayName;
+  } else {
     console.log(req.session);
 	  response.success = false;
 	  response.name = "UNKNOWN";
