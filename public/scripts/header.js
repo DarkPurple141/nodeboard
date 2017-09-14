@@ -8,7 +8,7 @@ function getUser(user){
 	userBox.innerHTML = user.name;
 }
 
-function APICall(request,f){
-	var link = "/api/"+request;
+function APICall(request,callback){
+	let link = "/api/"+request;
 	$.get(link, f);
 }
