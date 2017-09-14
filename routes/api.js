@@ -8,13 +8,10 @@ router.get('/user', function(req, res, next) {
   // that the front end can use.
   let response = {};
   if(req.isAuthenticated){
-    console.log(req.session);
 	  response.success = true;
 	  response.name = req.user.displayName;
   } else {
-    console.log(req.session);
 	  response.success = false;
-	  response.name = "UNKNOWN";
   }
   res.send(response);
 });

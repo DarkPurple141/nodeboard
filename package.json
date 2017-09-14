@@ -39,6 +39,11 @@
       "name": "Barney Rubble",
       "email": "b@rubble.com",
       "url": "http://barnyrubble.tumblr.com/"
+    },
+    {
+      "name": "Zain Afzal",
+      "email": "zain.afz@gmail.com",
+      "url": "http://www.zainafzal.com"
     }
   ],
   "bugs": {

@@ -7,7 +7,7 @@ router.get('/', function(req, res, next) {
   if (req.user) {
     res.render('home', {title: "NodeBoard"});
   } else {
-    console.log("No user associated with session: " + req.session)
+    console.log("No user associated with session: " + req.session);
     res.redirect('/login');
   }
 });

@@ -6,20 +6,11 @@ function initHome(){
 }
 
 function getUser(user){
-	let userBox = document.getElementById("user");
-	if(user.success === false){
-		userBox.innerHTML = "Login";
-		userBox.href = "/login";
-	}else{
-		username = user.name;
-		userBox.innerHTML = username.charAt(0).toUpperCase() + username.slice(1);
-	}
+	let userBox = $("user");
+	userBox.innerHTML = user.name;
 }
 
 function APICall(request,f){
 	var link = "/api/"+request;
 	$.get(link, f);
 }
-
-
-
