@@ -4,7 +4,7 @@ const router = express.Router();
 /* GET got listing. */
 router.get(/.*/, function(req, res, next) {
 	req.logout();
-    res.redirect('/');
+  res.redirect('/');
 });
 
 module.exports = router;
