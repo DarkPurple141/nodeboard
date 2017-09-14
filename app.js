@@ -17,8 +17,9 @@ const got = require('./routes/got');
 const squares = require('./routes/squares');
 const login = require('./routes/login');
 const api = require('./routes/api');
-
+const auth = require('./routes/auth')(passport);
 const logout = require('./routes/logout');
+
 // app
 const app = express();
 app.locals.site = {
@@ -29,7 +30,7 @@ app.locals.site = {
   email_other: "zain.afz@gmail.com",
   twitter_username: "al_hinds"
 };
-const auth = require('./routes/auth')(app, passport);
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.engine('handlebars', handlebars.engine);

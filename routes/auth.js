@@ -1,4 +1,6 @@
-let mod = function (express, passport) {
+const express = require('express');
+
+module.exports = passport => {
   const router = express.Router();
   const FacebookStrategy = require('passport-facebook').Strategy;
 
@@ -38,5 +40,3 @@ let mod = function (express, passport) {
                                         failureRedirect: '/login'}));
   return router;
 }
-
-module.exports = mod;
