@@ -10,6 +10,7 @@ Style Guide
 NodeBoard uses a two-space indent for code. This looks like this.
 
 ```javascript
+
 let x = 0
 
 if (x > 2)

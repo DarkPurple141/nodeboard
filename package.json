@@ -2,8 +2,8 @@
   "name": "nodeboard",
   "version": "0.0.0",
   "repository": {
-    "type" : "git",
-    "url" : "https://github.com/DarkPurple141/nodeboard.git"
+    "type": "git",
+    "url": "https://github.com/DarkPurple141/nodeboard.git"
   },
   "private": true,
   "scripts": {
@@ -17,8 +17,11 @@
     "debug": "~2.6.3",
     "express": "~4.15.2",
     "express-handlebars": "^3.0.0",
+    "express-session": "^1.15.5",
     "handlebars": "^4.0.10",
     "morgan": "~1.8.1",
+    "passport": "^0.4.0",
+    "passport-facebook": "^2.1.1",
     "serve-favicon": "~2.4.2",
     "socket.io": "^2.0.3"
   },
@@ -26,20 +29,25 @@
     "jshint": "^2.9.5",
     "mocha": "^3.5.0"
   },
-  "contributors" : [
-      {
-        "name" : "Alex Hinds",
-        "email" : "alex.hinds141@gmail.com",
-        "url" : "http://alhinds.com/"
-      },
-      {
-        "name" : "Barney Rubble",
-        "email" : "b@rubble.com",
-        "url" : "http://barnyrubble.tumblr.com/"
-      }
-    ],
+  "contributors": [
+    {
+      "name": "Alex Hinds",
+      "email": "alex.hinds141@gmail.com",
+      "url": "http://alhinds.com/"
+    },
+    {
+      "name": "Barney Rubble",
+      "email": "b@rubble.com",
+      "url": "http://barnyrubble.tumblr.com/"
+    },
+    {
+      "name": "Zain Afzal",
+      "email": "zain.afz@gmail.com",
+      "url": "http://www.zainafzal.com"
+    }
+  ],
   "bugs": {
-    "url" : "https://github.com/DarkPurple141/nodeboard/issues",
-    "email" : "alex.hinds141@gmail.com"
+    "url": "https://github.com/DarkPurple141/nodeboard/issues",
+    "email": "alex.hinds141@gmail.com"
   }
 }
