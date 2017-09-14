@@ -1,7 +1,5 @@
 // Ugly but works for now
-window.onload = initHome();
-
-function initHome(){
+window.onload = let initHome = () => {
 	APICall("user",getUser);
 }
 
