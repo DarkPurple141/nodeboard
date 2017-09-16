@@ -1,6 +1,6 @@
 const assert = require('assert');
 const mongoose = require('mongoose');
-const db = require('../model/db')(mongoose, "Test");
+const db = require('../model/db')(mongoose, "test");
 
 const User = mongoose.model('User');
 const Game = mongoose.model('Game');
