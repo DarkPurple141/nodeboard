@@ -53,19 +53,23 @@ describe('db.js', function() {
       user.save(done)
     });
 
-    it('Should find a existing user', function() {
-      User.findOne({fbId: 0}, function(err, data) {
-        if(err) throw err
+    it('Should find a existing user', function(done) {
+      User.findOne({ fbId: 0 }, function(err, data) {
+        if (err) throw err;
+        assert.equal(data.name, "Barny Rubble");
+        done()
       });
     });
 
-    it('Should edit the update time for user', function() {
-      User.findOneAndUpdate({ fbId: 0 },
-        { updated_at: new Date('2014-01-22T14:56:59.301Z') },
+    it('Should edit the update time for user', function(done) {
+      User.findOneAndUpdate(
+        { fbId: 0 },
+        { updated_at: Date('2014-01-22T14:56:59.301Z') },
         { new: true },
         function(err, data) {
         if (err) throw err;
-        assert.equal(data.updated_at, new Date('2014-01-22T14:56:59.301Z'));
+        assert.equal(data.updated_at, Date('2014-01-22T14:56:59.301Z'));
+        done()
       })
     });
 
