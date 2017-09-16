@@ -20,19 +20,23 @@ describe('db.js', function() {
         game.save(done)
       });
 
-      it('Should find Squares', function() {
+      it('Should find Squares', function(done) {
         Game.findOne({name: "Squares"}, function(err, data) {
           if (err) throw err;
           assert.equal(data.active, true)
           assert.equal(data.private, false)
           assert.equal(data.name, "Squares")
+          done()
         })
+
       })
 
-      it("Should find and update Squares", function() {
-        Game.findOneAndUpdate({ name: 'Squares' }, { name: 'Waiting' }, function(err, data) {
+      it("Should find and update Squares", function(done) {
+        Game.findOneAndUpdate({ name: 'Squares' }, { private: true }, {new: true}, function(err, data) {
           if (err) throw err;
-          assert.equal(data.name, "Waiting");
+          assert.equal(data.name, "Squares")
+          assert.equal(data.private, true)
+          done()
         })
       })
 
