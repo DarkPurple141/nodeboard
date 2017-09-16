@@ -12,7 +12,7 @@ const userSchema = new mongoose.Schema({
     required: true,
     unique: true
   },
-  name: String,
+  userName: String,
   activeGame: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Game'

@@ -53,7 +53,7 @@ const got = require('./routes/got');
 const squares = require('./routes/squares');
 const login = require('./routes/login');
 const api = require('./routes/api');
-const auth = require('./routes/auth')(passport,mongoose);
+const auth = require('./routes/auth')(passport);
 const logout = require('./routes/logout');
 
 app.use('/', index);

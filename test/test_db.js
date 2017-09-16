@@ -60,7 +60,10 @@ describe('db.js', function() {
     });
 
     it('Should edit the update time for user', function() {
-      User.findOneAndUpdate({ fbId: 0 }, { updated_at: new Date('2014-01-22T14:56:59.301Z') }, function(err, data) {
+      User.findOneAndUpdate({ fbId: 0 },
+        { updated_at: new Date('2014-01-22T14:56:59.301Z') },
+        { new: true },
+        function(err, data) {
         if (err) throw err;
         assert.equal(data.updated_at, new Date('2014-01-22T14:56:59.301Z'));
       })

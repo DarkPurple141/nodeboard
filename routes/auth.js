@@ -1,6 +1,8 @@
 const express = require('express');
+const mongoose = require('mongoose');
 
-module.exports = (passport,mongoose) => {
+
+module.exports = (passport) => {
   const router = express.Router();
   const FacebookStrategy = require('passport-facebook').Strategy;
   const User = mongoose.model('User');
@@ -27,8 +29,8 @@ module.exports = (passport,mongoose) => {
       // check if user exists
       User.findOne({fbId: profile.id}, function(err, data) {
         // oops time to make a new user!
-        if(err){
-          let newUser = User({
+        if (err) {
+          let newUser = new User({
             fbId : profile.id,
             name : profile.displayName,
             admin : false
@@ -38,7 +40,7 @@ module.exports = (passport,mongoose) => {
             if (err) throw err;
             console.log('New User: '+profile.displayName);
           });
-        }else{
+        } else {
           // welcome back!
           console.log('Welcome Back: '+profile.displayName);
         }
