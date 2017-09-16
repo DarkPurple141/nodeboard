@@ -10,7 +10,7 @@ module.exports = (mongoose, url) => {
 
   const db = mongoose.connection;
 
-  // mongodb error
+  // mongodb error automatically logged
   db.on('error', console.error.bind(console, 'connection error:'));
 
   // mongodb connection open
@@ -18,6 +18,7 @@ module.exports = (mongoose, url) => {
     console.log(`Connected to Mongo at: ${new Date()}`)
   });
 
+  // when the app closes, so should the db connection
   process.on('SIGINT', function() {
     db.close(function () {
       console.log(`Disconnected from Mongo at: ${new Date()}`)
