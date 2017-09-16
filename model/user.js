@@ -7,26 +7,29 @@ const mongoose = require('mongoose')
 // create a schema
 const userSchema = new mongoose.Schema({
   name: String,
-  username: {
-    type: String,
+  fbId: {
+    type: Number,
     required: true,
     unique: true
   },
-  //password: { type: String, required: true }, // unlikely we need this?
+  name: String,
   activeGame: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Game'
   }, // if a logout occurs can fetch gameID
   admin: Boolean,
-  meta: {
-    age: Number,
-    website: String
-  },
   created_at: {
     type: Date,
     default: Date.now
   },
   updated_at: Date
+  /* Things we don't strictly need atm
+  password: { type: String, required: true },
+  meta: {
+    age: Number,
+    website: String
+  },
+  */
 })
 
 // add our own methods to user later

@@ -1,8 +1,9 @@
 const express = require('express');
 
-module.exports = passport => {
+module.exports = (passport,mongoose) => {
   const router = express.Router();
   const FacebookStrategy = require('passport-facebook').Strategy;
+  const User = mongoose.model('User');
 
   // passport configeration for facebook
   // NOTE: 'done' is just the callback function given
@@ -23,9 +24,26 @@ module.exports = passport => {
       callbackURL: "http://127.0.0.1:3000/auth/facebook/callback"
     },
     function(accessToken, refreshToken, profile, done) {
-      // This function is called once facebook finishes
-      // verifying. Here we store info into some database
-      // so the api can grab the name and stuff!
+      // check if user exists
+      User.findOne({fbId: profile.id}, function(err, data) {
+        // oops time to make a new user!
+        if(err){
+          var newUser = User({
+            fbId : profile.id,
+            name : profile.displayName,
+            admin : false
+          });
+          // save the user
+          newUser.save(function(err) {
+            if (err) throw err;
+            console.log('New User: '+profile.displayName);
+          });
+        }else{
+          // welcome back!
+          console.log('Welcome Back: '+profile.displayName);
+        }
+      });
+
       return done(null,profile);
     }
   ));

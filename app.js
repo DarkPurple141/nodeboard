@@ -43,20 +43,19 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
+// model
+mongoose.Promise = global.Promise;
+const db = require('./model/db')(mongoose);
+
 // routes
 const index = require('./routes/index');
 const got = require('./routes/got');
 const squares = require('./routes/squares');
 const login = require('./routes/login');
 const api = require('./routes/api');
-const auth = require('./routes/auth')(passport);
+const auth = require('./routes/auth')(passport,mongoose);
 const logout = require('./routes/logout');
 
-// model
-mongoose.Promise = global.Promise;
-const db = require('./model/db')(mongoose);
-
-// routes
 app.use('/', index);
 app.use('/got/', got);
 app.use('/squares/', squares);

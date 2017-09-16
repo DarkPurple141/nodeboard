@@ -40,9 +40,28 @@ describe('db.js', function() {
   });
 
   describe('User', function() {
-    it('should return -1 when the value is not present', function() {
-      assert.equal(-1, [1,2,3].indexOf(4));
+    it('Should save user without error', function(done) {
+      let user = new User({
+        fbId: 0,
+        name: "Barny Rubble",
+        admin: false
+      })
+      user.save(done)
     });
+
+    it('Should find a existing user', function() {
+      User.findOne({fbId: 0}, function(err, data) {
+        if(err) throw err
+      });
+    });
+
+    it('Should edit the update time for user', function() {
+      User.findOneAndUpdate({ fbId: 0 }, { updated_at: new Date('2014-01-22T14:56:59.301Z') }, function(err, data) {
+        if (err) throw err;
+        assert.equal(data.updated_at, new Date('2014-01-22T14:56:59.301Z'));
+      })
+    });
+
   });
 
   after(done => {
