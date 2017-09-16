@@ -1,27 +1,34 @@
 
-module.exports = (MongoClient) => {
+const DB_URL = 'mongodb://localhost:27017/';
 
-  const co = require('co')
-  const DB_URL = 'mongodb://localhost:27017/nodeboard';
+module.exports = (mongoose, url) => {
 
-  co(function*() {
-    const db = yield MongoClient.connect(DB_URL);
-    console.log("Connected successfully to db server");
-    yield updateGameState(db, 1, {'name' : 'Squares'});
-    //yield insertDocuments(db, null);
-    //yield findDocuments(db, null);
-    //yield indexCollection(db, null);
-    //yield aggregateDocuments(db, null);
-
-    db.close();
-  }).catch(err => console.log(err));
-
-}
-
-const updateGameState = (db, gameId, data) => {
-
-  db.collection("games").updateOne(gameId, data, (err, res) => {
-    if (err) throw err;
-    console.log("1 document updated");
+  mongoose.connect(DB_URL + url, {
+    useMongoClient: true, // config options
+    promiseLibrary: global.Promise
   })
+
+  const db = mongoose.connection;
+
+  // mongodb error
+  db.on('error', console.error.bind(console, 'connection error:'));
+
+  // mongodb connection open
+  db.once('open', () => {
+    console.log(`Connected to Mongo at: ${new Date()}`)
+  });
+
+  process.on('SIGINT', function() {
+    db.close(function () {
+      console.log(`Disconnected from Mongo at: ${new Date()}`)
+      process.exit(0);
+    });
+  });
+
+  // adding models
+  require('./game')
+  require('./user')
+
+  console.log("Database initialised.. waiting for connections.")
+  return db
 }

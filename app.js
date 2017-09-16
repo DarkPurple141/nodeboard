@@ -9,7 +9,7 @@ bodyParser = require('body-parser'),
 handlebars = require('express-handlebars').create(
   {defaultLayout: 'main'}),
 passport = require('passport'),
-mongoClient = require('mongodb').MongoClient,
+mongoose = require('mongoose'),
 session = require('express-session');
 
 // app
@@ -53,7 +53,8 @@ const auth = require('./routes/auth')(passport);
 const logout = require('./routes/logout');
 
 // model
-const model = require('./model/db')(mongoClient);
+mongoose.Promise = global.Promise;
+const db = require('./model/db')(mongoose);
 
 // routes
 app.use('/', index);
