@@ -28,7 +28,7 @@ module.exports = (passport,mongoose) => {
       User.findOne({fbId: profile.id}, function(err, data) {
         // oops time to make a new user!
         if(err){
-          var newUser = User({
+          let newUser = User({
             fbId : profile.id,
             name : profile.displayName,
             admin : false
