@@ -46,7 +46,7 @@ describe('db.js', function() {
   describe('User', function() {
     it('Should save user without error', function(done) {
       let user = new User({
-        fbId: 0,
+        fbId: '0',
         name: "Barny Rubble",
         admin: false
       })
@@ -54,7 +54,7 @@ describe('db.js', function() {
     });
 
     it('Should find a existing user', function(done) {
-      User.findOne({ fbId: 0 }, function(err, data) {
+      User.findOne({ fbId: '0' }, function(err, data) {
         if (err) throw err;
         assert.equal(data.name, "Barny Rubble");
         done()
@@ -63,7 +63,7 @@ describe('db.js', function() {
 
     it('Should edit the update time for user', function(done) {
       User.findOneAndUpdate(
-        { fbId: 0 },
+        { fbId: '0' },
         { updated_at: Date('2014-01-22T14:56:59.301Z') },
         { new: true },
         function(err, data) {

@@ -6,7 +6,7 @@ module.exports = (passport) => {
   const FacebookStrategy = require('passport-facebook').Strategy;
   const User = mongoose.model('User');
 
-  // passport configeration for facebook
+  // passport configuration for facebook
   // NOTE: 'done' is just the callback function given
 
   passport.serializeUser( function( user, done) {
@@ -26,18 +26,36 @@ module.exports = (passport) => {
     },
     function(accessToken, refreshToken, profile, done) {
       // check if user exists
-      User.findOne({fbId: profile.id}, function(err, data) {
-        // oops time to make a new user!
-        // if (err) throw err;
-        console.log(data);
-        if (data === null) {
+      console.log(profile)
+      User.findOne({ fbId: profile.id }, function(err, data) {
+        if (err) throw err;
+        if (!data) {
+          let user = new User({
+            fbId  : profile.id,
+            name  : profile.displayName,
+            admin : false
+          })
+          console.log(user)
+          user.save(function(err) {console.log(err)})
+        } else {
+          console.log(`Welcome back ${ data.name }`)
+        }
+      })
+      /*
+      User.findOne({ fbId: profile.id }, function(err, data) {
+        if (err) {
+          throw err;
+        } else if (data === null) {
           let newUser = new User({
-            fbId : profile.id,
-            name : profile.displayName,
+            fbId  : profile.id,
+            name  : profile.displayName,
             admin : false
           });
+
+          console.log(newUser);
           // save the user
           newUser.save(function(error) {
+            // error occurs here.
             if (error) throw error;
             console.log('New User: '+ profile.displayName);
           });
@@ -46,6 +64,7 @@ module.exports = (passport) => {
           console.log('Welcome Back: '+ data.name);
         }
       });
+      */
 
       return done(null,profile);
     }

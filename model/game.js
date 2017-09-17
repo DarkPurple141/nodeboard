@@ -9,7 +9,8 @@ const mongoose = require('mongoose')
 const gameSchema = new mongoose.Schema({
   name: {
     type: String,
-    required: true
+    required: true,
+    unique: true
   },
   private: {
     type: Boolean,
