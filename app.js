@@ -45,7 +45,7 @@ app.use(passport.session());
 
 // model
 mongoose.Promise = global.Promise;
-const db = require('./model/db')(mongoose);
+const db = require('./model/db')(mongoose, "nodeboard");
 
 // routes
 const index = require('./routes/index');
