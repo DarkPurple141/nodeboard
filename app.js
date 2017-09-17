@@ -9,6 +9,7 @@ bodyParser = require('body-parser'),
 handlebars = require('express-handlebars').create(
   {defaultLayout: 'main'}),
 passport = require('passport'),
+mongoose = require('mongoose'),
 session = require('express-session');
 
 // app
@@ -42,6 +43,10 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
+// model
+mongoose.Promise = global.Promise;
+const db = require('./model/db')(mongoose, "nodeboard");
+
 // routes
 const index = require('./routes/index');
 const got = require('./routes/got');
@@ -51,7 +56,6 @@ const api = require('./routes/api');
 const auth = require('./routes/auth')(passport);
 const logout = require('./routes/logout');
 
-// routes
 app.use('/', index);
 app.use('/got/', got);
 app.use('/squares/', squares);
