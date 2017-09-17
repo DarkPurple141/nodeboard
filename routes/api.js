@@ -7,8 +7,7 @@ router.get('/user', function(req, res, next) {
   // and passes it back in a nice form
   // that the front end can use.
   let response = {};
-  if (req.isAuthenticated) {
-
+  if (req.isAuthenticated && req.user) {
     // Additional checks to make sure we access real user attributes.
     if (req.user.provider === "facebook") {
       response.name = req.user.displayName;

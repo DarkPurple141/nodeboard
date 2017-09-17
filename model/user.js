@@ -29,13 +29,6 @@ const userSchema = new mongoose.Schema({
     default: Date.now
   },
   updated_at: Date
-  /* Things we don't strictly need atm
-  password: { type: String, required: true },
-  meta: {
-    age: Number,
-    website: String
-  },
-  */
 })
 
 // add our own methods to user later
