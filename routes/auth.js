@@ -26,46 +26,22 @@ module.exports = (passport) => {
     },
     function(accessToken, refreshToken, profile, done) {
       // check if user exists
-      console.log(profile)
       User.findOne({ fbId: profile.id }, function(err, data) {
         if (err) throw err;
         if (!data) {
+          // create new user
           let user = new User({
             fbId  : profile.id,
             name  : profile.displayName,
             admin : false
           })
-          console.log(user)
           user.save(function(err) {console.log(err)})
         } else {
-          console.log(`Welcome back ${ data.name }`)
+          // do nothing
+          // in future: update in database
+          // last login time for this user
         }
       })
-      /*
-      User.findOne({ fbId: profile.id }, function(err, data) {
-        if (err) {
-          throw err;
-        } else if (data === null) {
-          let newUser = new User({
-            fbId  : profile.id,
-            name  : profile.displayName,
-            admin : false
-          });
-
-          console.log(newUser);
-          // save the user
-          newUser.save(function(error) {
-            // error occurs here.
-            if (error) throw error;
-            console.log('New User: '+ profile.displayName);
-          });
-        } else {
-          // welcome back!
-          console.log('Welcome Back: '+ data.name);
-        }
-      });
-      */
-
       return done(null,profile);
     }
   ));
