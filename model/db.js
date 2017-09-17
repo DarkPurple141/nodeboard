@@ -29,6 +29,7 @@ module.exports = (mongoose, url) => {
   // adding models
   require('./game')
   require('./user')
+  require('./gameInstance')
 
   console.log("Database initialised.. waiting for connections.")
   return db

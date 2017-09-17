@@ -26,20 +26,19 @@ module.exports = (passport) => {
     },
     function(accessToken, refreshToken, profile, done) {
       // check if user exists
-      User.findOne({ fbId: profile.id }, function(err, data) {
+      console.log(profile)
+      User.findOne({ fbId: Number(profile.id) }, function(err, data) {
         if (err) throw err;
         if (!data) {
-          // create new user
           let user = new User({
             fbId  : profile.id,
             name  : profile.displayName,
             admin : false
           })
+          // error occurs here thus entry is not saved
           user.save(function(err) {console.log(err)})
         } else {
-          // do nothing
-          // in future: update in database
-          // last login time for this user
+          console.log(`Welcome back ${ data.name }`)
         }
       })
       return done(null,profile);

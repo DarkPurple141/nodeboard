@@ -7,7 +7,7 @@ const mongoose = require('mongoose')
 // create a schema
 const userSchema = new mongoose.Schema({
   fbId: {
-    type: String,
+    type: Number,
     required: true,
     unique: true
   },
@@ -18,7 +18,7 @@ const userSchema = new mongoose.Schema({
   //userName: String,
   activeGame: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Game'
+    ref: 'GameInstance'
   }, // if a logout occurs can fetch gameID
   admin: {
     type: Boolean,
@@ -29,6 +29,13 @@ const userSchema = new mongoose.Schema({
     default: Date.now
   },
   updated_at: Date
+  /* Things we don't strictly need atm
+  password: { type: String, required: true },
+  meta: {
+    age: Number,
+    website: String
+  },
+  */
 })
 
 // add our own methods to user later
@@ -42,7 +49,7 @@ userSchema.pre('save', function(next) {
   // if created_at doesn't exist, add to that field
   if (!this.created_at)
     this.created_at = currentDate;
-  console.log(`${this.name} record saved`);
+  console.log(`${this.name} record saved at ${Date(this.updated_at)}`);
   next();
 });
 
