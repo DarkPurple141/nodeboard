@@ -12,8 +12,17 @@ const gameSchema = new mongoose.Schema({
   updated_at: {
     type: Date,
     default: Date.now
-  }
+  },
+  activeGames: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'GameInstance'
+  }]
+})
 
+gameSchema
+.virtual('url')
+.get(function() {
+    return `/games/${this.name}/`;
 })
 
 const Game = mongoose.model('Game', gameSchema)

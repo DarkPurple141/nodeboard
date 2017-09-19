@@ -14,6 +14,8 @@ session = require('express-session');
 
 // app
 const app = express();
+
+// these are all accessible within handlebars
 app.locals.site = {
   title: "NodeBoard",
   github_username: "DarkPurple141",
@@ -21,7 +23,7 @@ app.locals.site = {
   email: "alex.hinds141@gmail.com",
   email_other: "zain.afz@gmail.com",
   twitter_username: "al_hinds"
-};
+}
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

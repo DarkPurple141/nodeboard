@@ -18,18 +18,27 @@ const GameInstanceSchema = new mongoose.Schema({
     ref: 'Game',
     required: true
   },
-  active : Boolean, // game in play or not
+  active : {
+    type: Boolean,
+    default: true // game in play or not
+  },
   players: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User'
   }],
-  state: {}, // a gameObj
+  // state: {}, // a gameObj
   created_at: Date,
   updated_at: {
     type: Date,
     default: Date.now
   }
 })
+
+GameInstanceSchema
+.virtual('url')
+.get(function () {
+    return `/games/${this.name}/${this._id}`;
+});
 
 // the schema is useless so far
 // we need to create a model using it
