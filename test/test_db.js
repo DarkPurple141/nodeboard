@@ -86,6 +86,7 @@ describe('db.js', function() {
 
   after(function(done) {
     mongoose.connection.db.dropDatabase()
+    db.close()
     done()
   })
 });
