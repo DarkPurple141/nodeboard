@@ -6,10 +6,11 @@ const GC = require('../controllers/gameIndex')
 /* authenticate the user */
 router.get('/', function(req, res, next) {
   if (req.user) {
-    let games;//[{name: "Jeff"}, {name: "Alan"}]
-    GC.gameList(function(data) {
-      games = data;
-      res.render('home', {title: "NodeBoard", games: games.map(obj => obj.name)});
+    GC.gameList(function(games) {
+      res.render('home', {
+        title: "NodeBoard",
+        games: games.map(obj => obj.name)
+      });
     })
 
   } else {
