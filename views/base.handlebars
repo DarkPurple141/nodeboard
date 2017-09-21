@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<link type="text/css" rel="stylesheet" href="/css/styles.css">
+		<link type="text/css" rel="stylesheet" href="/css/minima.css">
+		<script src="/socket.io/socket.io.js"></script>
+		<script src="/scripts/jquery.min.js"></script>
+		<script src="/scripts/vue.js"></script>
+		{{#each components}}
+			<script src="/components/{{this}}.js"></script>
+		{{/each}}
+	</head>
+	<body>
+		<div id="root">
+			<app></app>
+		</div>
+		<script src="/components/root.js"></script>
+	</body>
+</html>

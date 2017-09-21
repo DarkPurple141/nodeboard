@@ -3,16 +3,12 @@ const router = express.Router();
 
 /* GET home listing. */
 router.get('/', function(req, res, next) {
-  //res.send('respond with a resource');
-  res.render('login', {
-    layout: 'login-layout',
-    state: req.isAuthenticated() ? "Login" : "Logout",
-    helpers: {
-      capitalise : function(str) {
-        return str[0].toUpper()
-      }
-    }
-  })
+  // Note that root component is special
+  // in that it must be placed last
+  res.render('base', {
+    components: ["navbar","footer","login"],
+    layout: false
+  });
 });
 
 module.exports = router;
