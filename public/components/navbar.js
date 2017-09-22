@@ -1,3 +1,3 @@
 Vue.component('v-navbar', {
-  template: '<div>I am a Navbar!</div>'
-})
+  template: `<div>I am the Navbar!</div>`
+});
