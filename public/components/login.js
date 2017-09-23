@@ -1,18 +1,14 @@
 // main app decleration
 Vue.component('app', {
-  template: `
-  	<div>
-  		<div v-bind:style="background"></div>
+	template: `
+		<div>
+			<div v-bind:style="background"></div>
 			<div v-bind:style="loginPrompt">
 				<h1 v-bind:style="title"> Nodeboard </h1>
 				<hr v-bind:style="underline">
-				<input v-bind:style="form" placeholder="Username" type="text" class="form-control"/>
-				<input v-bind:style="form" placeholder="Password" type="password" class="form-control"/>
 				<br>
 				<div>
 					<a href="/auth/facebook"><img v-bind:style="[connect]" src="/images/fb.png"/></a>
-					<img v-bind:style="[connect]" src="/images/temp.png"/>
-					<img v-bind:style="[connect]" src="/images/temp.png"/>
 				</div>
 			</div>
   	</div>`,
@@ -34,7 +30,7 @@ Vue.component('app', {
 			loginPrompt: {
 				zIndex: "1",
 				width: "20em",
-				height: "20em",
+				height: "25%",
 				background: "white",
 				position: "absolute",
 				marginLeft: "auto",
@@ -46,12 +42,13 @@ Vue.component('app', {
 				top: "0",
 				bottom: "0",
 				textAlign: "center",
-				borderRight: "5px solid #84fab0",
 				boxShadow: "0 6px 10px 0 rgba(0, 0, 0, 0.3), 0 2px 2px 0 rgba(0, 0, 0, 0.2)"
 			},
 			title: {
-				paddingTop: "0.5em",
-				color: "#2c3e50"
+				paddingTop: "1em",
+				color: "#002b36",
+				fontSize: "2em",
+				fontFamily: "Orbitron"
 			},
 			subtitle: {
 				color: "rgba(44, 62, 80, 1)"
