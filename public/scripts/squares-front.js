@@ -2,18 +2,13 @@
 
 const socket = io('/squares');
 const game = Squares(socket);
+const d3 = require('d3')
 
 // game related logic
 function Squares(socket) {
 
-    socket.on('update', data =>
-      game.updateState(data)
-      console.log(data)
-    )
-
-    socket.on('hi', msg =>
-      console.log(msg)
-    )
+    socket.on('update', data => game.updateState(data))
+    socket.on('hi', msg => console.log(msg))
 
     socket.sendTurn = (data) => socket.emit('update', data);
 

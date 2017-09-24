@@ -1,5 +1,7 @@
 // static map information and Game Engine
 
+export {regions, Game};
+
 const regions = [
   {
     id: 0

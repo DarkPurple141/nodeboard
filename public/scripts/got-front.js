@@ -7,7 +7,7 @@ Please avert your eyes.
 
 **/
 
-// import {regions, Game} from "logic/engine.js"
+import { regions, Game } from "./logic/engine";
 
 const socket = io.connect('/got')
 const game = new Game(socket)

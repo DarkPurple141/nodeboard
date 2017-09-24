@@ -6,7 +6,7 @@ https://developer.mozilla.org/en-US/docs/Learn/Server-side/Express_Nodejs/Displa
 */
 
 const gameIndex = {
-  // Display list of all Authors
+  // Displays list of all games in the db.
   gameList : function(callback) {
       Games.find({}, function(err, data) {
         if (err) throw err
