@@ -2,6 +2,7 @@
 Vue.component('app', {
 	template: `
 		<div>
+			<v-navbar></v-navbar>
 			<div v-bind:style="background"></div>
 			<div v-bind:style="loginPrompt">
 				<h1 v-bind:style="title"> Nodeboard </h1>
@@ -13,13 +14,10 @@ Vue.component('app', {
 			</div>
   	</div>`,
   data: function(){
+  	let g = gradient("#84fab0","#8fd3f4");
 		return {
 			background: {
-			  background: "#EBEBEB",
-			  background: "-webkit-linear-gradient(left top, #84fab0, #8fd3f4)",
-			  background: "-o-linear-gradient(bottom right, #84fab0, #8fd3f4)",
-			  background: "-moz-linear-gradient(bottom right, #84fab0, #8fd3f4)",
-			  background: "linear-gradient(to bottom right, #84fab0, #8fd3f4)",
+				background: g,
 				position: "absolute",
 				top:"0",
 				bottom: "0",
@@ -71,3 +69,8 @@ Vue.component('app', {
 	  }
 	}
 });
+
+function gradient(a,b){
+	let	g = "-webkit-linear-gradient(left top, "+a+", "+b+") ";
+	return g;
+}

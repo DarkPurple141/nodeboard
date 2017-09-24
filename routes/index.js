@@ -12,9 +12,7 @@ router.get('/', function(req, res, next) {
         games: games.map(obj => obj.name)
       });
     })
-
   } else {
-    console.log("No user associated with session: " + req.session);
     res.redirect('/login');
   }
 });
