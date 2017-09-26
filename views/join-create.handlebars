@@ -1,0 +1,20 @@
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <table>
+          <thead>
+            <th>Id</th>
+            <th>Players</th>
+            <th>Created</th>
+          </thead>
+        <tbody>
+          {{#games}}
+          <tr>
+            <td>{{ id }}</td>
+            <td><{{ numPlayers }}</td>
+            <td><{{ createdAt }}</td>
+          </tr>
+          {{/games}}
+        </tbody>
+      </table>
+    </div>
+</main>

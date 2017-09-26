@@ -37,7 +37,7 @@ const GameInstanceSchema = new mongoose.Schema({
 GameInstanceSchema
 .virtual('url')
 .get(function () {
-    return `/games/${this.name}/${this._id}`;
+    return `/play/${this.name}/game/${this._id}`;
 });
 
 // the schema is useless so far

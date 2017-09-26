@@ -8,6 +8,11 @@ const gameSchema = new mongoose.Schema({
     required: true,
     unique: true
   },
+  urlkey: {
+    type: String,
+    required: true,
+    unique: true
+  },
   created_at: Date,
   updated_at: {
     type: Date,
@@ -22,7 +27,7 @@ const gameSchema = new mongoose.Schema({
 gameSchema
 .virtual('url')
 .get(function() {
-    return `/games/${this.name}/`;
+    return `/play/${this.name}/`;
 })
 
 const Game = mongoose.model('Game', gameSchema)

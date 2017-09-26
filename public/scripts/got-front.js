@@ -17,7 +17,7 @@ socket.on('news',
   data => console.log(data))
 
 socket.on('update',
-  data => console.log("updating!"))
+  data => console.log("updating! ", data))
 
 /// eventuall this will create the svg map
 $(document).ready(
