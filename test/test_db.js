@@ -9,7 +9,10 @@ const GameInstance = mongoose.model('GameInstance');
 
 describe('db.js', function() {
 
-  let squares = new Game({name: "Squares"})
+  let squares = new Game({
+    name: "Squares",
+    urlkey: "Squares".toLowerCase()
+  })
   squares.save(function(err) {
     if (err) throw err;
   })
@@ -18,7 +21,8 @@ describe('db.js', function() {
     describe('#save()', function() {
       it('Should save record without error', function(done) {
         let game = new Game({
-          name: "Blocks"
+          name: "Blocks",
+          urlkey: "Blocks".toLowerCase()
         })
         game.save(done)
       });
@@ -29,7 +33,7 @@ describe('db.js', function() {
                     .exec(function(err, data) {
           if (err) throw err;
           assert.equal(data.name, "Blocks")
-          assert.equal(data.url, `/games/${data.name}/`)
+          assert.equal(data.url, `/play/${data.name}/`)
           done()
         })
 
@@ -69,7 +73,7 @@ describe('db.js', function() {
           assert.equal(data.private, false)
           assert.equal(data.name, "Squares")
           assert.equal(data.game.name, "Squares")
-          assert.equal(data.url, `/games/${data.name}/${data._id}`)
+          assert.equal(data.url, `/play/${data.name}/game/${data._id}`)
           done()
         })
 
@@ -125,7 +129,7 @@ describe('db.js', function() {
 
   after(function(done) {
     mongoose.connection.db.dropDatabase()
-    db.close() 
+    db.close()
     done()
   })
 });
