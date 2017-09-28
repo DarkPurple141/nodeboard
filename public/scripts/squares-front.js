@@ -2,18 +2,13 @@
 
 const socket = io('/squares');
 const game = Squares(socket);
+const d3 = require('d3')
 
 // game related logic
 function Squares(socket) {
 
-    socket.on('update', data =>
-      game.updateState(data)
-      console.log(data)
-    )
-
-    socket.on('hi', msg =>
-      console.log(msg)
-    )
+    socket.on('update', data => game.updateState(data))
+    socket.on('hi', msg => console.log(msg))
 
     socket.sendTurn = (data) => socket.emit('update', data);
 
@@ -97,27 +92,27 @@ function updateCSS(el, count) {
 window.onload = () => {
 
   let grid = d3.select("#gameCanvas")
-  	.append("svg")
-  	.attr("width","510px")
-  	.attr("height","510px");
+    .append("svg")
+    .attr("width","510px")
+    .attr("height","510px");
 
   let row = grid.selectAll(".row")
-  	.data(game.hash.data)
-  	.enter().append("g")
-  	.attr("class", "row");
+    .data(game.hash.data)
+    .enter().append("g")
+    .attr("class", "row");
 
   let column = row.selectAll(".square")
-  	.data( d => d )
-  	.enter().append("rect")
-  	.attr("class", "square")
+    .data( d => d )
+    .enter().append("rect")
+    .attr("class", "square")
     .attr("id", d => d.id )
-  	.attr("x", d => d.x )
-  	.attr("y", d => d.y )
-  	.attr("width", d => d.width)
-  	.attr("height", d => d.height)
-  	.style("fill", "#fff")
-  	.style("stroke", "#222")
-  	.on('click', function(d, i) { // can't use arrow here as we need this
+    .attr("x", d => d.x )
+    .attr("y", d => d.y )
+    .attr("width", d => d.width)
+    .attr("height", d => d.height)
+    .style("fill", "#fff")
+    .style("stroke", "#222")
+    .on('click', function(d, i) { // can't use arrow here as we need this
        if (game.turn === false) {
          alert("Not your turn fam.");
          return;

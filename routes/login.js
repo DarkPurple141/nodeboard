@@ -3,7 +3,7 @@ const router = express.Router();
 
 router.get('/', function(req, res, next) {
   res.render('base', {
-    components: ["navbar","footer","login"],
+    app: "login",
     layout: false
   });
 });
