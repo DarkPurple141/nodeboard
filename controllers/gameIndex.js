@@ -1,5 +1,6 @@
 
 const Games = require('../model/game')
+const Instance = require('../model/gameInstance')
 /*
 Potential template code from
 https://developer.mozilla.org/en-US/docs/Learn/Server-side/Express_Nodejs/Displaying_data
@@ -24,28 +25,51 @@ function singleGameList (search, callback) {
     })
 }
 
+function singleGame (gameObj, callback) {
+   console.log(`Making new ${gameObj.name} instance`);
+   let instance = new Instance({
+      game: gameObj._id,
+      name: gameObj.name,
+      active: true
+   })
+   callback(instance);
+}
+
+function gameList(callback) {
+    Games.find(function(err, data) {
+      if (err) throw err
+      console.log(data)
+      callback(data)
+    })
+}
+
 const gameIndex = {
 
   // Displays list of all games in the db.
-  gameList : function(callback) {
-      Games.find(function(err, data) {
-        if (err) throw err
-        console.log(data)
-        callback(data)
+  listGames : function(req, res, next) {
+    gameList(function(games) {
+      res.render('home', {
+        title: "NodeBoard Play",
+        games: games.map(obj => obj.name)
       })
+    })
   },
 
+  // display active games for given game
   activeGames : function(req, res, next) {
     console.log(`Looking for active ${req.params.game} games.`)
     singleGameList(req.params.game, function(data) {
+      console.log(data)
       res.render('join-create', {
         title: `Play ${data.name}`,
         games: data.activeGames.map(function (obj) {
+          console.log(obj)
           let o = {
-              createdAt: obj.createdAt,
+              createdAt: obj.created_at,
               numPlayers: obj.players.length,
               id: obj._id
           }
+          console.log(o)
           return o;
         })
       })
@@ -58,7 +82,17 @@ const gameIndex = {
   // Create ID of game to be created, host takes gameID
   createGame : function(req, res, next) {
       console.log(`Create ${req.params.game}`);
-      next();
+      Games.findOne({
+         urlkey: req.params.game
+      }, function(err, data) {
+         if (err) throw err;
+         singleGame(data, function(gameObj) {
+            gameObj.save(function() {
+               data.save(data.activeGames.push(gameObj._id))
+            })
+         })
+         res.redirect(`/play/${req.params.game}/`)
+      })
   },
 
   // Join gameID of game, else
