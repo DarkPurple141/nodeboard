@@ -1,6 +1,6 @@
 #! /usr/bin/env node
 
-const DB_URL = 'nodeboard'
+const DB_URL = 'test'
 
 const async = require('async'),
       mongoose = require('mongoose'),
@@ -9,10 +9,11 @@ const async = require('async'),
 
 let games = []
 
-function gameCreate(name, callback) {
+function gameCreate(name, maxPlayers, callback) {
   let game = new Game({
     name: name,
-    urlkey: name.toLowerCase().split(' ').join('-')
+    urlkey: name.toLowerCase().split(' ').join('-'),
+    maxPlayers: maxPlayers
   });
 
   game.save(function (err) {
@@ -29,13 +30,13 @@ function gameCreate(name, callback) {
 function createGames(callback) {
     async.parallel([
         function(callback) {
-          gameCreate('Squares', callback)
+          gameCreate('Squares', 2, callback)
         },
         function(callback) {
-          gameCreate('GoT', callback)
+          gameCreate('GoT', 6, callback)
         },
         function(callback) {
-          gameCreate('Settlers of Catan', callback)
+          gameCreate('Settlers of Catan', 4, callback)
         }
     ],
     // optional callback

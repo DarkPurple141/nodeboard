@@ -9,11 +9,20 @@ const GameInstance = mongoose.model('GameInstance');
 
 describe('db.js', function() {
 
+  // preamble
   let squares = new Game({
     name: "Squares",
     urlkey: "Squares".toLowerCase()
   })
   squares.save(function(err) {
+    if (err) throw err;
+  })
+  let jeff = new User({
+     name: "Jeff",
+     fbId: 666,
+     admin: true
+  })
+  jeff.save(function(err) {
     if (err) throw err;
   })
 
@@ -59,7 +68,8 @@ describe('db.js', function() {
         let game = new GameInstance({
           name: "Squares",
           active: true,
-          game: squares._id
+          game: squares._id,
+          host: jeff._id
         })
         game.save(done)
       });

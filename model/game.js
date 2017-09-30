@@ -13,6 +13,11 @@ const gameSchema = new mongoose.Schema({
     required: true,
     unique: true
   },
+  maxPlayers : {
+     type: Number,
+     required: true,
+     default: 4
+  },
   created_at: Date,
   updated_at: {
     type: Date,

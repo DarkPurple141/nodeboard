@@ -20,7 +20,12 @@ const GameInstanceSchema = new mongoose.Schema({
   },
   active : {
     type: Boolean,
-    default: true // game in play or not
+    default: true // game in play or not//joinable
+  },
+  host: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    required: true
   },
   players: [{
     type: mongoose.Schema.Types.ObjectId,
