@@ -65,7 +65,7 @@ app.use('/got/', got);
 app.use('/squares/', squares);
 app.use('/login/', login);
 app.use('/api/', api);
-app.use('/auth/',auth);
+app.use('/auth/', auth);
 app.use('/logout/',logout);
 
 // catch 404 and forward to error handler

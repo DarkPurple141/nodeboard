@@ -136,7 +136,7 @@ const gameIndex = {
   // Join gameID of game, else
   joinGame : function(req, res, next) {
       console.log(`Attempting to join ${req.params.game}`);
-      addPlayerToGame(req.params.id, req.user.id, function(err) {
+      addPlayerToGame(req.params.id, Number(req.user.id), function(err) {
          if (err) {
             next(err)
          } else {

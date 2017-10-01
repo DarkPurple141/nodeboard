@@ -1,26 +1,12 @@
 const express = require('express');
 const router = express.Router();
-
+const Game =
 
 /* GET got listing. */
+// TODO this should be dealt with only through gameIndex "Play"
 router.get('/', function(req, res, next) {
   //res.send('respond with a resource');
   res.render('got', {layout: 'got-layout'});
-});
-
-router.get('/:game/create/', function(req, res, next) {
-  //res.send('respond with a resource');
-  res.render('got', {layout: 'got-layout'});
-});
-
-router.get('/:game/join/:id/', function(req, res, next) {
-  //res.send('respond with a resource');
-  res.render('got', {layout: 'got-layout'});
-});
-
-router.get('/:game/game/:id', function(req, res, next) {
-
-
 });
 
 module.exports = router;
