@@ -15,7 +15,11 @@ router.post('/:game/create/', GC.createGame);
 router.post('/:game/join/:id/', GC.joinGame);
 
 // play an existing game (instanciated after create/join phase)
-router.post('/:game/game/:id', GC.playGame);
+// only the host should do this.
+router.post('/:game/game/:id', GC.startGame);
+
+// gets the game in play
+router.get('/:game/game/:id', GC.getGame);
 
 // make a game inactive, must already be active.
 router.post('/:game/close/:id', GC.closeGame);

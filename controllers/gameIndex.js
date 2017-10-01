@@ -149,9 +149,17 @@ const gameIndex = {
 
   // TODO
   // Play the game if it exists
-  playGame : function(req, res, next) {
+  startGame : function(req, res, next) {
       console.log(`Play ${req.params.game}`);
       next();
+  },
+
+  // TODO
+  // only available when game is in play
+  // only possible if playerID already associated with gameID
+  getGame : function(req, res, next) {
+     console.log(`Play ${req.params.game}`);
+     next();
   },
 
   // called after game ends, or if game lobby is closed.
