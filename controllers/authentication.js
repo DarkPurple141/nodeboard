@@ -19,3 +19,5 @@ const auth = {
      res.redirect('/');
    }
 }
+
+module.exports = auth;
