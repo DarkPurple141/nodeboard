@@ -13,40 +13,44 @@ function shuffle(a) {
 
 function Deck() {
   this.cards = [0, 0, 0, 1, 1, 1, 2, 2, 2, 3];
-  this.init = () => { shuffle(this.cards); console.log (this.cards); console.log(this.card) };
+  this.init = () => { shuffle(this.cards); };
 }
 
 Deck.prototype = {
   get card() { return this.cards.pop() }
 }
 
-const DeckOne = function () {
+function DeckOne() {
+  console.log("Deck One")
   Deck.call(this);
 }
 
-const DeckTwo = function () {
+function DeckTwo() {
+  console.log("Deck Two")
   Deck.call(this);
 }
 
-const DeckThree = function () {
+function DeckThree() {
+  console.log("Deck Three")
   Deck.call(this);
 }
 
-DeckOne.prototype = new Deck();
-DeckTwo.prototype = new Deck();
-DeckThree.prototype = new Deck();
+DeckOne.prototype = Object.create(Deck.prototype);
+DeckTwo.prototype = Object.create(Deck.prototype);
+DeckThree.prototype = Object.create(Deck.prototype);
 
 const Game = function (id) {
     const _id = id
-    const _cards = [new DeckOne(), new DeckTwo(), new DeckThree()]
-    const _cardIndex = 0
-    const _round = 0
+    let _cards = [new DeckOne(), new DeckTwo(), new DeckThree()]
+    let _cardIndex = 0
+    let _round = 0
 
     return {
       get round() { return _round },
+      set round(val) { _round += val },
       get cardIndex() { return _cardIndex },
       set cardIndex(val) { _cardIndex = (_cardIndex + val) % _cards.length},
-      init : () => {
+      init : function () {
         // initialise decks
         for (let deck in _cards) {
           _cards[deck].init();
@@ -54,8 +58,8 @@ const Game = function (id) {
         /*Do some more stuff*/
       },
 
-      draw : () => {
-        return _cards[cardIndex++].card;
+      draw : function () {
+        return _cards[this.cardIndex++].card;
       }
     }
 }
@@ -68,23 +72,27 @@ const gameServer = function (io) {
 
   nsp.on('connection', function (socket) {
 
-    players[socket.id] = socket;
-    socket.emit('news', { hello: 'world' });
+    if (!socket.id in players) {
+      
+    }
 
+    socket.emit('news', { hello: 'world' });
     socket.on('game-event', function (data) {
       console.log(socket.id);
       console.log(data);
+      let toSend = "New Game";
       if (!(socket.id in players)) {
+        console.log("GAME CREATION")
+        players[socket.id] = socket;
         let g = new Game();
         g.init();
         games.push(g);
       } else {
-        let g = new Game();
-        g.init();
-        games.push(g);
+        toSend = games[0].draw();
+        console.log(toSend)
       }
 
-      socket.emit('update' , data);
+      socket.emit('update' , toSend);
     });
 
     socket.on('create', function(gameName) {

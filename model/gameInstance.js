@@ -20,7 +20,12 @@ const GameInstanceSchema = new mongoose.Schema({
   },
   active : {
     type: Boolean,
-    default: true // game in play or not
+    default: true // game in play or not//joinable
+  },
+  host: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    required: true
   },
   players: [{
     type: mongoose.Schema.Types.ObjectId,
@@ -37,7 +42,17 @@ const GameInstanceSchema = new mongoose.Schema({
 GameInstanceSchema
 .virtual('url')
 .get(function () {
-    return `/games/${this.name}/${this._id}`;
+    return `/play/${this.name}/game/${this._id}`;
+});
+
+GameInstanceSchema.pre('save', function(next) {
+  let currentDate = Date.now()
+  // change the updated_at field to current date
+  this.updated_at = currentDate
+  // if created_at doesn't exist, add to that field
+  if (!this.created_at)
+    this.created_at = currentDate;
+  next();
 });
 
 // the schema is useless so far

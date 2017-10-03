@@ -1,10 +1,8 @@
-const express = require('express');
-const router = express.Router();
+const express = require('express')
+const router = express.Router()
+const auth = require('../controllers/authentication')
 
 /* GET got listing. */
-router.get('/', function(req, res, next) {
-  req.logout();
-  res.redirect('/');
-});
+router.get('/', auth.logout)
 
-module.exports = router;
+module.exports = router
