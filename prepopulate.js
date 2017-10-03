@@ -9,8 +9,12 @@ const async = require('async'),
 
 let games = []
 
-function gameCreate(name, callback) {
-  let game = new Game({ name: name });
+function gameCreate(name, maxPlayers, callback) {
+  let game = new Game({
+    name: name,
+    urlkey: name.toLowerCase().split(' ').join('-'),
+    maxPlayers: maxPlayers
+  });
 
   game.save(function (err) {
     if (err) {
@@ -26,13 +30,13 @@ function gameCreate(name, callback) {
 function createGames(callback) {
     async.parallel([
         function(callback) {
-          gameCreate('Squares', callback)
+          gameCreate('Squares', 2, callback)
         },
         function(callback) {
-          gameCreate('GoT', callback)
+          gameCreate('GoT', 6, callback)
         },
         function(callback) {
-          gameCreate('Settlers', callback)
+          gameCreate('Settlers of Catan', 4, callback)
         }
     ],
     // optional callback
