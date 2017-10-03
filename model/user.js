@@ -49,7 +49,7 @@ userSchema.pre('save', function(next) {
   // if created_at doesn't exist, add to that field
   if (!this.created_at)
     this.created_at = currentDate;
-  console.log(`${this.name} record saved at ${Date(this.updated_at)}`);
+  console.log(`${this.name} record saved`);
   next();
 });
 

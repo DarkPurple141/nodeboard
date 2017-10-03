@@ -32,7 +32,10 @@ const GameInstanceSchema = new mongoose.Schema({
     ref: 'User'
   }],
   // state: {}, // a gameObj
-  created_at: Date,
+  created_at: {
+     type: Date,
+     default: Date.now
+  },
   updated_at: {
     type: Date,
     default: Date.now

@@ -1,7 +1,9 @@
 
-const DB_URL = 'mongodb://localhost:27017/';
+const mongoose = require('mongoose')
+mongoose.Promise = global.Promise
+const DB_URL = 'mongodb://localhost:27017/'
 
-module.exports = (mongoose, url) => {
+module.exports = url => {
 
   mongoose.connect(DB_URL + url, {
     useMongoClient: true, // config options

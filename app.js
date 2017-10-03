@@ -9,7 +9,6 @@ bodyParser = require('body-parser'),
 handlebars = require('express-handlebars').create(
   {defaultLayout: 'main'}),
 passport = require('passport'),
-mongoose = require('mongoose'),
 session = require('express-session');
 
 // app
@@ -48,8 +47,7 @@ module.exports = (dbname) => {
    app.use(passport.session());
 
    // model
-   mongoose.Promise = global.Promise;
-   const db = require('./model/db')(mongoose, dbname);
+   const db = require('./model/db')(dbname);
 
    // routes
    const index = require('./routes/index');

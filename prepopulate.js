@@ -1,10 +1,9 @@
 #! /usr/bin/env node
 
-const DB_URL = 'test'
+const DB_URL = 'nodeboard'
 
 const async = require('async'),
-      mongoose = require('mongoose'),
-      db    = require('./model/db')(mongoose, DB_URL),
+      db    = require('./model/db')(DB_URL),
       Game = require('./model/game')
 
 let games = []

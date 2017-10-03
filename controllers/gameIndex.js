@@ -20,16 +20,18 @@ function singleGameList (search, callback) {
       { urlkey : search }
     )
     .populate('activeGames')
-    .exec(function(err, data) {
-      if (err) throw err
-      console.log(data)
-      data.activeGames = data.activeGames.filter(function(item) {
-         return item.active === true;
+    .exec(function(queryError, game) {
+      if (queryError) throw queryError;
+      game.save(validationError => {
+         if (validationError) throw validationError;
+         game.activeGames = game.activeGames.filter(
+            item => item.active === true)
+         })
+      .then(callback(game))
+      .catch(promiseError => {
+         console.error("Error occurred in singleGameList")
+         })
       })
-      data.save(function() {
-         callback(data)
-      })
-    })
 }
 
 // TODO should backend assume request is valid or not?
@@ -55,14 +57,26 @@ function addPlayerToGame(gameID, userID, callback) {
 }
 
 // Make a new game of x.
-function singleGame (gameObj, callback) {
-   console.log(`Making new ${gameObj.name} instance`);
-   let instance = new Instance({
-      game: gameObj._id,
-      name: gameObj.name,
-      active: true
+function makeGame (gameObj, user, callback) {
+   User.findOne({fbId : user}, function(err, userSearch) {
+      if (err) console.error("No user associated with fbid")
+      console.log(`Making new ${gameObj.name} instance`);
+      let instance = new Instance({
+         game: gameObj._id,
+         name: gameObj.name,
+         active: true,
+         host: userSearch._id,
+         players: [userSearch._id]
+      })
+
+      userSearch.save(() => {
+         userSearch.activeGame = instance._id})
+         .then(callback(instance))
+         .catch(userSaveError => {
+            console.error("Error occurred in makeGame");
+         })
    })
-   callback(instance);
+
 }
 
 // update the db to reflect the game ending.
@@ -99,13 +113,11 @@ const gameIndex = {
 
   // display active games for given game
   activeGames : function(req, res, next) {
-    console.log(`Looking for active ${req.params.game} games.`)
+    console.log(`Active ${req.params.game} games queried..`)
     singleGameList(req.params.game, function(data) {
-      console.log(data)
       res.render('join-create', {
         title: `Play ${data.name}`,
-        games: data.activeGames.map(function (obj) {
-          console.log(obj)
+        games: data.activeGames.map(obj => {
           let o = {
               createdAt: obj.created_at,
               numPlayers: obj.players.length,
@@ -119,17 +131,26 @@ const gameIndex = {
 
   // Create ID of game to be created, host takes gameID
   createGame : function(req, res, next) {
-      console.log(`Create ${req.params.game}`);
+      console.log(`Create ${req.params.game}`)
       Games.findOne({
          urlkey: req.params.game
-      }, function(err, data) {
-         if (err) throw err;
-         singleGame(data, function(gameObj) {
-            gameObj.save(function() {
-               data.save(data.activeGames.push(gameObj._id))
+      }, function(searchError, game) {
+         if (searchError) throw searchError;
+         makeGame(game, Number(req.user.id), function(gameInstance) {
+            gameInstance.save()
+            .then(() => {
+               game.activeGames.push(gameInstance._id)
+               game.save(() => {
+                  res.redirect(`/play/${req.params.game}/`)
+               })
+               .catch(saveErr => {
+                  console.error("CreateGame Save Failed")
+               })
+            })
+            .catch(createGameError => {
+               console.error("CreateGame Failed")
             })
          })
-         res.redirect(`/play/${req.params.game}/`)
       })
   },
 

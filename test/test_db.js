@@ -1,7 +1,7 @@
 const assert = require('assert');
 const mongoose = require('mongoose');
 mongoose.Promise = global.Promise
-const db = require('../model/db')(mongoose, "test");
+const db = require('../model/db')("test");
 
 const User = mongoose.model('User');
 const Game = mongoose.model('Game');
