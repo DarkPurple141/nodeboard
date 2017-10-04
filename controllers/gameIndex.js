@@ -15,6 +15,13 @@ https://developer.mozilla.org/en-US/docs/Learn/Server-side/Express_Nodejs/Displa
 // game => isX user allowed to join? join. else -> route back to game.
 
 // bring up the current active games for x, and remove any that have expired.
+function fullError() {
+   let err = new Error("Current game is full")
+   err.name = "fullError"
+   return err;
+}
+
+
 function singleGameList (search, callback) {
     Games.findOne(
       { urlkey : search }
@@ -39,19 +46,34 @@ function addPlayerToGame(gameID, userID, callback) {
    Instance.findOne(
       { _id : gameID })
    .populate('game')
-   .exec(function(gameError, gameInstance) {
+   .exec()
+   .then(gameInstance => {
       if (gameInstance.players.length >= gameInstance.game.maxPlayers) {
-         let fullError = Error("Game Full")
-         callback(fullError)
-      } else {
-         // TODO check if player already in game?
-         User.findOneAndUpdate(
-            { fbId: userID },
-            { activeGame: gameInstance._id },
-            function(userError, userToUpdate) {
-               gameInstance.save(gameInstance.players.push(userToUpdate._id))
-               callback(userError)
+         throw fullError()
+      }
+      return gameInstance;
+   })
+   .then(gameInstance => {
+      User.findOneAndUpdate(
+         { fbId: userID },
+         { activeGame: gameInstance._id },
+         function(userError, userToUpdate) {
+            if (userError) throw userError
+            gameInstance.players.push(userToUpdate._id)
+            gameInstance.save(() => {
+               callback(null)
             })
+            .catch(instanceUpdateError => {
+               throw instanceUpdateError
+            })
+         })
+      }
+   )
+   .catch(joinError => {
+      if (joinError.name === "fullError") {
+         callback(joinError)
+      } else {
+         throw joinError
       }
    })
 }
@@ -68,13 +90,12 @@ function makeGame (gameObj, user, callback) {
          host: userSearch._id,
          players: [userSearch._id]
       })
-
-      userSearch.save(() => {
-         userSearch.activeGame = instance._id})
-         .then(callback(instance))
-         .catch(userSaveError => {
-            console.error("Error occurred in makeGame");
-         })
+      userSearch.activeGame = instance._id
+      userSearch.save()
+      .then(callback(instance))
+      .catch(userSaveError => {
+         console.error("Error occurred in makeGame");
+      })
    })
 
 }
@@ -106,7 +127,7 @@ const gameIndex = {
     gameList(function(games) {
       res.render('home', {
         title: "NodeBoard Play",
-        games: games.map(obj => obj.name)
+        games: games
       })
     })
   },

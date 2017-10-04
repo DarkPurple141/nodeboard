@@ -8,13 +8,19 @@
             <th>Id</th>
             <th>Players</th>
             <th>Created</th>
+            <th>Click</th>
           </thead>
         <tbody>
           {{#games}}
           <tr>
-            <td>{{ id }}</td>
-            <td><{{ numPlayers }}</td>
-            <td><{{ createdAt }}</td>
+            <td>{{ id }} </td>
+            <td>{{ numPlayers }}</td>
+            <td>{{ createdAt }}</td>
+            <td>
+            <form action ="join/{{id}}/" method = "post">
+               <input type="submit" name="Join">
+            </form>
+            </td>
           </tr>
           {{/games}}
         </tbody>
