@@ -15,12 +15,14 @@ Use npm run build to compile everything specified to public/dist
 
 module.exports = {
     entry: {
-        got: "./public/scripts/got-front.js",
-        squares: "./public/scripts/squares-front.js"
+        "public/dist/got": "./public/scripts/got-front.js",
+        "public/dist/squares": "./public/scripts/squares-front.js",
+        "public/components/login": "./vue-src/login.js",
+        "public/components/root": "./vue-src/root.js"
     },
     output: {
-        path: path.resolve(__dirname, "public/dist"),
-        filename: "[name].bundle.js"
+        path: path.resolve(__dirname, "./"),
+        filename: "[name].js"
     },
     module: {
          loaders: [{
