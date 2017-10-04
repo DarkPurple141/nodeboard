@@ -38,6 +38,7 @@ module.exports = (passport) => {
           // error occurs here thus entry is not saved
           user.save(function(err) {console.log(err)})
         } else {
+          console.log(data)
           console.log(`Welcome back ${ data.name }`)
         }
       })
