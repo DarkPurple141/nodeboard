@@ -4,7 +4,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
 
 module.exports = {
-  entry: './vue-src/root.js',
+  entry: './src/root.js',
   output: {
     path: path.resolve(__dirname, './public/dist'),
     publicPath: 'public/dist/',
@@ -75,7 +75,7 @@ if (process.env.NODE_ENV === 'production') {
     }),
     new HtmlWebpackPlugin({
      filename: 'index.html',
-     template: 'vue-src/index.html',
+     template: 'src/index.html',
      inject: true,
      minify: {
         removeComments: true,
@@ -93,7 +93,7 @@ if (process.env.NODE_ENV === 'production') {
        // https://github.com/ampedandwired/html-webpack-plugin
        new HtmlWebpackPlugin({
          filename: 'index.html',
-         template: 'vue-src/index.html',
+         template: 'src/index.html',
          inject: true
        }),
        new FriendlyErrorsPlugin()
