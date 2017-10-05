@@ -1,5 +1,7 @@
 const path = require('path')
 const webpack = require('webpack')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
 
 module.exports = {
   entry: './vue-src/root.js',
@@ -70,6 +72,30 @@ if (process.env.NODE_ENV === 'production') {
     }),
     new webpack.LoaderOptionsPlugin({
       minimize: true
-    })
+    }),
+    new HtmlWebpackPlugin({
+     filename: 'index.html',
+     template: 'vue-src/index.html',
+     inject: true,
+     minify: {
+        removeComments: true,
+        collapseWhitespace: true,
+        removeAttributeQuotes: true
+        // more options:
+        // https://github.com/kangax/html-minifier#options-quick-reference
+      }
+   })
   ])
+} else if (process.env.NODE_ENV === 'development') {
+   module.exports.plugins = (module.exports.plugins || []).concat([
+      new webpack.HotModuleReplacementPlugin(),
+       new webpack.NoEmitOnErrorsPlugin(),
+       // https://github.com/ampedandwired/html-webpack-plugin
+       new HtmlWebpackPlugin({
+         filename: 'index.html',
+         template: 'vue-src/index.html',
+         inject: true
+       }),
+       new FriendlyErrorsPlugin()
+   ])
 }
