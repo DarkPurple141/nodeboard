@@ -19,7 +19,8 @@
          <v-flex xs12>
            <v-container grid-list-xl>
              <v-layout row wrap align-center>
-               <description-card v-for="item in cards" :cardData="item"></description-card>
+               <description-card v-for="item in cards" :cardData="item" :key="item.headline">
+               </description-card>
              </v-layout>
            </v-container>
          </v-flex>
@@ -31,7 +32,7 @@
  </template>
 
  <script>
- import descriptionCard from './components/description-card'
+ import descriptionCard from './components/descriptionCard'
 
  export default {
    name: 'Home',
