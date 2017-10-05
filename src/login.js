@@ -5,7 +5,7 @@ Vue.component('app', {
       <section>
         <v-parallax src="/images/landing.png" height="500">
           <v-layout column align-center justify-center>
-            <h1 class="white--text orbit-font">Nodeboard</h1>
+            <h1 class="white--text orbit-font">{{ title }}</h1>
             <h4 class="white--text orbit-font">Boardgames Reimagined</h4>
             <a href="/auth/facebook/">
               <img src="images/fb.png"/>
@@ -25,9 +25,9 @@ Vue.component('app', {
                         <div class="headline text-xs-center amber--text">Play!</div>
                       </v-card-title>
                       <v-card-text>
-                        Cras facilisis mi vitae nunc lobortis pharetra. Nulla volutpat tincidunt ornare. 
-                        Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. 
-                        Nullam in aliquet odio. Aliquam eu est vitae tellus bibendum tincidunt. Suspendisse potenti. 
+                        Cras facilisis mi vitae nunc lobortis pharetra. Nulla volutpat tincidunt ornare.
+                        Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.
+                        Nullam in aliquet odio. Aliquam eu est vitae tellus bibendum tincidunt. Suspendisse potenti.
                       </v-card-text>
                     </v-card>
                   </v-flex>
@@ -37,9 +37,9 @@ Vue.component('app', {
                         <div class="headline text-xs-center amber--text">Create!</div>
                       </v-card-title>
                       <v-card-text>
-                        Cras facilisis mi vitae nunc lobortis pharetra. Nulla volutpat tincidunt ornare. 
-                        Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. 
-                        Nullam in aliquet odio. Aliquam eu est vitae tellus bibendum tincidunt. Suspendisse potenti. 
+                        Cras facilisis mi vitae nunc lobortis pharetra. Nulla volutpat tincidunt ornare.
+                        Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.
+                        Nullam in aliquet odio. Aliquam eu est vitae tellus bibendum tincidunt. Suspendisse potenti.
                       </v-card-text>
                     </v-card>
                   </v-flex>
@@ -49,9 +49,9 @@ Vue.component('app', {
                         <div class="headline text-xs-center amber--text">Compete!</div>
                       </v-card-title>
                       <v-card-text>
-                        Cras facilisis mi vitae nunc lobortis pharetra. Nulla volutpat tincidunt ornare. 
-                        Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. 
-                        Nullam in aliquet odio. Aliquam eu est vitae tellus bibendum tincidunt. Suspendisse potenti. 
+                        Cras facilisis mi vitae nunc lobortis pharetra. Nulla volutpat tincidunt ornare.
+                        Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.
+                        Nullam in aliquet odio. Aliquam eu est vitae tellus bibendum tincidunt. Suspendisse potenti.
                       </v-card-text>
                     </v-card>
                   </v-flex>
@@ -65,7 +65,7 @@ Vue.component('app', {
     </v-app>`,
   data: function(){
     return {
-      title: "Nodeboard"
+      title: "Alex"
     };
   }
 });
