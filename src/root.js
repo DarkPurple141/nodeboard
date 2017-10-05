@@ -1,14 +1,16 @@
 /*
 This is the main inpoint for the app
 */
-
+import Vue from 'vue'
 import Vuetify from 'vuetify'
-import login from './login'
+import Home from './Home'
 
+// apparently required for rendering as well as including the script.
 Vue.use(Vuetify)
-Vue.use(login)
 
 // create a root instance
 new Vue({
-  el: '#root'
+  el: '#app',
+  template: '<Home/>',
+  components: { Home }
 });
