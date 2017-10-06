@@ -1,3 +1,4 @@
+const path = require('path')
 
 const api = {
    getUser : function(req, res, next) {
@@ -19,6 +20,20 @@ const api = {
    	  response.success = false;
      }
      res.send(response);
+  },
+
+  loggedIn : function (req, res, next) {
+     if (req.user) {
+        // if loggedIn, allow normal api access
+        next()
+     } else {
+        console.log("No user associated with session; redirecting")
+        res.redirect('/api/login/')
+     }
+  },
+
+   serveHome : function (req, res, next) {
+      res.sendFile('/dist/index.html', {root : path.resolve('./public') })
    }
 }
 

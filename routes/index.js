@@ -1,16 +1,12 @@
-const express = require('express');
-const router = express.Router();
+const express = require('express')
+const router = express.Router()
+const api = require('../controllers/api')
 
-/* GET home page. */
-/* authenticate the user */
-router.get('/', function(req, res, next) {
-  if (req.user) {
-    res.redirect('/play');
+/*
+   GET home page. so vue can be served.
+*/
 
-  } else {
-    console.log("No user associated with session: " + req.session);
-    res.redirect('/login');
-  }
-});
+router.get('/', api.serveHome);
+
 
 module.exports = router;

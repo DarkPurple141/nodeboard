@@ -125,10 +125,17 @@ const gameIndex = {
   // Displays list of all games in the db.
   listGames : function(req, res, next) {
     gameList(function(games) {
+      res.json({
+        user: req.user.displayName,
+        id : req.user.id,
+        games: games
+      })
+      /*
       res.render('home', {
         title: "NodeBoard Play",
         games: games
       })
+      */
     })
   },
 
