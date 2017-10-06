@@ -126,8 +126,8 @@ const gameIndex = {
   listGames : function(req, res, next) {
     gameList(function(games) {
       res.json({
-        user: req.user.displayName,
-        id : req.user.id,
+        //user: req.user.displayName || "Anon",
+        //id : req.user.id,
         games: games
       })
       /*

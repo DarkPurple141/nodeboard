@@ -7,6 +7,11 @@
       <v-card-text>
          {{ cardData.stub }}
       </v-card-text>
+      <v-card-actions v-if="cardData.url">
+         <v-btn flat>
+            <a v-bind:href="cardData.url">More</a>
+         </v-btn>
+      </v-card-actions>
      </v-card>
    </v-flex>
 </template>
