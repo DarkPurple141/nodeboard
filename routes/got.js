@@ -1,6 +1,5 @@
 const express = require('express');
 const router = express.Router();
-const Game =
 
 /* GET got listing. */
 // TODO this should be dealt with only through gameIndex "Play"

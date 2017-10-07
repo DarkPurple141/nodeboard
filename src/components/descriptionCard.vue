@@ -15,10 +15,6 @@
 export default {
   name: 'descriptionCard',
   template: "<description-card></description-card>",
-  // note cardInfo tranlsates to card-info in html render.
-  props: ['cardData'],
-  mounted() {
-      console.log('Component ready.')
-  }
+  props: ['cardData']
 }
 </script>

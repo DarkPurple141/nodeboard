@@ -8,9 +8,16 @@
     <link href="https://unpkg.com/vuetify/dist/vuetify.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Orbitron" rel="stylesheet">
     <title>NodeBoard</title>
+    <!-- This fixes a facebook api thing where it appends #_=_ -->
+    <script type="text/javascript">
+      if (window.location.hash && window.location.hash == '#_=_') {
+          window.location.hash = '';
+      }
+    </script>
   </head>
   <body>
    <div id="app">
+       <router-view></router-view>
    </div>
     <!-- built files will be auto injected -->
   </body>

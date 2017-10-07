@@ -53,20 +53,14 @@ module.exports = (dbname) => {
    const index = require('./routes/index');
    const got = require('./routes/got');
    const squares = require('./routes/squares');
-   const login = require('./routes/login');
    const api = require('./routes/api');
    const auth = require('./routes/auth')(passport);
-   const logout = require('./routes/logout');
    const play = require('./routes/play');
 
-   app.use('/play', play);
-   app.use('/', index);
-   app.use('/got/', got);
-   app.use('/squares/', squares);
-   app.use('/login/', login);
+
    app.use('/api/', api);
-   app.use('/auth/', auth);
-   app.use('/logout/',logout);
+   app.use('/auth/',auth);
+   app.use('/*', index);
 
    // catch 404 and forward to error handler
    app.use(function(req, res, next) {

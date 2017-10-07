@@ -6,8 +6,8 @@
      <v-parallax src="/images/landing.png" height="500">
        <v-layout column align-center justify-center>
          <h1 class="white--text orbit-font">{{ title }}</h1>
-         <h4 class="white--text orbit-font">Boardgames Reimagined</h4>
-         <a href="/auth/facebook/">
+         <h4 class="white--text orbit-font">{{ subtitle }}</h4>
+         <a href="auth/facebook/">
            <img src="images/fb.png"/>
          </a>
        </v-layout>
@@ -24,7 +24,6 @@
              </v-layout>
            </v-container>
          </v-flex>
-
        </v-layout>
      </v-container>
    </section>
@@ -39,6 +38,7 @@
    data: function(){
      return {
        title: "NodeBoard",
+       subtitle: "Boardgames Reimagined",
        cards : [
           {
             headline: "Play!",
