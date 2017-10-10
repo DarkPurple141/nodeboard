@@ -82,7 +82,18 @@ function createGames(callback) {
              4,
              callback
           )
-        }
+       },
+       (callback) => {
+         gameCreate(
+            'Risk',
+            "Risk is a strategy board game of diplomacy, conflict and conquest" +
+            " for two to six players. The standard version is played on a board " +
+            "depicting a political map of the earth, divided into forty-two " +
+            "territories, which are grouped into six continents.",
+            6,
+            callback
+         )
+       }
     ],
     // optional callback
     callback)
