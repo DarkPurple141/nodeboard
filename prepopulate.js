@@ -1,6 +1,10 @@
 #! /usr/bin/env node
 
-let DB_URL = 'test'
+if (process.argv[2]) {
+   DB_URL = process.argv[2];
+} else {
+   DB_URL = 'test'
+}
 
 const async = require('async'),
       db    = require('./model/db')(DB_URL),
@@ -96,12 +100,6 @@ function createAdmins(callback) {
 
    // optional callback
    callback)
-}
-
-if (process.argv[2]) {
-   DB_URL = process.argv[2];
-} else {
-   DB_URL = 'test'
 }
 
 async.series([

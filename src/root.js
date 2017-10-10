@@ -23,5 +23,8 @@ const router = new VueRouter({
 // create a root instance
 new Vue({
   router,
-  template : `<router-view></router-view>`
+  template : `
+  <v-app>
+     <router-view></router-view>
+  </v-app>`
 }).$mount('#app');
