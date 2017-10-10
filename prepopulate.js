@@ -64,8 +64,8 @@ function createGames(callback) {
           gameCreate(
              'GoT',
              "King Robert Baratheon is dead, and the lands of Westeros brace for battle." +
-              "Can you claim the Iron Throne? Designed for ages 14 and up, " +
-              "A Game of Thrones: The Board Game Second Edition is a classic game" +
+              " Can you claim the Iron Throne? Designed for ages 14 and up, " +
+              "A Game of Thrones: The Board Game Second Edition is a classic game " +
                "of warfare, diplomacy, and intrigue for three to six players.",
              6,
              callback
@@ -74,10 +74,10 @@ function createGames(callback) {
         (callback) => {
           gameCreate(
              'Settlers of Catan',
-             "The Settlers of Catan from Mayfair Games is an award-winning" +
+             "The Settlers of Catan from Mayfair Games is an award-winning " +
               "strategy game where players collect resources and use them " +
-              "to build roads, settlements and cities on their way to victory." +
-               "The board itself is variable, making each game a little different" +
+              "to build roads, settlements and cities on their way to victory. " +
+               "The board itself is variable, making each game a little different " +
                 "from the next.",
              4,
              callback

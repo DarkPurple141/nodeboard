@@ -41,7 +41,7 @@
         let game = {
            id : item._id,
            headline: item.name,
-           stub: item.description,
+           stub: item.description.substring(0, 80) + "...",
            url: window.location + '/' + item.urlkey
         }
         return game
