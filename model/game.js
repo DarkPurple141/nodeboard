@@ -8,6 +8,10 @@ const gameSchema = new mongoose.Schema({
     required: true,
     unique: true
   },
+  description : {
+    type: String,
+    required: true
+  },
   urlkey: {
     type: String,
     required: true,
