@@ -8,6 +8,7 @@
          {{ cardData.stub }}
       </v-card-text>
       <v-card-actions v-if="cardData.url">
+         <router-link :to="{ path: '/play/' + cardData.url, params: {game: cardData.url } }">LMAO</router-link>
          <v-btn flat class="layout justify-center">
             <a v-bind:href="cardData.url">More</a>
          </v-btn>
@@ -23,7 +24,7 @@ export default {
   // note cardInfo tranlsates to card-info in html render.
   props: ['cardData'],
   mounted() {
-      console.log('Component ready.')
+      console.log('Component ready for ' + this.cardData.headline)
   }
 }
 </script>

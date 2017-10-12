@@ -42,7 +42,7 @@
            id : item._id,
            headline: item.name,
            stub: item.description.substring(0, 80) + "...",
-           url: window.location + '/' + item.urlkey
+           url: item.urlkey
         }
         return game
      })

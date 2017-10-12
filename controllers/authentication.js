@@ -7,7 +7,7 @@ const auth = {
 
    // nodeboard/api/login/
    login : function(req, res, next) {
-      res.status(200).send(req.user)
+      res.json(req.user)
    },
 
    // nodeboard/api/logout/

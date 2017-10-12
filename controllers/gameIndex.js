@@ -143,6 +143,17 @@ const gameIndex = {
   activeGames : function(req, res, next) {
     console.log(`Active ${req.params.game} games queried..`)
     singleGameList(req.params.game, function(data) {
+      res.json({
+        title: `Play ${data.name}`,
+        games: data.activeGames.map(obj => {
+          let o = {
+              createdAt: obj.created_at,
+              numPlayers: obj.players.length,
+              id: obj._id
+          }
+          return o;
+       })})
+      /*
       res.render('join-create', {
         title: `Play ${data.name}`,
         games: data.activeGames.map(obj => {
@@ -154,6 +165,7 @@ const gameIndex = {
           return o;
         })
       })
+      */
     })
   },
 

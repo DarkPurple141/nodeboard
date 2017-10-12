@@ -1,4 +1,3 @@
-
 const Squares = (socketObject) => {
 
   const nsp = socketObject.of('/squares');

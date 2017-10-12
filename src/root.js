@@ -19,17 +19,15 @@ const router = new VueRouter({
    routes: [
       {
          path: '/',
-         component : Home,
+         component : Home
       },
       {
          path: '/play',
          component : Play,
-         children: [
-            {
-               path: '/:game',
-               component: playGame
-            }
-         ]
+      },
+      {
+         path: '/play/:game',
+         component: playGame
       }
    ]
 })
