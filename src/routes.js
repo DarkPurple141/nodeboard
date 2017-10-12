@@ -7,6 +7,10 @@ export default [
       component: Play
    },
    {
+      path: '/_=_',
+      redirect: '/'
+   },
+   {
       path: '/play/:game',
       component: playGame
    }
