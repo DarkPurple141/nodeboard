@@ -5,11 +5,6 @@ const path = require('path')
 
 const auth = {
 
-   // nodeboard/api/login/
-   login : function(req, res, next) {
-      res.json(req.user)
-   },
-
    // nodeboard/api/logout/
    logout : function(req, res, next) {
      req.logout();

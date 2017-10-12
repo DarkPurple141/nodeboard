@@ -7,11 +7,11 @@
        <v-layout column align-center justify-center>
          <h1 class="white--text orbit-font">{{ title }}</h1>
          <h4 class="white--text orbit-font">Boardgames Reimagined</h4>
-         <router-link to="/play">play</router-link>
          <a href="/auth/facebook/">
            <img src="/images/fb.png"/>
          </a>
        </v-layout>
+       <router-link to="/about">About</router-link>
      </v-parallax>
    </section>
    <section>
@@ -33,7 +33,7 @@
  </template>
 
  <script>
- import descriptionCard from './components/descriptionCard'
+ import descriptionCard from '../components/descriptionCard'
 
  export default {
    name: 'Home',

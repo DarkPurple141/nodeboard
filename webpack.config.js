@@ -4,11 +4,14 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
 
 module.exports = {
-  entry: './src/root.js',
+  entry: {
+     preauth: './src/root.js',
+     app: './src/app.js'
+  },
   output: {
     path: path.resolve(__dirname, './public/dist'),
     publicPath: '/dist/',
-    filename: 'build.js'
+    filename: '[name].build.js'
   },
   module: {
     rules: [
@@ -77,6 +80,7 @@ if (process.env.NODE_ENV === 'production') {
     new HtmlWebpackPlugin({
      filename: 'index.html',
      template: 'src/index.html',
+     chunks: ['preauth'],
      inject: true,
      minify: {
         removeComments: true,
@@ -84,9 +88,22 @@ if (process.env.NODE_ENV === 'production') {
         removeAttributeQuotes: true
         // more options:
         // https://github.com/kangax/html-minifier#options-quick-reference
-      }
-   })
-  ])
+     }
+    }),
+    new HtmlWebpackPlugin({
+     inject: true,
+     chunks: ['app'],
+     template: 'src/app.html',
+     filename: 'app.html',
+     minify: {
+        removeComments: true,
+        collapseWhitespace: true,
+        removeAttributeQuotes: true
+        // more options:
+        // https://github.com/kangax/html-minifier#options-quick-reference
+     }
+    })
+   ])
 } else if (process.env.NODE_ENV === 'development') {
    module.exports.plugins = (module.exports.plugins || []).concat([
       new webpack.HotModuleReplacementPlugin(),
@@ -94,9 +111,16 @@ if (process.env.NODE_ENV === 'production') {
        // https://github.com/ampedandwired/html-webpack-plugin
        new HtmlWebpackPlugin({
          filename: 'index.html',
+         chunks: ['preauth'],
          template: 'src/index.html',
          inject: true
        }),
+      new HtmlWebpackPlugin({
+         inject: true,
+         chunks: ['app'],
+         template: 'src/app.html',
+         filename: 'app.html'
+      }),
        new FriendlyErrorsPlugin()
    ])
 }

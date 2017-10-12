@@ -1,21 +1,13 @@
-import Home from './Home'
-import Play from './Play'
-import playGame from './playGame'
+import Play from './pages/Play'
+import playGame from './pages/playGame'
 
-export const routes = [
+export default [
    {
-      path: '/',
-      component : Home,
+      path : '/',
+      component: Play
    },
    {
-      path: '/play',
-      component : Play,
-      children: [
-         {
-            path: '/:game/',
-            name: 'game-list',
-            component: playGame
-         }
-      ]
+      path: '/play/:game',
+      component: playGame
    }
 ]

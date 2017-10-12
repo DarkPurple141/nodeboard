@@ -11,8 +11,6 @@ router.use(function(req, res, next) {
   next();
 });
 
-router.get('/login/', auth.login);
-
 router.get('/error/', auth.error);
 
 router.post('/logout/', auth.logout);

@@ -3,10 +3,9 @@ This is the main inpoint for the app
 */
 import Vue from 'vue'
 import Vuetify from 'vuetify'
-import VueRouter from 'vue-router'
 import VueResource from 'vue-resource'
-import Home from './pages/Home'
-import About from './pages/About'
+import VueRouter from 'vue-router'
+import routes from './routes'
 
 // apparently required for rendering as well as including the script.
 Vue.use(VueResource)
@@ -14,16 +13,7 @@ Vue.use(Vuetify)
 Vue.use(VueRouter)
 
 const router = new VueRouter({
-   routes: [
-      {
-         path: '/',
-         component : Home
-      },
-      {
-         path: '/about',
-         component : About,
-      },
-   ]
+   routes: routes
 })
 
 // create a root instance
@@ -33,4 +23,4 @@ new Vue({
   <v-app>
      <router-view></router-view>
   </v-app>`
-}).$mount('#preauth');
+}).$mount('#app');

@@ -3,23 +3,12 @@ const path = require('path')
 const api = {
    getUser : function(req, res, next) {
      // processes info from passport.js
-     // and passes it back in a nice form
-     // that the front end can use.
-     // TODO some of this is pretty meaningless wth new api.
-     let response = {};
-     if (req.isAuthenticated && req.user) {
-       // Additional checks to make sure we access real user attributes.
-       if (req.user.provider === "facebook") {
-         response.name = req.user.displayName;
-       } else {
-         response.name = "ANON";
-       }
-   	  response.success = true;
-
+     if (req.user) {
+        res.json(req.user)
      } else {
-   	  response.success = false;
+        console.log("No user logged in!")
+        res.redirect('/')
      }
-     res.send(response);
   },
 
   loggedIn : function (req, res, next) {
@@ -28,12 +17,16 @@ const api = {
         next()
      } else {
         console.log("No user associated with session; redirecting")
-        res.redirect('/api/login/')
+        serveHome(req, res, next)
      }
   },
 
    serveHome : function (req, res, next) {
-      res.sendFile('/dist/index.html', {root : path.resolve('./public') })
+      if (req.user) {
+         res.sendFile('/dist/app.html', {root : path.resolve('./public') })
+      } else {
+         res.sendFile('/dist/index.html', {root : path.resolve('./public') })
+      }
    }
 }
 

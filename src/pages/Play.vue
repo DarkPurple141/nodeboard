@@ -21,7 +21,7 @@
  </template>
 
  <script>
- import descriptionCard from './components/descriptionCard'
+ import descriptionCard from '../components/descriptionCard'
 
  export default {
    name: 'Play',
