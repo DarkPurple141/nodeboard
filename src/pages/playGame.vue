@@ -76,24 +76,32 @@ export default {
 
   methods: {
      createGame: function() {
-        HTTP.get(`http://localhost:3000/api/user`)
-        .then(userName => {
-           this.user = userName
-           console.log(userName)
-           HTTP.post(`http://localhost:3000/play/${this.$route.params.game}/create`)
+        HTTP.post(`play/${this.$route.params.game}/create`)
+        .then(successObj => {
+           if (successObj.data.success == false) {
+             throw "Create Failed"
+           }
         })
-        .then(
+        .then(() => {
            this.getGames()
-        ).catch(e => {
+        }).catch(e => {
            throw e;
         })
      },
 
      getGames: function() {
-        HTTP.get(`http://localhost:3000/play/${this.$route.params.game}`)
+        HTTP.get(`play/${this.$route.params.game}`)
        .then(response => {
+          console.log(response.data)
           this.table.title = response.data.title
-          this.games = response.data.games
+          this.table.games = response.data.games.map(
+             item => {
+                item.host = "Holding"
+                item.join = false
+                return item;
+             }
+          )
+          console.log(this.games)
        })
        .catch(e => {
           throw e;

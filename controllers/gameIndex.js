@@ -150,7 +150,7 @@ const gameIndex = {
 
   // Create ID of game to be created, host takes gameID
   createGame : function(req, res, next) {
-      console.log(`Create ${req.params.game} from ${req.user}`)
+      console.log(`Create ${req.params.game} from ${req.user.displayName}`)
       Games.findOne({
          urlkey: req.params.game
       }, function(searchError, game) {
@@ -160,7 +160,8 @@ const gameIndex = {
             .then(() => {
                game.activeGames.push(gameInstance._id)
                game.save(() => {
-                  res.redirect(`/play/${req.params.game}/`)
+                  res.json({success: true})
+                  //res.redirect(`/play/${req.params.game}/`)
                })
                .catch(saveErr => {
                   console.error("CreateGame Save Failed")
