@@ -5,7 +5,6 @@ const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
 
 module.exports = {
   entry: {
-     preauth: './src/root.js',
      app: './src/app.js'
   },
   output: {
@@ -78,23 +77,10 @@ if (process.env.NODE_ENV === 'production') {
       minimize: true
     }),
     new HtmlWebpackPlugin({
-     filename: 'index.html',
-     template: 'src/index.html',
-     chunks: ['preauth'],
-     inject: true,
-     minify: {
-        removeComments: true,
-        collapseWhitespace: true,
-        removeAttributeQuotes: true
-        // more options:
-        // https://github.com/kangax/html-minifier#options-quick-reference
-     }
-    }),
-    new HtmlWebpackPlugin({
      inject: true,
      chunks: ['app'],
-     template: 'src/app.html',
-     filename: 'app.html',
+     template: 'src/index.html',
+     filename: 'index.html',
      minify: {
         removeComments: true,
         collapseWhitespace: true,
@@ -109,17 +95,11 @@ if (process.env.NODE_ENV === 'production') {
       new webpack.HotModuleReplacementPlugin(),
        new webpack.NoEmitOnErrorsPlugin(),
        // https://github.com/ampedandwired/html-webpack-plugin
-       new HtmlWebpackPlugin({
-         filename: 'index.html',
-         chunks: ['preauth'],
-         template: 'src/index.html',
-         inject: true
-       }),
       new HtmlWebpackPlugin({
          inject: true,
          chunks: ['app'],
-         template: 'src/app.html',
-         filename: 'app.html'
+         template: 'src/index.html',
+         filename: 'index.html'
       }),
        new FriendlyErrorsPlugin()
    ])

@@ -3,11 +3,15 @@
       <div v-bind:style="brand">
         Nodeboard
       </div>
+      <div>
+         {{ user }}
+      </div>
    </div>
 </template>
 
 <script>
 export default {
+   props: ['user'],
    name: 'v-navbar',
    template: "<v-navbar></v-navbar>",
    data: function() {
@@ -15,7 +19,7 @@ export default {
    		navbarContainer: {
    			width: "100%",
    			height: "5%",
-   			position: "fixed",
+   			position: "relative",
    			top: "0",
    			left: "0",
    			background: "-webkit-linear-gradient(left,#84fab0,#8fd3f4)",

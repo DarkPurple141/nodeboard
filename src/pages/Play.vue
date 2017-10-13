@@ -22,6 +22,7 @@
 
  <script>
  import descriptionCard from '../components/descriptionCard'
+ import HTTP from '../http-config'
 
  export default {
    name: 'Play',
@@ -35,14 +36,14 @@
     descriptionCard
   },
   created: function() {
-   this.$http.get(`http://localhost:3000/play/`)
+   HTTP.get(`play`)
    .then(response => {
      this.games = response.data.games.map(item => {
         let game = {
            id : item._id,
            headline: item.name,
            stub: item.description.substring(0, 80) + "...",
-           url: item.urlkey
+           url: `/play/${item.urlkey}`
         }
         return game
      })
