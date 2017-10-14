@@ -8,30 +8,36 @@ const Game = mongoose.model('Game');
 const GameInstance = mongoose.model('GameInstance');
 
 describe('db.js', function() {
-
+  let squares, jeff;
   // preamble
-  let squares = new Game({
-    name: "Squares",
-    urlkey: "Squares".toLowerCase()
+  before(function(done) {
+     squares = new Game({
+      name: "Squares",
+      urlkey: "Squares".toLowerCase(),
+      description: "Squares is fun!"
+     })
+     squares.save(function(err) {
+      if (err) throw err;
+     })
+     jeff = new User({
+       name: "Jeff",
+       fbId: 666,
+       admin: true
+     })
+     jeff.save(function(err) {
+      if (err) throw err;
+     })
+     done()
   })
-  squares.save(function(err) {
-    if (err) throw err;
-  })
-  let jeff = new User({
-     name: "Jeff",
-     fbId: 666,
-     admin: true
-  })
-  jeff.save(function(err) {
-    if (err) throw err;
-  })
+
 
   describe('Game', function () {
     describe('#save()', function() {
       it('Should save record without error', function(done) {
         let game = new Game({
           name: "Blocks",
-          urlkey: "Blocks".toLowerCase()
+          urlkey: "Blocks".toLowerCase(),
+          description: "Blocks is great, yo!"
         })
         game.save(done)
       });

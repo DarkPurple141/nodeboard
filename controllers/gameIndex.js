@@ -126,6 +126,7 @@ const gameIndex = {
   listGames : function(req, res, next) {
     gameList(function(games) {
       res.json({
+<<<<<<< HEAD
         //user: req.user.displayName || "Anon",
         //id : req.user.id,
         games: games
@@ -133,6 +134,8 @@ const gameIndex = {
       /*
       res.render('home', {
         title: "NodeBoard Play",
+=======
+>>>>>>> origin/experimental-changes
         games: games
       })
       */
@@ -143,7 +146,7 @@ const gameIndex = {
   activeGames : function(req, res, next) {
     console.log(`Active ${req.params.game} games queried..`)
     singleGameList(req.params.game, function(data) {
-      res.render('join-create', {
+      res.json({
         title: `Play ${data.name}`,
         games: data.activeGames.map(obj => {
           let o = {
@@ -152,14 +155,13 @@ const gameIndex = {
               id: obj._id
           }
           return o;
-        })
-      })
+       })})
     })
   },
 
   // Create ID of game to be created, host takes gameID
   createGame : function(req, res, next) {
-      console.log(`Create ${req.params.game}`)
+      console.log(`Create ${req.params.game} from ${req.user.displayName}`)
       Games.findOne({
          urlkey: req.params.game
       }, function(searchError, game) {
@@ -169,7 +171,8 @@ const gameIndex = {
             .then(() => {
                game.activeGames.push(gameInstance._id)
                game.save(() => {
-                  res.redirect(`/play/${req.params.game}/`)
+                  res.json({success: true})
+                  //res.redirect(`/play/${req.params.game}/`)
                })
                .catch(saveErr => {
                   console.error("CreateGame Save Failed")

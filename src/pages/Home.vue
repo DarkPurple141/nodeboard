@@ -6,11 +6,18 @@
      <v-parallax src="/images/landing.png" height="500">
        <v-layout column align-center justify-center>
          <h1 class="white--text orbit-font">{{ title }}</h1>
+<<<<<<< HEAD:src/Home.vue
          <h4 class="white--text orbit-font">{{ subtitle }}</h4>
          <a href="auth/facebook/">
            <img src="images/fb.png"/>
+=======
+         <h4 class="white--text orbit-font">Boardgames Reimagined</h4>
+         <a href="/auth/facebook/">
+           <img src="/images/fb.png"/>
+>>>>>>> origin/experimental-changes:src/pages/Home.vue
          </a>
        </v-layout>
+       <router-link to="/about">About</router-link>
      </v-parallax>
    </section>
    <section>
@@ -31,7 +38,7 @@
  </template>
 
  <script>
- import descriptionCard from './components/descriptionCard'
+ import descriptionCard from '../components/descriptionCard'
 
  export default {
    name: 'Home',

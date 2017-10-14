@@ -34,26 +34,29 @@ module.exports = (dbname) => {
    // uncomment after placing your favicon in /public
    //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
    app.use(logger('dev'));
+   app.use(express.static(path.join(__dirname, 'public')));
+   app.use(cookieParser('barney'));
    app.use(bodyParser.json());
    app.use(bodyParser.urlencoded({ extended: false }));
-   app.use(express.static(path.join(__dirname, 'public')));
-   app.use(cookieParser('memes'));
    app.use(session({
-     secret: 'memes',
+     secret: 'barney',
      resave: false,
      saveUninitialized: true
    }));
-   app.use(passport.initialize());
-   app.use(passport.session());
 
    // model
    const db = require('./model/db')(dbname);
+
+   const auth = require('./routes/auth')(passport);
+   app.use(passport.initialize());
+   app.use(passport.session());
 
    // routes
    const index = require('./routes/index');
    const got = require('./routes/got');
    const squares = require('./routes/squares');
    const api = require('./routes/api');
+<<<<<<< HEAD
    const auth = require('./routes/auth')(passport);
    const play = require('./routes/play');
 
@@ -61,6 +64,16 @@ module.exports = (dbname) => {
    app.use('/api/', api);
    app.use('/auth/',auth);
    app.use('/*', index);
+=======
+   const play = require('./routes/play');
+
+   app.use('/auth/', auth);
+   app.use('/', index);
+   app.use('/play/', play);
+   app.use('/got/', got);
+   app.use('/squares/', squares);
+   app.use('/api/', api);
+>>>>>>> origin/experimental-changes
 
    // catch 404 and forward to error handler
    app.use(function(req, res, next) {

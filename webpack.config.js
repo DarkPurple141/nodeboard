@@ -4,11 +4,13 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
 
 module.exports = {
-  entry: './src/root.js',
+  entry: {
+     app: './src/app.js'
+  },
   output: {
     path: path.resolve(__dirname, './public/dist'),
     publicPath: '/dist/',
-    filename: 'build.js'
+    filename: '[name].build.js'
   },
   module: {
     rules: [
@@ -75,28 +77,30 @@ if (process.env.NODE_ENV === 'production') {
       minimize: true
     }),
     new HtmlWebpackPlugin({
-     filename: 'index.html',
-     template: 'src/index.html',
      inject: true,
+     chunks: ['app'],
+     template: 'src/index.html',
+     filename: 'index.html',
      minify: {
         removeComments: true,
         collapseWhitespace: true,
         removeAttributeQuotes: true
         // more options:
         // https://github.com/kangax/html-minifier#options-quick-reference
-      }
-   })
-  ])
+     }
+    })
+   ])
 } else if (process.env.NODE_ENV === 'development') {
    module.exports.plugins = (module.exports.plugins || []).concat([
       new webpack.HotModuleReplacementPlugin(),
        new webpack.NoEmitOnErrorsPlugin(),
        // https://github.com/ampedandwired/html-webpack-plugin
-       new HtmlWebpackPlugin({
-         filename: 'index.html',
+      new HtmlWebpackPlugin({
+         inject: true,
+         chunks: ['app'],
          template: 'src/index.html',
-         inject: true
-       }),
+         filename: 'index.html'
+      }),
        new FriendlyErrorsPlugin()
    ])
 }

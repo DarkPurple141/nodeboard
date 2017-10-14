@@ -72,10 +72,6 @@ const gameServer = function (io) {
 
   nsp.on('connection', function (socket) {
 
-    if (!socket.id in players) {
-      
-    }
-
     socket.emit('news', { hello: 'world' });
     socket.on('game-event', function (data) {
       console.log(socket.id);

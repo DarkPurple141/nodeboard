@@ -1,6 +1,10 @@
 #! /usr/bin/env node
 
-const DB_URL = 'nodeboard'
+if (process.argv[2]) {
+   DB_URL = process.argv[2];
+} else {
+   DB_URL = 'test'
+}
 
 const async = require('async'),
       db    = require('./model/db')(DB_URL),
@@ -27,9 +31,10 @@ function adminCreate(name, fbID, callback) {
    })
 }
 
-function gameCreate(name, maxPlayers, callback) {
+function gameCreate(name, description, maxPlayers, callback) {
   let game = new Game({
     name: name,
+    description: description,
     urlkey: name.toLowerCase().split(' ').join('-'),
     maxPlayers: maxPlayers
   });
@@ -48,14 +53,47 @@ function gameCreate(name, maxPlayers, callback) {
 function createGames(callback) {
     async.parallel([
         (callback) => {
-          gameCreate('Squares', 2, callback)
+          gameCreate(
+             'Squares',
+             "A sweet two player squarefest made by the creators of nodeboard",
+             2,
+             callback
+          )
         },
         (callback) => {
-          gameCreate('GoT', 6, callback)
+          gameCreate(
+             'GoT',
+             "King Robert Baratheon is dead, and the lands of Westeros brace for battle." +
+              " Can you claim the Iron Throne? Designed for ages 14 and up, " +
+              "A Game of Thrones: The Board Game Second Edition is a classic game " +
+               "of warfare, diplomacy, and intrigue for three to six players.",
+             6,
+             callback
+          )
         },
         (callback) => {
-          gameCreate('Settlers of Catan', 4, callback)
-        }
+          gameCreate(
+             'Settlers of Catan',
+             "The Settlers of Catan from Mayfair Games is an award-winning " +
+              "strategy game where players collect resources and use them " +
+              "to build roads, settlements and cities on their way to victory. " +
+               "The board itself is variable, making each game a little different " +
+                "from the next.",
+             4,
+             callback
+          )
+       },
+       (callback) => {
+         gameCreate(
+            'Risk',
+            "Risk is a strategy board game of diplomacy, conflict and conquest" +
+            " for two to six players. The standard version is played on a board " +
+            "depicting a political map of the earth, divided into forty-two " +
+            "territories, which are grouped into six continents.",
+            6,
+            callback
+         )
+       }
     ],
     // optional callback
     callback)
