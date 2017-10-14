@@ -53,10 +53,6 @@ module.exports = (passport) => {
   // Facebook will redirect the user to this URL after approval.
   router.get('/facebook/callback',
     passport.authenticate('facebook', { successRedirect: '/',
-<<<<<<< HEAD
-                                        failureRedirect: '/'}));
-=======
                                         failureRedirect: '/api/error/'}));
->>>>>>> origin/experimental-changes
   return router;
 }

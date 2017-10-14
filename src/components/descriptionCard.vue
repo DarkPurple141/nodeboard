@@ -21,14 +21,10 @@
 export default {
   name: 'descriptionCard',
   template: "<description-card></description-card>",
-<<<<<<< HEAD
-  props: ['cardData']
-=======
   // note cardInfo tranlsates to card-info in html render.
   props: ['cardData'],
   mounted() {
       console.log('Component ready for ' + this.cardData.headline)
   }
->>>>>>> origin/experimental-changes
 }
 </script>

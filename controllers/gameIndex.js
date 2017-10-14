@@ -126,19 +126,8 @@ const gameIndex = {
   listGames : function(req, res, next) {
     gameList(function(games) {
       res.json({
-<<<<<<< HEAD
-        //user: req.user.displayName || "Anon",
-        //id : req.user.id,
         games: games
       })
-      /*
-      res.render('home', {
-        title: "NodeBoard Play",
-=======
->>>>>>> origin/experimental-changes
-        games: games
-      })
-      */
     })
   },
 

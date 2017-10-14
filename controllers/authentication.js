@@ -5,14 +5,6 @@ const path = require('path')
 
 const auth = {
 
-<<<<<<< HEAD
-   // nodeboard/api/login/
-   login : function(req, res, next) {
-      res.status(200).send(req.user)
-   },
-
-=======
->>>>>>> origin/experimental-changes
    // nodeboard/api/logout/
    logout : function(req, res, next) {
      req.logout();
@@ -21,18 +13,6 @@ const auth = {
 
    // nodeboard/api/error/
    error : function(req, res, next) {
-<<<<<<< HEAD
-      res.status(401).send("Nothing")
-   },
-
-   // nodeboard/api/authStatus
-   isLoggedIn: function(req, res, next) {
-      if(req.user){
-          res.status(200).send(true);
-      }else{
-          res.status(200).send(false);
-      }
-=======
       //res.sendStatus(401)
       next()
    },
@@ -45,7 +25,6 @@ const auth = {
      res.header("Access-Control-Allow-Headers",
      "Origin, X-Requested-With, Content-Type, Accept, authorization");
      next();
->>>>>>> origin/experimental-changes
    }
 }
 

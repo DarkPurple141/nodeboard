@@ -20,27 +20,10 @@ const api = {
         console.log("No user associated with session; redirecting")
         res.sendFile('/dist/index.html', {root : path.resolve('./public') })
      }
-<<<<<<< HEAD
-     res.send(response);
-  },
-
-  loggedIn : function (req, res, next) {
-     if (req.user) {
-        // if loggedIn, allow normal api access
-        next()
-     } else {
-        console.log("No user associated with session; redirecting")
-        res.redirect('/api/login/')
-     }
-  },
-
-   serveHome : function (req, res, next) {
-=======
   },
 
    serveHome : function (req, res, next) {
       console.log("Request via home")
->>>>>>> origin/experimental-changes
       res.sendFile('/dist/index.html', {root : path.resolve('./public') })
    }
 }

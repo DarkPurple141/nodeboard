@@ -56,15 +56,6 @@ module.exports = (dbname) => {
    const got = require('./routes/got');
    const squares = require('./routes/squares');
    const api = require('./routes/api');
-<<<<<<< HEAD
-   const auth = require('./routes/auth')(passport);
-   const play = require('./routes/play');
-
-
-   app.use('/api/', api);
-   app.use('/auth/',auth);
-   app.use('/*', index);
-=======
    const play = require('./routes/play');
 
    app.use('/auth/', auth);
@@ -73,7 +64,6 @@ module.exports = (dbname) => {
    app.use('/got/', got);
    app.use('/squares/', squares);
    app.use('/api/', api);
->>>>>>> origin/experimental-changes
 
    // catch 404 and forward to error handler
    app.use(function(req, res, next) {
