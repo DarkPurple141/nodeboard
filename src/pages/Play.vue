@@ -2,6 +2,7 @@
 
 <template>
  <v-app dark>
+   <vNavbar></vNavbar>
    <section>
       <v-container grid-list-md text-xs-center>
        <v-layout column wrap align-center>
@@ -13,7 +14,6 @@
              </v-layout>
            </v-container>
          </v-flex>
-
        </v-layout>
      </v-container>
    </section>
@@ -22,6 +22,7 @@
 
  <script>
  import descriptionCard from '../components/descriptionCard'
+ import vNavbar from '../components/navbar'
  import HTTP from '../http-config'
 
  export default {
@@ -33,6 +34,7 @@
      };
    },
    components: {
+    vNavbar,
     descriptionCard
   },
   created: function() {

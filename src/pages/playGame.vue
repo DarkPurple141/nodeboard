@@ -2,10 +2,8 @@
 <template>
 <v-app dark>
 
-   <section>
-      <!--nav-->
-      <navbarContainer :user="user"></navbarContainer>
-   </section>
+  <!--nav-->
+   <nodeboardNav></nodeboardNav>
    <section>
       <v-container grid-list-md>
       <v-layout row wrap>
@@ -28,7 +26,7 @@
 
 <script>
 
-import navbarContainer from '../components/navbar'
+import nodeboardNav from '../components/navbar'
 import gameTable from '../components/gameTable'
 import HTTP from '../http-config'
 
@@ -66,7 +64,7 @@ export default {
   },
 
   components : {
-      navbarContainer,
+      nodeboardNav,
       gameTable
   },
 
