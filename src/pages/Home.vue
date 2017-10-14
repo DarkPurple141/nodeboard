@@ -25,6 +25,7 @@
              </v-layout>
            </v-container>
          </v-flex>
+
        </v-layout>
      </v-container>
    </section>
@@ -39,7 +40,6 @@
    data: function(){
      return {
        title: "NodeBoard",
-       subtitle: "Boardgames Reimagined",
        cards : [
           {
             headline: "Play!",
