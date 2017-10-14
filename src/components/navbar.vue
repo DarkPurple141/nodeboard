@@ -1,5 +1,5 @@
 <template>
-  <v-toolbar prominent extended class="mb-5">
+  <v-toolbar prominent extended class="mb-5 orange-gradient">
     <v-toolbar-side-icon></v-toolbar-side-icon>
     <v-toolbar-title><nodeboard-logo></nodeboard-logo></v-toolbar-title>
     <v-spacer></v-spacer>
@@ -48,3 +48,13 @@ export default {
   }
 }
 </script>
+
+<style>
+  .orange-gradient{
+    background: -webkit-linear-gradient(left,
+      #fdbb84,
+      #fc8d59,
+      #ef6548
+      )
+  }
+</style>
