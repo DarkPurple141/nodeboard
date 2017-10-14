@@ -34,27 +34,28 @@ module.exports = (dbname) => {
    // uncomment after placing your favicon in /public
    //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
    app.use(logger('dev'));
+   app.use(express.static(path.join(__dirname, 'public')));
+   app.use(cookieParser('barney'));
    app.use(bodyParser.json());
    app.use(bodyParser.urlencoded({ extended: false }));
-   app.use(express.static(path.join(__dirname, 'public')));
-   app.use(cookieParser('memes'));
    app.use(session({
-     secret: 'memes',
+     secret: 'barney',
      resave: false,
      saveUninitialized: true
    }));
-   app.use(passport.initialize());
-   app.use(passport.session());
 
    // model
    const db = require('./model/db')(dbname);
+
+   const auth = require('./routes/auth')(passport);
+   app.use(passport.initialize());
+   app.use(passport.session());
 
    // routes
    const index = require('./routes/index');
    const got = require('./routes/got');
    const squares = require('./routes/squares');
    const api = require('./routes/api');
-   const auth = require('./routes/auth')(passport);
    const play = require('./routes/play');
 
    app.use('/auth/', auth);

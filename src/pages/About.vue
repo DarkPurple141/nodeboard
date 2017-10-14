@@ -6,12 +6,12 @@
      About NodeBoard.
    </section>
  </v-app>
- </template>
+</template>
 
- <script>
- export default {
+<script>
+export default {
    name: 'About'
- }
+}
 </script>
 
 <style>

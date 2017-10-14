@@ -26,7 +26,10 @@ function singleGameList (search, callback) {
     Games.findOne(
       { urlkey : search }
     )
-    .populate('activeGames')
+    .populate({
+      path: 'activeGames',
+      populate: { path: 'host' }
+   })
     .exec(function(queryError, game) {
       if (queryError) throw queryError;
       game.save(validationError => {
@@ -126,16 +129,8 @@ const gameIndex = {
   listGames : function(req, res, next) {
     gameList(function(games) {
       res.json({
-        //user: req.user.displayName || "Anon",
-        //id : req.user.id,
         games: games
       })
-      /*
-      res.render('home', {
-        title: "NodeBoard Play",
-        games: games
-      })
-      */
     })
   },
 
@@ -147,31 +142,19 @@ const gameIndex = {
         title: `Play ${data.name}`,
         games: data.activeGames.map(obj => {
           let o = {
-              createdAt: obj.created_at,
-              numPlayers: obj.players.length,
-              id: obj._id
+              createdAt: Date(obj.created_at),
+              numPlayers: `${obj.players.length}/${data.maxPlayers}`,
+              id: obj._id,
+              host: obj.host.name
           }
           return o;
        })})
-      /*
-      res.render('join-create', {
-        title: `Play ${data.name}`,
-        games: data.activeGames.map(obj => {
-          let o = {
-              createdAt: obj.created_at,
-              numPlayers: obj.players.length,
-              id: obj._id
-          }
-          return o;
-        })
-      })
-      */
     })
   },
 
   // Create ID of game to be created, host takes gameID
   createGame : function(req, res, next) {
-      console.log(`Create ${req.params.game}`)
+      console.log(`Create ${req.params.game} from ${req.user.displayName}`)
       Games.findOne({
          urlkey: req.params.game
       }, function(searchError, game) {
@@ -181,7 +164,8 @@ const gameIndex = {
             .then(() => {
                game.activeGames.push(gameInstance._id)
                game.save(() => {
-                  res.redirect(`/play/${req.params.game}/`)
+                  res.json({success: true})
+                  //res.redirect(`/play/${req.params.game}/`)
                })
                .catch(saveErr => {
                   console.error("CreateGame Save Failed")

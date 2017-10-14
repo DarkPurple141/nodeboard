@@ -7,26 +7,24 @@ const api = {
         res.json(req.user)
      } else {
         console.log("No user logged in!")
-        res.redirect('/')
+        res.sendStatus(209)
      }
   },
 
   loggedIn : function (req, res, next) {
      if (req.user) {
+        console.log("Valid api request ", req.user.name)
         // if loggedIn, allow normal api access
         next()
      } else {
         console.log("No user associated with session; redirecting")
-        serveHome(req, res, next)
+        res.sendFile('/dist/index.html', {root : path.resolve('./public') })
      }
   },
 
    serveHome : function (req, res, next) {
-      if (req.user) {
-         res.sendFile('/dist/app.html', {root : path.resolve('./public') })
-      } else {
-         res.sendFile('/dist/index.html', {root : path.resolve('./public') })
-      }
+      console.log("Request via home")
+      res.sendFile('/dist/index.html', {root : path.resolve('./public') })
    }
 }
 

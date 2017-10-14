@@ -1,13 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const GC = require('../controllers/gameIndex');
+const auth = require('../controllers/authentication');
 
-router.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers",
-  "Origin, X-Requested-With, Content-Type, Accept");
-  next();
-});
+// cors
+router.use(auth.corsHeaders);
 
 /* GET game listings. */
 router.get('/', GC.listGames);

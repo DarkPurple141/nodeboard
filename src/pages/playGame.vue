@@ -1,59 +1,111 @@
 
 <template>
-   <v-app dark>
-       <div class="game">
-         <h2>Game {{ title }}</h2>
-         <table v-if="games.length > 0">
-           <thead>
-             <th>Id</th>
-             <th>Players</th>
-             <th>Created</th>
-             <th>Click</th>
-           </thead>
-         <tbody>
-            <tr v-for="item in games">
-             <td>{{ item.id }} </td>
-             <td>{{ item.numPlayers }}</td>
-             <td>{{ item.createdAt }}</td>
-             <td>
-             <form :action=`join/${item.id}` method = "post">
-                 <input type="submit" name="Join">
-             </form>
-             </td>
-            </tr>
-         </tbody>
-         </table>
-       </div>
-       <!-- HACK for now -->
-       <router-link :to="{ path: '/play'}">BACK</router-link>
-    </v-app dark>
+<v-app dark>
+
+   <section>
+      <!--nav-->
+      <navbarContainer :user="user"></navbarContainer>
+   </section>
+   <section>
+      <v-container grid-list-md>
+      <v-layout row wrap>
+         <v-flex xs12>
+         <!--gameTable-->
+         <gameTable :table="table"></gameTable>
+         </v-flex>
+         <v-flex text-xs-center xs6>
+           <button @click="createGame()">Create Game</button>
+         </v-flex>
+          <v-flex text-xs-center xs6>
+             <router-link :to="{ path: '/'}">BACK</router-link>
+          </v-flex>
+      </v-layout>
+   </v-container>
+  </section>
+
+</v-app>
 </template>
 
-
 <script>
+
+import navbarContainer from '../components/navbar'
+import gameTable from '../components/gameTable'
+import HTTP from '../http-config'
+
 export default {
   name: 'playGame',
   // note cardInfo tranlsates to card-info in html render.
   data: function() {
      return {
-        title: "",
-        games: []
+        table: {
+           title: "",
+           games: [{
+              id : 1,
+              host: "test person",
+              numPlayers: "2",
+              createdAt: Date(),
+              value: false
+           }],
+           headers: [
+             {
+               text: 'ID',
+               sortable: false,
+               value: 'id'
+             },
+             { text: 'Host', value: 'host'},
+             { text: 'Players', value: 'numPlayers' },
+             { text: 'Created', value: 'createdAt' },
+             { text: 'Join', value: 'join' },
+          ]
+       },
+       user: "anon"
      }
   },
   mounted() {
       console.log('Play Game ready.')
   },
 
+  components : {
+      navbarContainer,
+      gameTable
+  },
+
   created: function() {
-     this.$http.get(`http://localhost:3000/play/${this.$route.params.game}`)
-     .then(response => {
-        console.log(response.data)
-        this.title = response.data.title
-        this.games = response.data.games
-     })
-     .catch(e => {
-        throw e;
-     })
+     this.getGames()
+  },
+
+  methods: {
+     createGame: function() {
+        HTTP.post(`play/${this.$route.params.game}/create`)
+        .then(successObj => {
+           if (successObj.data.success == false) {
+             throw "Create Failed"
+           }
+        })
+        .then(() => {
+           this.getGames()
+        }).catch(e => {
+           throw e;
+        })
+     },
+
+     getGames: function() {
+        HTTP.get(`play/${this.$route.params.game}`)
+       .then(response => {
+          console.log(response.data)
+          this.table.title = response.data.title
+          this.table.games = response.data.games.map(
+             item => {
+                item.join = false
+                return item;
+             }
+          )
+          console.log(this.games)
+       })
+       .catch(e => {
+          throw e;
+       })
+     }
   }
 }
 </script>
