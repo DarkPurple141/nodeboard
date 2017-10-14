@@ -26,7 +26,10 @@ function singleGameList (search, callback) {
     Games.findOne(
       { urlkey : search }
     )
-    .populate('activeGames')
+    .populate({
+      path: 'activeGames',
+      populate: { path: 'host' }
+   })
     .exec(function(queryError, game) {
       if (queryError) throw queryError;
       game.save(validationError => {
@@ -139,9 +142,10 @@ const gameIndex = {
         title: `Play ${data.name}`,
         games: data.activeGames.map(obj => {
           let o = {
-              createdAt: obj.created_at,
-              numPlayers: obj.players.length,
-              id: obj._id
+              createdAt: Date(obj.created_at),
+              numPlayers: `${obj.players.length}/${data.maxPlayers}`,
+              id: obj._id,
+              host: obj.host.name
           }
           return o;
        })})
