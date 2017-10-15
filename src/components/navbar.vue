@@ -21,21 +21,25 @@ export default {
   name: 'v-navbar',
   data: function() {
   	return {
-      user: "",
-      buttons: [
-         {
-            title: "Play",
-            link: "/play"
-         },
-         {
-            title: "Create",
-            link: "/create"
-         },
-         {
-            title: this.user,
-            link:"/profile"
-         }
-      ]
+      user: ""
+    }
+  },
+  computed : {
+     buttons: function() {
+       return [
+          {
+             title: "Play",
+             link: "/play"
+          },
+          {
+             title: "Create",
+             link: "/create"
+          },
+          {
+             title: this.user,
+             link:"/profile"
+          }
+       ]
     }
   },
   components: {

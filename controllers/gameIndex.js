@@ -141,6 +141,7 @@ const gameIndex = {
           let o = {
               createdAt: obj.created_at,
               numPlayers: obj.players.length,
+              name: obj.name,
               id: obj._id
           }
           return o;
