@@ -3,7 +3,7 @@
 <v-app dark>
 
   <!--nav-->
-   <nodeboardNav></nodeboardNav>
+   <vNavbar></vNavbar>
    <section>
       <v-container grid-list-md>
       <v-layout row wrap>
@@ -26,7 +26,7 @@
 
 <script>
 
-import nodeboardNav from '../components/navbar'
+import vNavbar from '../components/navbar'
 import gameTable from '../components/gameTable'
 import HTTP from '../http-config'
 

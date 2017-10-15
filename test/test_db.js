@@ -14,6 +14,7 @@ describe('db.js', function() {
      squares = new Game({
       name: "Squares",
       urlkey: "Squares".toLowerCase(),
+      stub: "Squares is goood.",
       description: "Squares is fun!"
      })
      squares.save(function(err) {
@@ -37,6 +38,7 @@ describe('db.js', function() {
         let game = new Game({
           name: "Blocks",
           urlkey: "Blocks".toLowerCase(),
+          stub: "Blocks fun.",
           description: "Blocks is great, yo!"
         })
         game.save(done)

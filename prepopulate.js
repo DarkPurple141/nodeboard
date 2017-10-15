@@ -90,7 +90,7 @@ function createGames(callback) {
        (callback) => {
          gameCreate(
             'Risk',
-            "Use your army to win the war",
+            "A game of global domination",
             "Risk is a strategy board game of diplomacy, conflict and conquest" +
             " for two to six players. The standard version is played on a board " +
             "depicting a political map of the earth, divided into forty-two " +

@@ -28,18 +28,27 @@ export default {
     nodeboardLogo
   },
   computed: {
-    buttons: function(){
-      let buts = [];
-      // lol buts
-      buts.push({title:"Play",link:"/play"});
-      buts.push({title:"Create",link:"/create"});
-      buts.push({title:this.user,link:"/profile"});
-      return buts;
+    buttons: function() {
+      return [
+         {
+            title: "Play",
+            link: "/play"
+         },
+         {
+            title: "Create",
+            link: "/create"
+         },
+         {
+            title: this.user,
+            link:"/profile"
+         }
+      ]
     }
   },
-  mounted(){
+  mounted() {
     HTTP.get(`api/user`)
    .then(response => {
+      // just get firstName
       this.user = response.data.displayName.split(" ")[0];
    })
    .catch(e => {
