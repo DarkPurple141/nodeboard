@@ -18,9 +18,21 @@
            </router-link>
         </v-flex>
         <v-flex xs6>
-          <v-btn outline class="orange">Info</v-btn>
+          <v-btn outline class="orange" @click.stop="dialog = true">Info</v-btn>
+          <!-- pop up -->
+          <v-dialog v-model="dialog">
+            <v-card dark>
+              <v-card-title class="headline">{{cardData.headline}}</v-card-title>
+              <v-card-text>{{cardData.description}}</v-card-text>
+              <v-card-actions>
+                <v-btn outline class="orange white--text" flat @click.stop="dialog=false">Close</v-btn>
+              </v-card-actions>
+            </v-card>
+          </v-dialog>
+
         </v-flex>
       </v-layout>
+
     </v-card>
   </v-flex>
 </template>
@@ -32,6 +44,11 @@ export default {
   props: ['cardData'],
   mounted() {
       console.log('Component ready for ' + this.cardData.headline)
+  },
+  data: function(){
+    return {
+      dialog: false
+    }
   }
 }
 </script>
