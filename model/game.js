@@ -8,6 +8,10 @@ const gameSchema = new mongoose.Schema({
     required: true,
     unique: true
   },
+  stub: {
+    type: String,
+    required: true
+  },
   description : {
     type: String,
     required: true
@@ -23,6 +27,10 @@ const gameSchema = new mongoose.Schema({
      default: 4
   },
   created_at: Date,
+  header_image: {
+    type: String,
+    default: "images/landing.png"
+  },
   updated_at: {
     type: Date,
     default: Date.now
