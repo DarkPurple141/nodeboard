@@ -14,7 +14,7 @@
 
 export default {
    name: 'errorPage',
-   props['error']
+   props: ['error']
 }
 </script>
 

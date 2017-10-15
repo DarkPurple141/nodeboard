@@ -21,15 +21,8 @@ export default {
   name: 'v-navbar',
   data: function() {
   	return {
-      user: "NOBODY"
-    }
-  },
-  components: {
-    nodeboardLogo
-  },
-  computed: {
-    buttons: function() {
-      return [
+      user: "",
+      buttons: [
          {
             title: "Play",
             link: "/play"
@@ -44,6 +37,9 @@ export default {
          }
       ]
     }
+  },
+  components: {
+    nodeboardLogo
   },
   mounted() {
     HTTP.get(`api/user`)
