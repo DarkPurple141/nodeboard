@@ -50,8 +50,8 @@ export default {
                sortable: false,
                value: 'id'
              },
-             { text: 'host', value: 'host'},
-             { text: 'numPlayers', value: 'players' },
+             { text: 'Host', value: 'host'},
+             { text: 'Players', value: 'numPlayers' },
              { text: 'Created', value: 'createdAt' },
              { text: 'Join', value: 'join' },
           ]
@@ -94,7 +94,6 @@ export default {
           this.table.title = response.data.title
           this.table.games = response.data.games.map(
              item => {
-                item.host = "Holding"
                 item.join = false
                 return item;
              }
