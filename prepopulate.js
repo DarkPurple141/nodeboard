@@ -14,7 +14,7 @@ const async = require('async'),
 let games = []
 let users = []
 
-function adminCreate(name, fbID, callback) {
+function adminCreate(name, userName, fbID, callback) {
    let user = new User({
       name: name,
       fbId: fbID,
@@ -102,10 +102,10 @@ function createGames(callback) {
 function createAdmins(callback) {
    async.parallel([
       (callback) => {
-        adminCreate('Alex Hinds', 10155846485352642, callback)
+        adminCreate('Alex Hinds', 'DarkPurple141', 10155846485352642, callback)
       },
       (callback) => {
-        adminCreate('Zain Afzal', 6, callback)
+        adminCreate('Zain Afzal', 'zainafzal08', 6, callback)
       }
    ],
 

@@ -15,7 +15,7 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  //userName: String,
+  userName: String,
   activeGame: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'GameInstance'
