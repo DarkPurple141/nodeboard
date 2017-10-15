@@ -31,9 +31,10 @@ function adminCreate(name, userName, fbID, callback) {
    })
 }
 
-function gameCreate(name, description, maxPlayers, callback) {
+function gameCreate(name, stub, description, maxPlayers, callback) {
   let game = new Game({
     name: name,
+    stub: stub,
     description: description,
     urlkey: name.toLowerCase().split(' ').join('-'),
     maxPlayers: maxPlayers
@@ -55,6 +56,7 @@ function createGames(callback) {
         (callback) => {
           gameCreate(
              'Squares',
+             "Battle to color the board",
              "A sweet two player squarefest made by the creators of nodeboard",
              2,
              callback
@@ -63,6 +65,7 @@ function createGames(callback) {
         (callback) => {
           gameCreate(
              'GoT',
+             "Claim the Iron Throne",
              "King Robert Baratheon is dead, and the lands of Westeros brace for battle." +
               " Can you claim the Iron Throne? Designed for ages 14 and up, " +
               "A Game of Thrones: The Board Game Second Edition is a classic game " +
@@ -74,6 +77,7 @@ function createGames(callback) {
         (callback) => {
           gameCreate(
              'Settlers of Catan',
+             "Collect. Build. Conquer.",
              "The Settlers of Catan from Mayfair Games is an award-winning " +
               "strategy game where players collect resources and use them " +
               "to build roads, settlements and cities on their way to victory. " +
@@ -86,6 +90,7 @@ function createGames(callback) {
        (callback) => {
          gameCreate(
             'Risk',
+            "A game of global domination",
             "Risk is a strategy board game of diplomacy, conflict and conquest" +
             " for two to six players. The standard version is played on a board " +
             "depicting a political map of the earth, divided into forty-two " +

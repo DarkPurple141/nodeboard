@@ -2,18 +2,18 @@
 
 <template>
  <v-app dark>
+   <vNavbar></vNavbar>
    <section>
       <v-container grid-list-md text-xs-center>
        <v-layout column wrap align-center>
          <v-flex xs12>
            <v-container grid-list-xl>
              <v-layout row wrap align-center>
-               <description-card v-for="item in games" :cardData="item" :key="item._id">
-               </description-card>
+               <game-card v-for="item in games" :cardData="item" :key="item._id">
+               </game-card>
              </v-layout>
            </v-container>
          </v-flex>
-
        </v-layout>
      </v-container>
    </section>
@@ -21,7 +21,8 @@
  </template>
 
  <script>
- import descriptionCard from '../components/descriptionCard'
+ import gameCard from '../components/gameCard'
+ import vNavbar from '../components/navbar'
  import HTTP from '../http-config'
 
  export default {
@@ -33,7 +34,8 @@
      };
    },
    components: {
-    descriptionCard
+    vNavbar,
+    gameCard
   },
   created: function() {
    HTTP.get(`play`)
@@ -42,7 +44,9 @@
         let game = {
            id : item._id,
            headline: item.name,
-           stub: item.description.substring(0, 80) + "...",
+           imgSrc: item.header_image,
+           stub: item.stub,
+           description: item.description,
            url: `/play/${item.urlkey}`
         }
         return game

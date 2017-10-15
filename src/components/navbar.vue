@@ -1,38 +1,69 @@
 <template>
-  	<div v-bind:style="navbarContainer">
-      <div v-bind:style="brand">
-        Nodeboard
-      </div>
-      <div>
-         {{ user }}
-      </div>
-   </div>
+  <v-toolbar prominent extended class="mb-5 orange-gradient">
+    <v-toolbar-side-icon></v-toolbar-side-icon>
+    <v-toolbar-title><nodeboard-logo></nodeboard-logo></v-toolbar-title>
+    <v-spacer></v-spacer>
+    <div v-for="button in buttons">
+      <router-link :to="button.link" tag="span">
+        <v-btn flat>
+          {{button.title}}
+        </v-btn>
+      </router-link>
+    </div>
+  </v-toolbar>
 </template>
 
 <script>
+import HTTP from '../http-config'
+import nodeboardLogo from '../components/nodeboardLogo'
+
 export default {
-   props: ['user'],
-   name: 'v-navbar',
-   template: "<v-navbar></v-navbar>",
-   data: function() {
-   	return {
-   		navbarContainer: {
-   			width: "100%",
-   			height: "5%",
-   			position: "relative",
-   			top: "0",
-   			left: "0",
-   			background: "-webkit-linear-gradient(left,#84fab0,#8fd3f4)",
-   			boxShadow: "0 6px 10px 0 rgba(0, 0, 0, 0.3), 0 2px 2px 0 rgba(0, 0, 0, 0.2)"
-   		},
-         brand: {
-           color: "white",
-           fontFamily: "Orbitron",
-           fontSize: "1.5em",
-           paddingTop: "0.3em",
-           paddingLeft: "0.3em"
-        }
-	    }
-   }
+  name: 'v-navbar',
+  data: function() {
+  	return {
+      user: ""
+    }
+  },
+  computed : {
+     buttons: function() {
+       return [
+          {
+             title: "Play",
+             link: "/play"
+          },
+          {
+             title: "Create",
+             link: "/create"
+          },
+          {
+             title: this.user,
+             link:"/profile"
+          }
+       ]
+    }
+  },
+  components: {
+    nodeboardLogo
+  },
+  mounted() {
+    HTTP.get(`api/user`)
+   .then(response => {
+      // just get firstName
+      this.user = response.data.displayName.split(" ")[0];
+   })
+   .catch(e => {
+      throw e;
+   })
+  }
 }
 </script>
+
+<style>
+  .orange-gradient{
+    background: -webkit-linear-gradient(left,
+      #fdbb84,
+      #fc8d59,
+      #ef6548
+      )
+  }
+</style>
