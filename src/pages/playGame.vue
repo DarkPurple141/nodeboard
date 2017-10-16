@@ -9,13 +9,13 @@
       <v-layout row wrap>
          <v-flex xs12>
          <!--gameTable-->
-         <gameTable :table="table"></gameTable>
+         <gameTable v-on:join="joinGame" :table="table"></gameTable>
          </v-flex>
          <v-flex text-xs-center xs6>
            <button @click="createGame()">Create Game</button>
          </v-flex>
           <v-flex text-xs-center xs6>
-             <router-link :to="{ path: '/'}">BACK</router-link>
+             <router-link :to="{ path: '/play'}">BACK</router-link>
           </v-flex>
       </v-layout>
    </v-container>
@@ -63,7 +63,7 @@ export default {
 
   methods: {
      createGame: function() {
-        HTTP.post(`play/${this.$route.params.game}/create`)
+        HTTP.post(`play/${this.$route.params.game}/create`, { gameName: "name" })
         .then(successObj => {
            if (successObj.data.success == false) {
              throw "Create Failed"
@@ -86,6 +86,15 @@ export default {
        .catch(e => {
           throw e;
        })
+     },
+     joinGame: function (id) {
+         HTTP.post(`play/${this.$route.params.game}/join/${id}`)
+         .then(() => {
+            this.getGames()
+         })
+         .catch(e => {
+           console.error(e)
+         })
      }
   }
 }

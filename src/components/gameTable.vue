@@ -13,7 +13,7 @@
       <td class="text-xs-right">{{ props.item.host }}</td>
       <td class="text-xs-right">{{ props.item.numPlayers }}</td>
       <td class="text-xs-right">{{ props.item.createdAt }}</td>
-      <td class="text-xs-right"><button v-on:click="join(props.item.id)">Join</button></td>
+      <td class="text-xs-right"><button v-on:click="joinEvent(props.item.id)">Join</button></td>
    </template>
  </v-data-table>
 </v-card>
@@ -31,13 +31,9 @@ export default {
       console.log('gameTable component loaded')
   },
   methods: {
-     join: function(id) {
-        console.log("JOIN.")
-        HTTP.post(`play/${this.$route.params.game}/join/${id}`)
-        .catch(e => {
-           console.error(e)
-        })
+     joinEvent: function(id) {
+        this.$emit('join', id)
      }
-  }
+ }
 }
 </script>

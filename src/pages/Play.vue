@@ -41,7 +41,6 @@
    HTTP.get(`play`)
    .then(response => {
      this.games = response.data.games.map(item => {
-        console.log(item.url)
         let game = {
            id : item._id,
            headline: item.name,

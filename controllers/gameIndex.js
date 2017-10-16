@@ -159,6 +159,7 @@ const gameIndex = {
       Games.findOne({
          urlkey: req.params.game
       }, function(searchError, game) {
+         console.log("Create game name:", req.body)
          if (searchError) throw searchError;
          makeGame(game, req.body.gameName, Number(req.user.id), function(gameInstance) {
             gameInstance.save()
