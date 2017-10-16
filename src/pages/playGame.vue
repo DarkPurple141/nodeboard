@@ -37,23 +37,13 @@ export default {
      return {
         table: {
            title: "",
-           games: [{
-              name : "",
-              host: "test person",
-              numPlayers: "2",
-              createdAt: Date(),
-              value: false
-           }],
+           games: [],
            headers: [
-             {
-               text: 'Name',
-               sortable: false,
-               value: 'name'
-             },
+             { text: 'Join', value: 'id' },
+             { text: 'Name', value: 'name'},
              { text: 'Host', value: 'host'},
              { text: 'Players', value: 'numPlayers' },
-             { text: 'Created', value: 'createdAt' },
-             { text: 'Join', value: 'join' },
+             { text: 'Created', value: 'createdAt' }
           ]
        },
        user: "anon"
@@ -92,13 +82,8 @@ export default {
        .then(response => {
           console.log(response.data)
           this.table.title = response.data.title
-          this.table.games = response.data.games.map(
-             item => {
-                item.join = false
-                return item;
-             }
-          )
-          console.log(this.games)
+          this.table.games = response.data.games
+          console.log(this.table.games)
        })
        .catch(e => {
           throw e;
