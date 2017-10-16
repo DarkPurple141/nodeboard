@@ -38,7 +38,7 @@ export default {
         table: {
            title: "",
            games: [{
-              id : 1,
+              name : "",
               host: "test person",
               numPlayers: "2",
               createdAt: Date(),
@@ -46,9 +46,9 @@ export default {
            }],
            headers: [
              {
-               text: 'ID',
+               text: 'Name',
                sortable: false,
-               value: 'id'
+               value: 'name'
              },
              { text: 'Host', value: 'host'},
              { text: 'Players', value: 'numPlayers' },

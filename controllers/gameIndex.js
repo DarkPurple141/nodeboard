@@ -143,8 +143,9 @@ const gameIndex = {
         games: data.activeGames.map(obj => {
           let o = {
               createdAt: obj.created_at,
-              numPlayers: obj.players.length,
+              numPlayers: `${obj.players.length}/${data.maxPlayers}`,
               name: obj.name,
+              host: obj.host.userName,
               id: obj._id
           }
           return o;

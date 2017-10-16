@@ -21,19 +21,24 @@ const gameSchema = new mongoose.Schema({
     required: true,
     unique: true
   },
+  minPlayers : {
+     type: Number,
+     required: true,
+     default: 2
+  },
   maxPlayers : {
      type: Number,
      required: true,
      default: 4
   },
   created_at: Date,
-  header_image: {
-    type: String,
-    default: "images/landing.png"
-  },
   updated_at: {
     type: Date,
     default: Date.now
+  },
+  image: {
+     type: String,
+     default: "images/landing.png"
   },
   activeGames: [{
     type: mongoose.Schema.Types.ObjectId,

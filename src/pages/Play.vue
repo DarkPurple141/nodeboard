@@ -41,10 +41,11 @@
    HTTP.get(`play`)
    .then(response => {
      this.games = response.data.games.map(item => {
+        console.log(item)
         let game = {
            id : item._id,
            headline: item.name,
-           imgSrc: item.header_image,
+           imgSrc: item.image,
            stub: item.stub,
            description: item.description,
            url: `/play/${item.urlkey}`

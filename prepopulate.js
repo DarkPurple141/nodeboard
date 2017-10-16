@@ -16,6 +16,7 @@ let users = []
 
 function adminCreate(name, userName, fbID, callback) {
    let user = new User({
+      userName: userName,
       name: name,
       fbId: fbID,
       admin: true
@@ -110,7 +111,7 @@ function createAdmins(callback) {
         adminCreate('Alex Hinds', 'DarkPurple141', 10155846485352642, callback)
       },
       (callback) => {
-        adminCreate('Zain Afzal', 'zainafzal08', 6, callback)
+        adminCreate('Zain Afzal', 'zainafzal08', 10214206639987808, callback)
       }
    ],
 

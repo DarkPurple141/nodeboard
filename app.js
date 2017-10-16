@@ -6,8 +6,6 @@ favicon = require('serve-favicon'),
 logger = require('morgan'),
 cookieParser = require('cookie-parser'),
 bodyParser = require('body-parser'),
-handlebars = require('express-handlebars').create(
-  {defaultLayout: 'main'}),
 passport = require('passport'),
 session = require('express-session');
 
@@ -26,10 +24,7 @@ module.exports = (dbname) => {
      twitter_username: "al_hinds"
    }
 
-   // view engine setup
-   app.set('views', path.join(__dirname, 'views'));
-   app.engine('handlebars', handlebars.engine);
-   app.set('view engine', 'handlebars');
+   // view is handled by webpack & vue
 
    // uncomment after placing your favicon in /public
    //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
@@ -79,8 +74,8 @@ module.exports = (dbname) => {
      res.locals.error = req.app.get('env') === 'development' ? err : {};
 
      // render the error page
-     res.status(err.status || 500);
-     res.render('error', {layout: false});
+     res.status(err.status || 500)
+     res.json(err)
    });
    return app;
 }
