@@ -39,15 +39,14 @@ export default {
            title: "",
            games: [],
            headers: [
-             { text: 'Join', value: 'id' },
              { text: 'Name', value: 'name'},
              { text: 'Host', value: 'host'},
              { text: 'Players', value: 'numPlayers' },
-             { text: 'Created', value: 'createdAt' }
+             { text: 'Created', value: 'createdAt' },
+             { text: 'Join', value: 'id' }
           ]
-       },
-       user: "anon"
-     }
+       }
+    }
   },
   mounted() {
       console.log('Play Game ready.')
@@ -83,7 +82,6 @@ export default {
           console.log(response.data)
           this.table.title = response.data.title
           this.table.games = response.data.games
-          console.log(this.table.games)
        })
        .catch(e => {
           throw e;

@@ -9,17 +9,19 @@
       hide-actions
    >
    <template slot="items" scope="props">
-      <td class="text-xs-right">{{ props.item.id }}</td>
+      <td class="text-xs-right">{{ props.item.name }}</td>
       <td class="text-xs-right">{{ props.item.host }}</td>
       <td class="text-xs-right">{{ props.item.numPlayers }}</td>
       <td class="text-xs-right">{{ props.item.createdAt }}</td>
-      <td class="text-xs-right">True</td>
+      <td class="text-xs-right"><button v-on:click="join(props.item.id)">Join</button></td>
    </template>
  </v-data-table>
 </v-card>
 </template>
 
 <script>
+import HTTP from '../http-config'
+
 export default {
   name: 'gameTable',
   template: "<game-table></game-table>",
@@ -27,6 +29,15 @@ export default {
   props: ['table'],
   mounted() {
       console.log('gameTable component loaded')
+  },
+  methods: {
+     join: function(id) {
+        console.log("JOIN.")
+        HTTP.post(`play/${this.$route.params.game}/join/${id}`)
+        .catch(e => {
+           console.error(e)
+        })
+     }
   }
 }
 </script>

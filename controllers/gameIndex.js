@@ -82,13 +82,13 @@ function addPlayerToGame(gameID, userID, callback) {
 }
 
 // Make a new game of x.
-function makeGame (gameObj, user, callback) {
+function makeGame (gameObj, gameName ,user, callback) {
    User.findOne({fbId : user}, function(err, userSearch) {
       if (err) console.error("No user associated with fbid")
       console.log(`Making new ${gameObj.name} instance`);
       let instance = new Instance({
          game: gameObj._id,
-         name: gameObj.name,
+         name: gameName,
          active: true,
          host: userSearch._id,
          players: [userSearch._id]
@@ -142,11 +142,11 @@ const gameIndex = {
         title: `Play ${data.name}`,
         games: data.activeGames.map(obj => {
           let o = {
-              createdAt: Date(obj.created_at),
+              createdAt: Date(obj.created_at).toLocaleString(),
               numPlayers: `${obj.players.length}/${data.maxPlayers}`,
               name: obj.name,
               host: obj.host.userName,
-              id: obj._id
+              id: obj._id,
           }
           return o;
        })})
@@ -160,7 +160,7 @@ const gameIndex = {
          urlkey: req.params.game
       }, function(searchError, game) {
          if (searchError) throw searchError;
-         makeGame(game, Number(req.user.id), function(gameInstance) {
+         makeGame(game, req.body.gameName, Number(req.user.id), function(gameInstance) {
             gameInstance.save()
             .then(() => {
                game.activeGames.push(gameInstance._id)

@@ -7,12 +7,6 @@
       <v-card-text>
          {{ cardData.stub }}
       </v-card-text>
-      <v-card-actions v-if="cardData.url">
-         <router-link :to="{ path: cardData.url, params: {game: cardData.url } }">LMAO</router-link>
-         <v-btn flat class="layout justify-center">
-            <a v-bind:href="cardData.url">More</a>
-         </v-btn>
-      </v-card-actions>
      </v-card>
    </v-flex>
 </template>
