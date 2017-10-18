@@ -7,9 +7,11 @@
        <v-layout column align-center justify-center>
          <h1 class="white--text orbit-font">{{ title }}</h1>
          <h4 class="white--text orbit-font">Boardgames Reimagined</h4>
-         <a href="/auth/facebook/">
-           <img src="/images/fb.png"/>
-         </a>
+         <div class="social-list">
+            <a href="/auth/facebook/">
+              <img src="/images/fb.png" alt="facebook_login"/>
+            </a>
+         </div>
        </v-layout>
        <router-link to="/about">About</router-link>
      </v-parallax>
