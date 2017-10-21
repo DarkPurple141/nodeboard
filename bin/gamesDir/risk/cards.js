@@ -85,3 +85,4 @@ function shuffle(array) {
 exports.Deck = Deck
 exports.Hand = Hand
 exports.Card = Card
+exports.shuffle = shuffle

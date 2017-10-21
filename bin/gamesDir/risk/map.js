@@ -1,8 +1,48 @@
 
+
+class Region {
+   constructor(name, neighbours) {
+      this._name = name
+      this._neighbours = neighbours
+      this._owner = null
+      this._units = 0
+   }
+
+   get name() {
+      return this._name
+   }
+
+   get neighbours() {
+      return this._neighbours
+   }
+
+   get owner() {
+      return this._owner
+   }
+
+   get units() {
+      return this._units
+   }
+
+   set owner(newOwner) {
+      this._owner = newOwner
+   }
+
+   set units(newUnits) {
+      this._units = newUnits
+   }
+
+}
+
+
 class Board {
    constructor() {
       this._map = {}
-      Object.assign(this._map, map)
+      for (let key in map) {
+         let neighbours = map[key].neighbours
+         this._map[key] = new Region(key, neighbours)
+      }
+      //Object.assign(this._map, map)
    }
 
    get places() {

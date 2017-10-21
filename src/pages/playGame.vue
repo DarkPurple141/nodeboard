@@ -87,6 +87,7 @@ export default {
           throw e;
        })
      },
+     
      joinGame: function (id) {
          HTTP.post(`play/${this.$route.params.game}/join/${id}`)
          .then(() => {
