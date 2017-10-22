@@ -1,9 +1,10 @@
 
 
 class Region {
-   constructor(name, neighbours) {
+   constructor(name, parent, neighbours) {
       this._name = name
       this._neighbours = neighbours
+      this._parent = parent
       this._owner = null
       this._units = 0
    }
@@ -31,18 +32,56 @@ class Region {
    set units(newUnits) {
       this._units = newUnits
    }
-
 }
 
+class Continent {
+   constructor (name, bonus) {
+      this._name = name
+      this._bonus = bonus
+      this._territories = {}
+   }
+
+   get bonus() {
+      return this._bonus
+   }
+
+   get name() {
+      return this._name
+   }
+
+   _addRegion(key, region) {
+      this._territories[key] = region
+   }
+
+   isOwned(player) {
+      for (territory in this._territories) {
+         if (this._territories[territory].owner != player) {
+            return false
+         }
+      }
+      return true
+   }
+
+}
 
 class Board {
    constructor() {
       this._map = {}
-      for (let key in map) {
-         let neighbours = map[key].neighbours
-         this._map[key] = new Region(key, neighbours)
+      this._continents = {}
+
+      for (let key in continents) {
+         this._continents[key] = new Continent(
+            key,
+            continents[key].bonus
+         )
+         for (let placeIndex in continents[key].territories) {
+            let place = continents[key].territories[placeIndex]
+            let neighbours = map[place].neighbours
+            let r = new Region(place, this._continents[key], neighbours)
+            this._map[place] = r
+            this._continents[key]._addRegion(place, r)
+         }
       }
-      //Object.assign(this._map, map)
    }
 
    get places() {
@@ -51,6 +90,16 @@ class Board {
 
    getRegion(region) {
       return this._map[region]
+   }
+
+   getContinentBonuses(player) {
+      let bonus = 0
+      for (cont in this._continents) {
+         if (this._continents[cont].isOwned(player)) {
+            bonus += this._continents[cont].bonus
+         }
+      }
+      return bonus
    }
 
    getNeighbours(region) {
@@ -435,6 +484,87 @@ let map = {
       ],
       owner: null,
       units: 0
+   }
+}
+
+let continents = {
+
+   'North America': {
+      bonus: 5,
+      territories: [
+         'Alaska',
+         'Alberta',
+         'Central America',
+         'Eastern United States',
+         'Greenland',
+         'Northwest Territory',
+         'Ontario',
+         'Quebec',
+         'Western United States'
+      ]
+   },
+
+   'South America' : {
+      bonus: 2,
+      territories: [
+         'Argentina',
+         'Brazil',
+         'Peru',
+         'Venezuela'
+      ]
+   },
+
+   'Europe' : {
+      bonus: 5,
+      territories: [
+         'Great Britain',
+         'Iceland',
+         'Northern Europe',
+         'Scandinavia',
+         'Southern Europe',
+         'Ukraine',
+         'Western Europe'
+      ]
+   },
+
+   'Africa' :{
+      bonus: 3,
+      territories: [
+         'Congo',
+         'East Africa',
+         'Egypt',
+         'Madagascar',
+         'North Africa',
+         'South Africa'
+      ]
+   },
+
+   'Asia' : {
+      bonus: 7,
+      territories: [
+         'Afghanistan',
+         'China',
+         'India',
+         'Irkutsk',
+         'Japan',
+         'Kamchatka',
+         'Middle East',
+         'Mongolia',
+         'Siam',
+         'Siberia',
+         'Ural',
+         'Yakutsk'
+      ]
+   },
+
+   'Australia' : {
+      bonus: 2,
+      territories: [
+         'Eastern Australia',
+         'Indonesia',
+         'New Guinea',
+         'Western Australia'
+      ]
    }
 }
 

@@ -28,6 +28,15 @@ class Player {
       this.territories = this.territories.filter(item => item.owner === this.id)
    }
 
+   getCardIndex(card) {
+      this._hand.cards.forEach((val, index) => {
+         if (val.equals(card)) {
+            return index
+         }
+      })
+      throw new Error("No such card in hand") // if no card
+   }
+
    addCardToHand(card) {
       this._hand.addCard(card)
    }

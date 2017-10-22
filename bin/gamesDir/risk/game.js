@@ -10,7 +10,10 @@ const Deck = Cards.Deck
 const CONFIG = {
    CAVALRY: 2,
    INFANTRY: 1,
-   CANNON : 5
+   CANNON : 5,
+   THREE_CANNONS: 6,
+   THREE_CAVALRY: 3,
+   THREE_INFANTRY: 0,
 }
 
 class Risk {
@@ -35,6 +38,7 @@ class Risk {
       }
       this._dice = Dice
       this._turn = 0
+      this._taken = false
    }
 
    get turn() {
@@ -62,9 +66,9 @@ class Risk {
    }
 
    /**
-   * @param targetRegion   a key for the board
-   * @param fromRegion     a key for the board
-   * @param attackStrength a number > 0
+    * @param targetRegion   a key for the board
+    * @param fromRegion     a key for the board
+    * @param attackStrength a number > 0
    **/
    attack(fromRegion, targetRegion, attackStrength) {
       let a = this._board.getRegion(fromRegion)
@@ -76,16 +80,61 @@ class Risk {
       this._resolveAttack(a, d, attackStrength, loss)
    }
 
+   /**
+      Play a set of three cards
+      @precondition cards in hand
+    */
+   playSet(cardA, cardB, cardC) {
+      let sum = cardA.value + cardB.value + cardC.value
+      let bonus = 0
+      // assume no wilds
+      switch (sum) {
+         case config.THREE_CANNONS:
+            bonus = 8
+         break
+         case config.THREE_CAVALRY:
+            bonus = cardA.value != cardB.value ? 10 : 6
+         break
+         case config.THREE_INFANTRY:
+            bonus = 4
+         break
+         default:
+            throw new Error("Card Set failure")
+      }
+
+      this.players[this.player].addExtras(bonus)
+      this._returnCardsToDeck(cardA, cardB, cardC)
+   }
+
+   // called at start of a new turn
+   startTurn() {
+      this.taken = false
+      this.players[this.player].addExtras(this.getTurnExtras())
+   }
+
+   // called at end of turn
    endTurn() {
+      if (this.taken) {
+         this.players[this.player].addCardToHand(this._deck.topCard)
+      }
       this._turn++
    }
 
    getTurnExtras() {
       let numTerr = this.players[this.player].territories.length
       let normalExtras = Math.max(Math.floor(numTerr / 3), 3)
-      let continentExtras = 0
+      let continentExtras = this._board.getContinentBonuses(this.player)
 
       return normalExtras + continentExtras
+   }
+
+   _returnCardsToDeck(cardA, cardB, cardC) {
+      let cards = []
+      cards.push(this.players[this.player]._hand.removeCard(cardA))
+      cards.push(this.players[this.player]._hand.removeCard(cardB))
+      cards.push(this.players[this.player]._hand.removeCard(cardC))
+      this._deck.addCards(cards)
+      this._deck.shuffle()
    }
 
    _resolveAttack(fromRegion, targetRegion, attackStrength, loss) {
@@ -96,6 +145,7 @@ class Risk {
          targetRegion.owner = fromRegion.owner
          targetRegion.units = moveValue
          fromRegion.units -= moveValue
+         this.taken = true
       }
    }
 

@@ -13,6 +13,11 @@ class Card {
    get territory() {
       return this._territory
    }
+
+   equals(otherCard) {
+      return this._territory === otherCard.territory &&
+             this._value === other.value
+   }
 }
 
 class Collection {
@@ -29,6 +34,15 @@ class Collection {
       this._cards.push(card)
    }
 
+   addCards(cards) {
+      this._cards.push(...cards)
+   }
+
+   removeCard(card) {
+      this._cards = this._cards.filter(item => !(item.equals(card)))
+      return card
+   }
+
    shuffle() {
       this._cards = shuffle(this._cards)
    }
@@ -38,6 +52,10 @@ class Collection {
 class Hand extends Collection {
    constructor() {
       super()
+   }
+
+   get cards() {
+      return this._cards
    }
 }
 
