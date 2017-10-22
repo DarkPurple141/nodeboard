@@ -1,4 +1,4 @@
-
+"use strict";
 
 class Region {
    constructor(name, parent, neighbours) {
@@ -54,7 +54,7 @@ class Continent {
    }
 
    isOwned(player) {
-      for (territory in this._territories) {
+      for (let territory in this._territories) {
          if (this._territories[territory].owner != player) {
             return false
          }
@@ -94,7 +94,7 @@ class Board {
 
    getContinentBonuses(player) {
       let bonus = 0
-      for (cont in this._continents) {
+      for (let cont in this._continents) {
          if (this._continents[cont].isOwned(player)) {
             bonus += this._continents[cont].bonus
          }
