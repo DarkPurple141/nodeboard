@@ -16,7 +16,7 @@ class Card {
 
    equals(otherCard) {
       return this._territory === otherCard.territory &&
-             this._value === other.value
+             this._value === otherCard.value
    }
 }
 
