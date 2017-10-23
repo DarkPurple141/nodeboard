@@ -4,8 +4,9 @@ const assert = require('assert')
 
 describe('Risk', function() {
   describe('#InitialGameState', function() {
-    let game
-    let numPlayers = 3
+    let game,
+        numPlayers = 3
+
     before(() => {
       game = new Risk(3)
     })
@@ -36,6 +37,22 @@ describe('Risk', function() {
     it('Check numExtrasAvailable', function() {
       let numTerrs = game.players[0].territories.length/3
       assert.equal(game.getTurnExtras(), Math.max(Math.floor(numTerrs), 3))
+    })
+
+    it('Check Map properly loaded', function() {
+      let places = game.board.places
+      for (let place in places) {
+         let region = game.board.getRegion(places[place])
+         let parent = region._parent
+         let found = false
+         for (let child in parent.children) {
+            if (parent.children[child].name === region.name) {
+               found = true
+               break
+            }
+         }
+         assert.equal(found, true)
+      }
     })
 
   })

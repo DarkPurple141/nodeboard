@@ -2,7 +2,7 @@
 
 const util = require('util')
 const Cards = require('./cards')
-const Board = require('./map')
+const Board = require('./board')
 const Player = require('./player')
 const Dice = require('./dice')
 const Deck = Cards.Deck
@@ -53,6 +53,10 @@ class Risk {
       return this._players
    }
 
+   get board() {
+      return this._board
+   }
+
    determineRollOutcome(attackRolls, defenseRolls) {
       let losses = [0, 0]
       let a = this._dice.rollDice(attackRolls)
@@ -69,7 +73,7 @@ class Risk {
     * @param targetRegion   a key for the board
     * @param fromRegion     a key for the board
     * @param attackStrength a number > 0
-   **/
+    */
    attack(fromRegion, targetRegion, attackStrength) {
       let a = this._board.getRegion(fromRegion)
       let d = this._board.getRegion(targetRegion)
@@ -176,6 +180,6 @@ let a = new Risk(3)
 
 a.print()
 // console.log(a.determineRollOutcome(3, 2))
-console.log(a.attack("Siam", "India", 3))
+// console.log(a.attack("Siam", "India", 3))
 
 module.exports = Risk
