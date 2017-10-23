@@ -2,6 +2,7 @@ import Play from './pages/Play'
 import playGame from './pages/playGame'
 import Home from './pages/Home'
 import About from './pages/About'
+import Proto from './pages/Proto'
 import ErrorPage from './pages/Error'
 import VueRouter from 'vue-router'
 import HTTP from './http-config'
@@ -29,6 +30,10 @@ const routes = [
    {
       path: '/about',
       component: About
+   },
+   {
+      path: '/proto',
+      component: Proto
    },
    {
       path: '/error',
