@@ -1,4 +1,4 @@
-const Squares = (name, socketObject) => {
+const Squares = (socketObject) => {
 
   /*
   const nsp = socketObject.of(name);
