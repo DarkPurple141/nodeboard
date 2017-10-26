@@ -1,18 +1,22 @@
 <template>
  <v-app>
+   <!--nav-->
+   <vNavbar></vNavbar>
    <section>
-    stuff
+      <object data="/images/riskMap.svg" type="image/svg+xml"
+         id="alphasvg" width="100%" height="100%"></object>
    </section>
  </v-app>
 </template>
 
 <script>
 
+import vNavbar from '../components/navbar'
 //import io from '../lib/socket'
-
-io.connect('/risk')
+const server = io.connect('/risk')
 
 export default {
+   components: { vNavbar },
    name: 'Proto'
 }
 
