@@ -3,11 +3,10 @@ module.exports = (io, name) => {
 
    // create nameSpace for relevant game
    const nsp = io.of(name)
-   nsp.rooms = {}
 
    nsp.on('connection', client => {
      console.log(`Someone connected to nameSpace : ${name}`)
-     client.emit('hi', 'everyone!')
+     client.broadcast.emit('message', 'hi everyone!')
 
      // handle room choice
      client.on('joinRoom', gameID => {
@@ -16,7 +15,7 @@ module.exports = (io, name) => {
 
      // chat message
      client.on('message', msg => {
-
+        //client.broadcast.to
         console.log(msg)
      })
 
