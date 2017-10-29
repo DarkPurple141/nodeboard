@@ -4,6 +4,15 @@
       <li>Sample</li>
       <li>Sample</li>
       <li>Sample</li>
+      <li>Sample</li>
+      <li>Sample</li>
+      <li>Sample</li>
+      <li>Sample</li>
+      <li>Sample</li>
+      <li>Sample</li>
+      <li>Sample</li>
+      <li>Sample</li>
+
    </ul>
 </template>
 
@@ -15,7 +24,7 @@ export default {
 </script>
 
 <style lang="css">
-#messages { list-style-type: none; margin: 0; padding: 0; }
+#messages { list-style-type: none; margin: 0; padding: 0; overflow-y: auto; height: 400px;}
 #messages li { padding: 5px 10px; }
 #messages li:nth-child(odd) { background: #eee; }
 </style>

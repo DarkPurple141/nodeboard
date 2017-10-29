@@ -36,7 +36,8 @@ describe('Risk', function() {
 
     it('Check numExtrasAvailable', function() {
       let numTerrs = game.players[0].territories.length/3
-      assert.equal(game.getTurnExtras(), Math.max(Math.floor(numTerrs), 3))
+      numTerrs = Math.max(Math.floor(numTerrs), 3) + game.board.getContinentBonuses(0)
+      assert.equal(game.getTurnExtras(), numTerrs)
     })
 
     it('Check Map properly loaded', function() {
