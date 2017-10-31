@@ -18,7 +18,7 @@ const api = {
         next()
      } else {
         console.log("No user associated with session; redirecting")
-        res.sendFile('/dist/index.html', {root : path.resolve('./public') })
+        res.status(403).sendFile('/dist/index.html', {root : path.resolve('./public') })
      }
   },
 

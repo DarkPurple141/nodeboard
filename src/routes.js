@@ -52,6 +52,10 @@ const routes = [
       path: '/play/:game/',
       component: playGame,
       meta: { needGuard: true }
+   },
+   {
+      path: '/*/',
+      redirect: '/'
    }
 ]
 
