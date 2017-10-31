@@ -48,16 +48,10 @@ module.exports = (dbname) => {
 
    // routes
    const index = require('./routes/index');
-   const got = require('./routes/got');
-   const squares = require('./routes/squares');
    const api = require('./routes/api');
-   const play = require('./routes/play');
 
    app.use('/auth/', auth);
    app.use('/', index);
-   app.use('/play/', play);
-   app.use('/got/', got);
-   app.use('/squares/', squares);
    app.use('/api/', api);
 
    // catch 404 and forward to error handler

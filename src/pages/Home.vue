@@ -1,4 +1,4 @@
-// main app decleration
+<!-- main app declaration -->
 
 <template>
  <v-app dark>

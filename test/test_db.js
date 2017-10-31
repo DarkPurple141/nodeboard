@@ -137,10 +137,9 @@ describe('db.js', function() {
           { updated_at: Date('2014-01-22T14:56:59.301Z')},
           { new: true },
           function(err, data) {
-          if (err) throw err;
-          assert.equal(data.updated_at, Date('2014-01-22T14:56:59.301Z'));
-          done()
-        })
+             assert.equal(data.updated_at, Date('2014-01-22T14:56:59.301Z'))
+             done()
+          })
       })
     })
   })

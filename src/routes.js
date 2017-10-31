@@ -8,7 +8,7 @@ import VueRouter from 'vue-router'
 import HTTP from './http-config'
 
 function guardRoute (to, from, next) {
-  HTTP.get('api/user')
+  HTTP.get('user')
   .then(response => {
      if (response.status == 209) {
         next(false)
