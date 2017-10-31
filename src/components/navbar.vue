@@ -37,7 +37,7 @@ export default {
           },
           {
              title: this.user,
-             link:"/profile"
+             link: "/profile"
           }
        ]
     }
@@ -46,7 +46,7 @@ export default {
     nodeboardLogo
   },
   mounted() {
-    HTTP.get(`api/user`)
+    HTTP.get(`user`)
    .then(response => {
       // just get firstName
       this.user = response.data.displayName.split(" ")[0];

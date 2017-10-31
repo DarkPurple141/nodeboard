@@ -1,4 +1,3 @@
-// main app decleration
 
 <template>
  <v-app dark>

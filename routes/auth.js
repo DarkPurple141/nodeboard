@@ -42,7 +42,7 @@ module.exports = (passport) => {
           console.log(`Welcome back ${ data.name }`)
         }
       })
-      return done(null,profile);
+      return done(null, profile);
     }
   ));
 
