@@ -63,7 +63,7 @@ export default {
 
   methods: {
      createGame: function() {
-        HTTP.post(`play/${this.$route.params.game}/create`, { gameName: "name" })
+        HTTP.post(`api/play/${this.$route.params.game}/create`, { gameName: "name" })
         .then(successObj => {
            if (successObj.data.success == false) {
              throw "Create Failed"
@@ -77,7 +77,7 @@ export default {
      },
 
      getGames: function() {
-        HTTP.get(`play/${this.$route.params.game}`)
+        HTTP.get(`api/play/${this.$route.params.game}`)
        .then(response => {
           console.log(response.data)
           this.table.title = response.data.title
@@ -88,7 +88,7 @@ export default {
        })
      },
      joinGame: function (id) {
-         HTTP.post(`play/${this.$route.params.game}/join/${id}`)
+         HTTP.post(`api/play/${this.$route.params.game}/join/${id}`)
          .then(() => {
             this.getGames()
          })

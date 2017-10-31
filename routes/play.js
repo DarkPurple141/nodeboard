@@ -3,9 +3,6 @@ const router = express.Router();
 const GC = require('../controllers/gameIndex');
 const auth = require('../controllers/authentication');
 
-// cors
-router.use(auth.corsHeaders);
-
 /* GET game listings. */
 router.get('/', GC.listGames);
 

@@ -38,7 +38,7 @@
     gameCard
   },
   created: function() {
-   HTTP.get(`play`)
+   HTTP.get(`api/play`)
    .then(response => {
      this.games = response.data.games.map(item => {
         let game = {
