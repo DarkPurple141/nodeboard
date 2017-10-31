@@ -2,5 +2,10 @@ language: node_js
 node_js:
   - 6
 services: mongodb
-before_script:
-  - "npm run build"
+cache:
+  bundler: true
+  directories:
+  - node_modules
+script:
+  - npm run build
+  - npm test
