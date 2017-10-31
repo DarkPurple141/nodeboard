@@ -1,4 +1,3 @@
-// main app decleration
 
 <template>
  <v-app dark>
@@ -38,7 +37,7 @@
     gameCard
   },
   created: function() {
-   HTTP.get(`api/play`)
+   HTTP.get(`play`)
    .then(response => {
      this.games = response.data.games.map(item => {
         let game = {
