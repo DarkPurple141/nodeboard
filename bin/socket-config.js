@@ -22,6 +22,7 @@ module.exports = (io, name) => {
      // client has actively left the room
      client.on('leaveRoom', () => {
         if (client.room) {
+           console.log("Leaving room")
            client.leave(client.room)
         }
      })
