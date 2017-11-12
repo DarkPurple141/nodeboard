@@ -1,6 +1,6 @@
 <template>
-   <form>
-      <input @keyup.enter="alert" id="m" autocomplete="off"/>
+   <form v-on:submit.prevent>
+      <input @keyup.enter="chat($event.target)" autocomplete="off"/>
    </form>
 </template>
 
@@ -9,8 +9,11 @@ export default {
    name: "messageBox",
    template: '<message-box></message-box>',
    methods: {
-      alert: function(element) {
-         console.log("Yay")
+      chat: function(target) {
+         console.log("Sending new message")
+         // emit message submit up the chain
+         this.$emit('message', target.value)
+         target.value = ""
       }
    }
 }

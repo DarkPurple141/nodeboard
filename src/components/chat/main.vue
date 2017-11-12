@@ -1,7 +1,7 @@
 <template>
    <div class="chat">
-      <messageThread></messageThread>
-      <messageBox></messageBox>
+      <messageThread :messages="messages"></messageThread>
+      <messageBox v-on:message="chatMessage"></messageBox>
    </div>
 </template>
 
@@ -10,11 +10,18 @@ import messageThread from './messageThread'
 import messageBox from './messageBox'
 
 export default {
+   props: ['messages'],
    name: 'Chat',
    template: "<Chat></Chat>",
    components: {
       messageThread,
       messageBox
+   },
+   methods: {
+      chatMessage: function(msg) {
+         //console.log("EVENT" + msg)
+         this.$emit('message', msg)
+      }
    }
 }
 </script>

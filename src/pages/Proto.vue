@@ -9,7 +9,7 @@
                <RiskBoard></RiskBoard>
             </v-flex>
             <v-flex xs2>
-               <Chat></Chat>
+               <Chat v-on:message="chatMessage" :messages="messages"></Chat>
             </v-flex>
         </v-layout>
       </v-container>
@@ -24,28 +24,55 @@ import vNavbar from '../components/navbar'
 import Chat from '../components/chat/main'
 import RiskBoard from '../components/boards/risk/main'
 
-// just for debugging.
-$(document).on('click', '.territory', (event) => {
-   alert((event.target.id).split('-').map(item => {
-      return item.charAt(0).toUpperCase() + item.substring(1)
-   }).join(' '))
-   console.log(event.target)
-})
-
 export default {
 
    data: function() {
       return {
-         userName: "Jeff"
+         userName: "Jeff",
+         url: "PROTO",
+         messages: [],
+         socket: null
       }
    },
 
-   ready() {
-      this.socket = io.connect('/risk')
-      this.socket.on('message', (msg) => {
-         socket.emit('message', msg)
+   mounted() {
+      console.log("getting connection")
+
+      let socket = io.connect('/risk')
+
+      socket.on('message', msg => {
+         // actually this will invoke a data update.
          console.log(msg)
+         this.messages.push(msg)
+         //socket.emit('message', {frommsg)
       })
+
+      socket.on('connectionReport', () => {
+         console.log("Sending server info..")
+         socket.emit('connectionReport',
+            {
+               room: this.url,
+               user: this.userName
+            }
+         )
+      })
+
+      socket.on('update', () => {
+         console.log("Update front..")
+      })
+
+      this.socket = socket
+
+   },
+   methods: {
+      chatMessage: function(msg) {
+         let chatMessage = {
+            from: this.userName,
+            msg: msg
+         }
+         this.messages.push(chatMessage)
+         this.socket.emit('message', chatMessage)
+      }
    },
    components: { vNavbar, Chat, RiskBoard },
    name: 'Prototype'

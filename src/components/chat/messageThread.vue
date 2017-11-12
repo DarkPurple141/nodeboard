@@ -1,23 +1,13 @@
 <template>
    <ul id="messages">
-      <li>Sample</li>
-      <li>Sample</li>
-      <li>Sample</li>
-      <li>Sample</li>
-      <li>Sample</li>
-      <li>Sample</li>
-      <li>Sample</li>
-      <li>Sample</li>
-      <li>Sample</li>
-      <li>Sample</li>
-      <li>Sample</li>
-      <li>Sample</li>
-
+      <li v-for="msg in messages">{{ msg.from }} : {{ msg.msg }}</li>
    </ul>
 </template>
 
 <script>
+
 export default {
+   props: ['messages'],
    name: "messageThread",
    template: '<message-thread></message-thread>'
 }
