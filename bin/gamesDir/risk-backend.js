@@ -35,8 +35,12 @@ module.exports = (io) => {
            room.players.push(client.id)
 
            // send news to others
-           client.broadcast.to(data.room).emit('message', `New player joined ${client.id}`)
-           console.log("Join exisiting room: ", data.room)
+           client.broadcast.to(data.room).emit('message',
+             {
+                from: "System",
+                msg: `${data.userName} joined room`
+             })
+              console.log("Join exisiting room: ", data.room)
         } else {
            // first person to join
            console.log("First person to join room: ", data.room)

@@ -218,6 +218,7 @@
 
 <script>
 export default {
+   props: ['gameState'],
    name: "riskBoard",
    template: '<risk-board></risk-board>'
 }

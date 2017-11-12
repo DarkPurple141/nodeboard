@@ -6,7 +6,7 @@
       <v-container grid-list-md text-xs-center>
          <v-layout row wrap>
             <v-flex xs10>
-               <RiskBoard></RiskBoard>
+               <RiskBoard :gameState="game"></RiskBoard>
             </v-flex>
             <v-flex xs2>
                <Chat v-on:message="chatMessage" :messages="messages"></Chat>
@@ -31,6 +31,7 @@ export default {
          userName: "Jeff",
          url: "PROTO",
          messages: [],
+         game: null,
          socket: null
       }
    },
@@ -41,10 +42,8 @@ export default {
       let socket = io.connect('/risk')
 
       socket.on('message', msg => {
-         // actually this will invoke a data update.
-         console.log(msg)
+         // Incoming message added to current data.
          this.messages.push(msg)
-         //socket.emit('message', {frommsg)
       })
 
       socket.on('connectionReport', () => {
@@ -65,6 +64,7 @@ export default {
 
    },
    methods: {
+      // event handler for message chat
       chatMessage: function(msg) {
          let chatMessage = {
             from: this.userName,

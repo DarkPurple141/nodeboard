@@ -9,7 +9,9 @@
   "scripts": {
     "start": "node ./bin/www",
     "test": "mocha --recursive",
-    "dev": "cross-env NODE_ENV=development webpack --watch & node ./bin/www",
+    "dev" : "npm run front & npm run back",
+    "front": "cross-env NODE_ENV=development webpack --watch",
+    "back" : "nodemon ./bin/www",
     "build": "cross-env NODE_ENV=production webpack --progress --hide-modules"
   },
   "dependencies": {
