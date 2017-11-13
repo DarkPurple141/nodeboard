@@ -8,28 +8,42 @@
       width="100%" height="100%" viewBox="10 0 1300 700">
 
     <g v-for="continent in continents" v-bind:id="continent.id" class="continent">
-      <Region v-for="region in continent.territories" v-bind:id="region.id"
-      :key="region.id" :region="region"></Region>
+      <Region v-for="region in continent.territories"
+         :id="region.id"
+         :class="['territory', getOwner(region.name)]"
+         :key="region.id"
+         :region="region"
+         @click.native="showRegion(region.name)">
+      </Region>
     </g>
     </svg>
 </template>
 
 <script>
 import Region from './regions'
-import Continents from './board-data'
+import svg from './svg-data'
+import Board from './board'
 
 export default {
-   props: ['gameState'],
+   props: ['game'],
    name: "riskBoard",
    components: {
       Region
    },
    data: function() {
       return {
-         continents: Continents
+         continents: svg
       }
    },
-   template: '<risk-board></risk-board>'
+   template: '<risk-board></risk-board>',
+   methods : {
+      getOwner: function(region) {
+         return 'p' + Math.ceil(5*Math.random())//+ this.game[region].owner
+      },
+      showRegion: function(name) {
+         alert(name)
+      }
+   }
 }
 </script>
 

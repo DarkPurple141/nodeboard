@@ -40,6 +40,11 @@ const routes = [
       component: ErrorPage
    },
    {
+      // FIXME eventually (should have guard)
+      path: '/play/:game/:id',
+      component: Proto
+   },
+   {
       path : '/play/',
       component: Play,
       meta: { needGuard: true }

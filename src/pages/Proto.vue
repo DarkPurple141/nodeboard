@@ -28,8 +28,8 @@ export default {
 
    data: function() {
       return {
-         userName: "Jeff",
-         url: "PROTO",
+         userName: this.$root.$data.user.name || "Jeff",
+         url: this.$route.query.id || "PROTO",
          messages: [],
          game: null,
          socket: null
