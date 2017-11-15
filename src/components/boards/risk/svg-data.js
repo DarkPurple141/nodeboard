@@ -1,3 +1,7 @@
+/*
+Gross looking file that contains the static data for the regions of Risk
+*/
+
 export default {
    "Australia": {
       id: "australia",

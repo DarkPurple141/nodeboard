@@ -3,8 +3,8 @@
    <div class="container">
      <h1>{{ error.code }}</h1>
 
-     <p><strong>Page not found :(</strong></p>
-     <p>The requested page could not be found.</p>
+     <p><strong>Error</strong></p>
+     <p>Oops! It looks like something went wrong!</p>
      <pre>{{ error.description }}</pre>
    </div>
 </v-app>
@@ -14,7 +14,32 @@
 
 export default {
    name: 'errorPage',
-   props: ['error']
+   data: function () {
+      return {
+         error : {
+            description: "",
+            code: 0
+         }
+      }
+   },
+   mounted: function() {
+      this.error.code = this.$route.query.code || 500
+      this.setDescription()
+   },
+   methods: {
+      setDescription: function() {
+         let d = ""
+         switch (this.error.code) {
+            case 404:
+               d = "Page not found :("
+               break;
+            default:
+               d = "Internal Server Error"
+         }
+         this.error.description = d
+      }
+   }
+
 }
 </script>
 

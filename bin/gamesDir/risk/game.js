@@ -39,6 +39,8 @@ class Risk {
       this._dice = Dice
       this._turn = 0
       this._taken = false
+      console.log(`INIT: New risk game of ${numPlayers} created.`)
+      this.print()
    }
 
    get turn() {

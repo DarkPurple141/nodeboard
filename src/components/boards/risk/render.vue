@@ -20,13 +20,12 @@
 </template>
 
 <script>
-import Region from './regions'
+import Region from './svg-region'
 import svg from './svg-data'
-import Board from './board'
 
 export default {
-   props: ['game'],
-   name: "riskBoard",
+   props: ['board'],
+   name: "riskRender",
    components: {
       Region
    },
@@ -38,7 +37,7 @@ export default {
    template: '<risk-board></risk-board>',
    methods : {
       getOwner: function(region) {
-         return 'p' + Math.ceil(5*Math.random())//+ this.game[region].owner
+         return 'p' + (this.board[region].owner + 1)
       },
       showRegion: function(name) {
          alert(name)

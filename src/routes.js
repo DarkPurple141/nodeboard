@@ -2,7 +2,7 @@ import Play from './pages/Play'
 import playGame from './pages/playGame'
 import Home from './pages/Home'
 import About from './pages/About'
-import Proto from './pages/Proto'
+import Risk from './pages/Risk'
 import ErrorPage from './pages/Error'
 import VueRouter from 'vue-router'
 import HTTP from './http-config'
@@ -32,17 +32,13 @@ const routes = [
       component: About
    },
    {
-      path: '/proto',
-      component: Proto
-   },
-   {
       path: '/error',
       component: ErrorPage
    },
    {
       // FIXME eventually (should have guard)
-      path: '/play/:game/:id',
-      component: Proto
+      path: '/play/risk/:id',
+      component: Risk
    },
    {
       path : '/play/',

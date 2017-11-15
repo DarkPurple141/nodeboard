@@ -38,7 +38,7 @@ module.exports = (io) => {
            client.broadcast.to(data.room).emit('message',
              {
                 from: "System",
-                msg: `${data.userName} joined room`
+                msg: `${data.user} joined room`
              })
               console.log("Join exisiting room: ", data.room)
         } else {
@@ -49,6 +49,7 @@ module.exports = (io) => {
 
         client.room = data.room
         client.join(data.room)
+        if (room) console.log(room.players)
      })
 
      // chat message
@@ -67,20 +68,28 @@ module.exports = (io) => {
 
      // begin the game
      client.on('start', () => {
+        console.log("Beginning new game...")
         let roomObj = getRoom(client.room)
         roomObj.game = new Risk(roomObj.players.length)
-        for (let i = 0; i < roomObj.players.length; i++) {
-           let playerSpecificDataSlice = 0
-           socket.broadcast.to(roomObj.players[i]).emit('update', playerSpecificDataSlice)
-        }
+        let gameData = {}
+        gameData.board = roomObj.game.board.boardState()
+
+        io.in(client.room).emit('start', gameData)
      })
 
      // send a game update
      client.on('update', (data) => {
        console.log(data)
-       client.broadcast.emit('update', data)
+
+       // FIXME process data
+
+       // eventually send only relevant update
+       for (let i = 0; i < roomObj.players.length; i++) {
+          client.broadcast.to(roomObj.players[i]).emit('update', data)
+       }
      })
 
+     // player has disconnected for an unknown reason, or they just quit
      client.on('disconnect', () => {
         // TODO decide whether this is the best idea.
         // ie maybe don't boot user from record so they can easily rejoin

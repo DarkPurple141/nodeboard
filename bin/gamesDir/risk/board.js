@@ -117,6 +117,17 @@ class Board {
    getNeighbours(region) {
       return this._map[region] ? this._map[region].neighbours : null
    }
+
+   boardState() {
+      let returnObj = {}
+      for (let key in this._map) {
+         returnObj[key] = {
+            owner: this._map[key].owner,
+            value: this._map[key].units
+         }
+      }
+      return returnObj
+   }
 }
 
 module.exports = Board
