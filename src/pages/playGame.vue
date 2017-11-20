@@ -62,6 +62,7 @@ export default {
   },
 
   methods: {
+     // FIXME Create a modal for game creation
      createGame: function() {
         HTTP.post(`play/${this.$route.params.game}/create`, { gameName: "name" })
         .then(successObj => {
@@ -87,7 +88,7 @@ export default {
           throw e;
        })
      },
-     
+
      joinGame: function (id) {
          HTTP.post(`play/${this.$route.params.game}/join/${id}`)
          .then(() => {

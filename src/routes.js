@@ -17,8 +17,8 @@ function guardRoute (to, from, next) {
      }
   })
   .catch(err => {
-     next(`/error/?code=${err}`)
      console.error(err)
+     next(`/error/?code=${err}`)
   })
 }
 

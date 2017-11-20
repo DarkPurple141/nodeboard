@@ -5,7 +5,7 @@
       xmlns="http://www.w3.org/2000/svg"
       xmlns:xlink="http://www.w3.org/1999/xlink"
       version="1.1"
-      width="100%" height="100%" viewBox="10 0 1300 700">
+      viewBox="10 0 1200 650">
 
     <g v-for="continent in continents" v-bind:id="continent.id" class="continent">
       <Region v-for="region in continent.territories"
@@ -47,6 +47,7 @@ export default {
 </script>
 
 <style lang="css">
+
 text {
    font-family: "Verdana";
    stroke: none;
