@@ -7,11 +7,12 @@
       version="1.1"
       viewBox="10 0 1200 650">
 
-    <g v-for="continent in continents" v-bind:id="continent.id" class="continent">
+    <g v-for="continent in continents" :id="continent.id" class="continent">
       <Region v-for="region in continent.territories"
          :id="region.id"
          :class="['territory', getOwner(region.name)]"
          :key="region.id"
+         :units="board[region.name].units"
          :region="region"
          @click.native="showRegion(region.name)">
       </Region>
@@ -51,6 +52,10 @@ export default {
 text {
    font-family: "Verdana";
    stroke: none;
+}
+
+svg {
+   background-color: #d6ebf2;
 }
 
 #south-america            { fill: #009999; stroke: #008888; }

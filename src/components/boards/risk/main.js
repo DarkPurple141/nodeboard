@@ -1,5 +1,9 @@
 export default {
-   state: { running: false },
+   state: {
+      running: false,
+      numPlayers: 1,
+      turn: 0
+    },
    board: {
       Afghanistan: {
          neighbours: [

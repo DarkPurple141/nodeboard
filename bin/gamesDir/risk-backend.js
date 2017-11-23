@@ -3,6 +3,7 @@ const Risk = require('./risk/game')
 
 let lobbies = []
 
+// might make this into a class later
 function newRoom(roomID, hostID) {
    let roomObj = {
       players: [hostID],
@@ -13,9 +14,13 @@ function newRoom(roomID, hostID) {
 }
 
 function getRoom(roomID) {
-
    return lobbies.find(item => item.room == roomID)
 }
+
+function getPlayerIndexInRoom(room, clientID) {
+   return room.players.indexOf(clientID)
+}
+
 
 module.exports = (io) => {
 
@@ -32,24 +37,39 @@ module.exports = (io) => {
      client.on('connectionReport', data => {
         let room = getRoom(data.room)
         if (room != undefined) {
-           room.players.push(client.id)
-
-           // send news to others
-           client.broadcast.to(data.room).emit('message',
-             {
-                from: "System",
-                msg: `${data.user} joined room`
-             })
+          if (client.room && client.room === data.room) {
+             // FIXME Should check that user didn't just refresh browser
+             // done by enforcing playerID mapping to socketID.
+             // if socket disconnects, but playerID is the same, map playerID
+             // to new socketID.
+             client.broadcast.to(data.room).emit('message',
+              {
+                 from: "System",
+                 msg: `${data.user} rejoined room`
+              })
+          } else {
+             room.players.push(client.id)
+             // send news to others
+             client.broadcast.to(data.room).emit('message',
+              {
+                 from: "System",
+                 msg: `${data.user} joined room`
+              })
               console.log("Join exisiting room: ", data.room)
+
+          }
+
         } else {
            // first person to join
            console.log("First person to join room: ", data.room)
            lobbies.push(newRoom(data.room, client.id))
         }
 
+        // add .room id to client object for later
         client.room = data.room
         client.join(data.room)
         if (room) console.log(room.players)
+         client.emit('user', getPlayerIndexInRoom(getRoom(data.room), client.id))
      })
 
      // chat message
@@ -73,6 +93,8 @@ module.exports = (io) => {
         roomObj.game = new Risk(roomObj.players.length)
         let gameData = {}
         gameData.board = roomObj.game.board.boardState()
+        gameData.turn = Math.floor(Math.random()*roomObj.game.players.length) // change later
+        gameData.numPlayers = roomObj.game.players.length
 
         io.in(client.room).emit('start', gameData)
      })
@@ -93,7 +115,7 @@ module.exports = (io) => {
      client.on('disconnect', () => {
         // TODO decide whether this is the best idea.
         // ie maybe don't boot user from record so they can easily rejoin
-        if (client.room) client.leave(client.room)
+        //if (client.room) client.leave(client.room)
         console.log("User disconnected")
         client.broadcast.to(client.room).emit('disconnectEvent', client.id)
      })

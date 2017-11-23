@@ -5,21 +5,35 @@
    <section>
       <v-container grid-list-md text-xs-center>
          <v-layout row wrap>
-            <v-flex xs10>
-               <div class="stats">
-                     <div v-for="i in [0, 1, 2, 3, 4]"
-                     :class="'players ' + 'p'+(i+1)">
-                        Player {{i}}: {{ numTerritories(i) }}</div>
+            <v-flex xs10 style="border:1px solid black;">
+               <div style="position: relative;">
+                  <!-- Modal start button -->
+                  <div class="start" v-if="!game.state.running">
+                     <v-btn large dark @click="startGame"
+                       color="primary">Start</v-btn>
+                  </div>
+               <div :class="disabledControls()">
+                  <!-- eventually should be an sub component-->
+                     <div class="stats">
+                        <div v-for="i in game.state.numPlayers"
+                        :class="'players ' + 'p'+(i) + ' ' + boldPlayer(isMyTurn(i-1))"
+                        :style="{ width :99/(game.state.numPlayers)+'%' }">
+                           Player {{i}}: {{ numTerritories(i - 1) }}
+                        </div>
+                     </div>
+                  <RiskBoard :board="game.board"></RiskBoard>
                </div>
-               <RiskBoard :board="game.board"></RiskBoard>
+            </div>
+            </div>
             </v-flex>
             <v-flex xs2>
                <Chat :socket="socket" :user="user.name"></Chat>
             </v-flex>
-            <!-- Temporary controls for testing -->
-            <div class="controls">
+            <!-- Temporary controls for testing
+                 eventually should be a sub component -->
+            <div class="controls" v-if="isMyTurn(user.playerID) && game.state.running">
                <v-btn @click="startGame"
-               v-if="!game.state.running"  color="primary">Start</v-btn>
+                 color="primary">Start</v-btn>
             </div>
         </v-layout>
       </v-container>
@@ -43,7 +57,7 @@ export default {
             name: this.$root.$data.user.name || "Jeff",
             playerID: -1,
          },
-         url: this.$route.query.id || "PROTO",
+         url: this.$route.params.id,
          game: GameState,
          socket: io.connect('/risk')
       }
@@ -61,8 +75,21 @@ export default {
       numTerritories: function(player) {
          let risk = this
          return (Object.keys(risk.game.board)).reduce((total, item) => {
-            return total + risk.game.board[item].owner === player ? 1 : 0
+            return total + (risk.game.board[item].owner === player ? 1 : 0);
          }, 0)
+      },
+
+      // checks whether controls are active
+      isMyTurn : function(player) {
+         return this.game.state.turn === player
+      },
+
+      boldPlayer: function(bool) {
+         return bool ? "active" : ""
+      },
+
+      disabledControls: function() {
+         return !this.game.state.running ? "disabled" : ''
       }
    },
 
@@ -78,9 +105,16 @@ export default {
          )
       })
 
+      risk.socket.on('user', userID => {
+         console.log("USER #" + userID)
+         risk.user.playerID = userID
+      })
+
       risk.socket.on('start', initData => {
          console.log("Getting game state for setup...")
          risk.game.state.running = true
+         risk.game.state.turn = initData.turn
+         risk.game.state.numPlayers = initData.numPlayers
          for (let key in initData.board) {
             let loadedRegion = initData.board[key]
             risk.game.board[key].owner = loadedRegion.owner
@@ -105,6 +139,17 @@ export default {
       font-family: 'Orbitron';
    }
 
+   .disabled {
+     pointer-events: none;
+     opacity: 0.4;
+  }
+
+   .start {
+      position: absolute;
+      top: 45%;
+      left: 45%;
+   }
+
    /* Player specific colours */
    .players {
       float: left;
@@ -112,6 +157,10 @@ export default {
       padding-bottom: 5px;
       padding-left: 7%;
       padding-right: 7%;
+   }
+
+   .players.active {
+      font-weight: bold;
    }
 
    .p1 {

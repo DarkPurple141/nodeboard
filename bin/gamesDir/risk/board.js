@@ -123,7 +123,7 @@ class Board {
       for (let key in this._map) {
          returnObj[key] = {
             owner: this._map[key].owner,
-            value: this._map[key].units
+            units: this._map[key].units
          }
       }
       return returnObj
