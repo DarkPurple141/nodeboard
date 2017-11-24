@@ -12,29 +12,28 @@
                      <v-btn large dark @click="startGame"
                        color="primary">Start</v-btn>
                   </div>
-               <div :class="disabledControls()">
-                  <!-- eventually should be an sub component-->
-                     <div class="stats">
-                        <div v-for="i in game.state.numPlayers"
-                        :class="'players ' + 'p'+(i) + ' ' + boldPlayer(isMyTurn(i-1))"
-                        :style="{ width :99/(game.state.numPlayers)+'%' }">
-                           Player {{i}}: {{ numTerritories(i - 1) }}
+                  <div :class="disabledControls()">
+                     <!-- eventually should be an sub component-->
+                        <div class="stats">
+                           <div v-for="i in game.state.numPlayers"
+                           :class="'players ' + 'p'+(i) + ' ' + boldPlayer(isMyTurn(i-1))"
+                           :style="{ width :99/(game.state.numPlayers)+'%' }" >
+                              Player {{i}}: {{ numTerritories(i - 1) }}
+                           </div>
                         </div>
-                     </div>
-                  <RiskBoard :board="game.board"></RiskBoard>
+                        <RiskBoard :board="game.board"></RiskBoard>
+                  </div>
                </div>
-            </div>
-            </div>
             </v-flex>
             <v-flex xs2>
                <Chat :socket="socket" :user="user.name"></Chat>
+               <!-- Temporary controls for testing
+                    eventually should be a sub component -->
+               <div class="controls" v-if="isMyTurn(user.playerID) && game.state.running">
+                  <v-btn @click="endTurn"
+                    color="primary">End Turn</v-btn>
+               </div>
             </v-flex>
-            <!-- Temporary controls for testing
-                 eventually should be a sub component -->
-            <div class="controls" v-if="isMyTurn(user.playerID) && game.state.running">
-               <v-btn @click="startGame"
-                 color="primary">Start</v-btn>
-            </div>
         </v-layout>
       </v-container>
    </section>
@@ -90,6 +89,10 @@ export default {
 
       disabledControls: function() {
          return !this.game.state.running ? "disabled" : ''
+      },
+
+      endTurn: function() {
+         this.socket.emit('update')
       }
    },
 
@@ -124,7 +127,12 @@ export default {
 
       risk.socket.on('update', data => {
          console.log(data)
-         console.log("Update front..")
+         risk.game.state.turn = data.turn
+         for (let key in data.board) {
+            let loadedRegion = data.board[key]
+            risk.game.board[key].owner = loadedRegion.owner
+            risk.game.board[key].units = loadedRegion.units
+         }
       })
 
    },

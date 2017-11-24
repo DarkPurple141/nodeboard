@@ -72,7 +72,7 @@ class Deck extends Collection {
       this.shuffle()
    }
 
-   get topCard() {
+   removeTopCard() {
       return this._cards.pop()
    }
 }

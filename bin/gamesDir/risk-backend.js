@@ -21,6 +21,25 @@ function getPlayerIndexInRoom(room, clientID) {
    return room.players.indexOf(clientID)
 }
 
+function processUpdate(game, data) {
+   let response = {updateType: data.updateType, data: {}}
+   switch (data.updateType) {
+      case "endTurn":
+         game.endTurn()
+         data.turn = game.player
+         break;
+      case "startTurn":
+         game.startTurn()
+         break;
+      case "placeExtras":
+         game.placeExtras(game.currentPlayer, data.territories)
+         break;
+      default:
+   }
+
+   return response
+}
+
 
 module.exports = (io) => {
 
@@ -100,15 +119,15 @@ module.exports = (io) => {
      })
 
      // send a game update
-     client.on('update', (data) => {
+     client.on('update', data => {
        console.log(data)
 
        // FIXME process data
+       let game = getRoom(client.room).game
+       let gameData = processUpdate(game, data)
 
        // eventually send only relevant update
-       for (let i = 0; i < roomObj.players.length; i++) {
-          client.broadcast.to(roomObj.players[i]).emit('update', data)
-       }
+       io.in(client.room).emit('start', gameData)
      })
 
      // player has disconnected for an unknown reason, or they just quit

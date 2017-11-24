@@ -20,35 +20,40 @@ class Risk {
    constructor(numPlayers) {
       this._players = []
       this._board = new Board()
-      this._deck = new Deck(this._board.places)
+      this._deck = new Deck(this.board.places)
       for (let i = 0; i < numPlayers; i++) {
-         this._players.push(new Player(i, Risk.determineStartExtras(numPlayers)))
+         this.players.push(new Player(i, Risk.determineStartExtras(numPlayers)))
       }
 
       // shuffle keys (just for init so that map is spread)
-      let keys = Cards.shuffle(this._board.places)
+      let keys = Cards.shuffle(this.board.places)
       let i = 0
       while (keys.length) {
          let key = keys.pop()
-         let region = this._board.getRegion(key)
+         let region = this.board.getRegion(key)
          region.owner = i % numPlayers
-         this._players[region.owner].placeExtras(1, region)
-         this._players[region.owner].territories.push(region)
+         this.players[region.owner].placeExtras(1, region)
+         this.players[region.owner].territories.push(region)
          i++
       }
       this._dice = Dice
       this._turn = 0
       this._taken = false
       console.log(`INIT: New risk game of ${numPlayers} created.`)
-      this.print()
    }
 
    get turn() {
       return this._turn
    }
 
+   // returns the index of the current player
    get player() {
-      return this.turn % this._players.length
+      return this.turn % this.players.length
+   }
+
+   // returns the actual player object
+   get currentPlayer() {
+      return this.players[this.player]
    }
 
    get players() {
@@ -108,37 +113,57 @@ class Risk {
             throw new Error("Card Set failure")
       }
 
-      this.players[this.player].addExtras(bonus)
+      this.currentPlayer.addExtras(bonus)
       this._returnCardsToDeck(cardA, cardB, cardC)
+   }
+
+   /**
+      @param territories
+      @type  Object
+      @param player
+      @type  should always be current player
+   */
+   placeExtras(player, territories) {
+      for (let terr in territories) {
+         this.players[player].placeExtras(
+            territories[terr],
+            this.board.getRegion(terr)
+         )
+      }
    }
 
    // called at start of a new turn
    startTurn() {
       this.taken = false
-      this.players[this.player].addExtras(this.getTurnExtras())
+      this.currentPlayer.addExtras(this.getTurnExtras())
    }
 
    // called at end of turn
    endTurn() {
+      let card = null
       if (this.taken) {
-         this.players[this.player].addCardToHand(this._deck.topCard)
+         card = this._deck.removeTopCard()
+         this.players[this.player].addCardToHand(card)
+         card = { value: card.value, territory: card.territory }
       }
       this._turn++
+
+      return card
    }
 
    getTurnExtras() {
-      let numTerr = this.players[this.player].territories.length
+      let numTerr = this.currentPlayer.territories.length
       let normalExtras = Math.max(Math.floor(numTerr / 3), 3)
-      let continentExtras = this._board.getContinentBonuses(this.player)
+      let continentExtras = this.board.getContinentBonuses(this.player)
 
       return normalExtras + continentExtras
    }
 
    _returnCardsToDeck(cardA, cardB, cardC) {
       let cards = []
-      cards.push(this.players[this.player]._hand.removeCard(cardA))
-      cards.push(this.players[this.player]._hand.removeCard(cardB))
-      cards.push(this.players[this.player]._hand.removeCard(cardC))
+      cards.push(this.currentPlayer._hand.removeCard(cardA))
+      cards.push(this.currentPlayer._hand.removeCard(cardB))
+      cards.push(this.currentPlayer._hand.removeCard(cardC))
       this._deck.addCards(cards)
       this._deck.shuffle()
    }
@@ -174,7 +199,7 @@ class Risk {
    }
 
    print () {
-      console.log(util.inspect(this._board, { showHidden: false, colors: true }))
+      console.log(util.inspect(this.board, { showHidden: false, colors: true }))
    }
 }
 

@@ -45,14 +45,14 @@ describe('Deck', function() {
 
    describe('#getters', function() {
       it('empty', function() {
-         let top = testDeck.topCard
+         let top = testDeck.removeTopCard()
          assert.equal(
             top.equals({territory: "Wildcard", value: 3}) ||
             top.equals({territory: "Alistan", value: 0}), true)
       })
 
       it('onlyWilds', function() {
-         let top = onlyWilds.topCard
+         let top = onlyWilds.removeTopCard()
          assert.equal(top.equals({territory: "Wildcard", value: 3}), true)
       })
    })
