@@ -103,7 +103,7 @@ export default {
                }
                risk.state.turn = data.turn
                break;
-            case: "placeExtras":
+            case "placeExtras":
                for (let terr in data.territories) {
                   risk.board[terr].units += data.territories[terr]
                }
