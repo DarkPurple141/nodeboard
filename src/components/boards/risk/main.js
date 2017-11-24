@@ -2,7 +2,8 @@ export default {
    state: {
       running: false,
       numPlayers: 1,
-      turn: 0
+      turn: 0,
+      players: []
     },
    board: {
       Afghanistan: {

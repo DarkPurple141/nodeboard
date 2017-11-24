@@ -30,6 +30,8 @@
                <!-- Temporary controls for testing
                     eventually should be a sub component -->
                <div class="controls" v-if="isMyTurn(user.playerID) && game.state.running">
+                  <v-btn @click="finishPlacement"
+                    color="primary">Finish Placement</v-btn>
                   <v-btn @click="endTurn"
                     color="primary">End Turn</v-btn>
                </div>
@@ -55,6 +57,7 @@ export default {
          user: {
             name: this.$root.$data.user.name || "Jeff",
             playerID: -1,
+            territories: {}
          },
          url: this.$route.params.id,
          game: GameState,
@@ -72,9 +75,9 @@ export default {
 
       // how many terrs does each player have
       numTerritories: function(player) {
-         let risk = this
-         return (Object.keys(risk.game.board)).reduce((total, item) => {
-            return total + (risk.game.board[item].owner === player ? 1 : 0);
+         let risk = this.game
+         return (Object.keys(risk.board)).reduce((total, item) => {
+            return total + (risk.board[item].owner === player ? 1 : 0);
          }, 0)
       },
 
@@ -91,8 +94,35 @@ export default {
          return !this.game.state.running ? "disabled" : ''
       },
 
+      processUpdate: function(data) {
+         let risk = this.game
+         switch (data.updateType) {
+            case "endTurn":
+               if (data.card) {
+                  risk.state.players[risk.state.turn].cards.push(data.card)
+               }
+               risk.state.turn = data.turn
+               break;
+            case: "placeExtras":
+               for (let terr in data.territories) {
+                  risk.board[terr].units += data.territories[terr]
+               }
+               break;
+            default:
+            break;
+         }
+      },
+
+      finishPlacement: function() {
+         this.socket.emit('update', {
+            updateType: "placeExtras",
+            territories: this.user.territories
+         })
+         this.user.territories = {}
+      },
+
       endTurn: function() {
-         this.socket.emit('update')
+         this.socket.emit('update', { updateType: "endTurn", data: null })
       }
    },
 
@@ -100,12 +130,7 @@ export default {
       let risk = this
       risk.socket.on('connectionReport', () => {
          console.log("Sending server info..")
-         risk.socket.emit('connectionReport',
-            {
-               room: risk.url,
-               user: risk.user.name
-            }
-         )
+         risk.socket.emit('connectionReport', { room: risk.url, user: risk.user.name })
       })
 
       risk.socket.on('user', userID => {
@@ -115,24 +140,19 @@ export default {
 
       risk.socket.on('start', initData => {
          console.log("Getting game state for setup...")
-         risk.game.state.running = true
-         risk.game.state.turn = initData.turn
-         risk.game.state.numPlayers = initData.numPlayers
+         let risk = this.game
+         risk.state.running = true
+         risk.state.turn = initData.turn
+         risk.state.numPlayers = initData.numPlayers
          for (let key in initData.board) {
             let loadedRegion = initData.board[key]
-            risk.game.board[key].owner = loadedRegion.owner
-            risk.game.board[key].units = loadedRegion.units
+            risk.board[key].owner = loadedRegion.owner
+            risk.board[key].units = loadedRegion.units
          }
       })
 
       risk.socket.on('update', data => {
-         console.log(data)
-         risk.game.state.turn = data.turn
-         for (let key in data.board) {
-            let loadedRegion = data.board[key]
-            risk.game.board[key].owner = loadedRegion.owner
-            risk.game.board[key].units = loadedRegion.units
-         }
+         risk.processUpdate(data)
       })
 
    },

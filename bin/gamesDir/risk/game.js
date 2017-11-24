@@ -203,10 +203,5 @@ class Risk {
    }
 }
 
-// let a = new Risk(3)
-
-// a.print()
-// console.log(a.determineRollOutcome(3, 2))
-// console.log(a.attack("Siam", "India", 3))
 
 module.exports = Risk

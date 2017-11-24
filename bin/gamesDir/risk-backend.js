@@ -25,14 +25,17 @@ function processUpdate(game, data) {
    let response = {updateType: data.updateType, data: {}}
    switch (data.updateType) {
       case "endTurn":
-         game.endTurn()
-         data.turn = game.player
+         response.card = game.endTurn()
+         response.turn = game.player
          break;
       case "startTurn":
          game.startTurn()
+         response.extras = game.currentPlayer.extrasAvailable()
          break;
       case "placeExtras":
          game.placeExtras(game.currentPlayer, data.territories)
+         break;
+      case: "attack"
          break;
       default:
    }
