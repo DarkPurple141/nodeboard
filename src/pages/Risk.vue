@@ -30,9 +30,9 @@
                <!-- Temporary controls for testing
                     eventually should be a sub component -->
                <div class="controls" v-if="isMyTurn(user.playerID) && game.state.running">
-                  <v-btn @click="finishPlacement"
+                  <v-btn v-if="game.state.placement" @click="finishPlacement"
                     color="primary">Finish Placement</v-btn>
-                  <v-btn @click="endTurn"
+                  <v-btn v-else @click="endTurn"
                     color="primary">End Turn</v-btn>
                </div>
             </v-flex>
@@ -107,6 +107,7 @@ export default {
                for (let terr in data.territories) {
                   risk.board[terr].units += data.territories[terr]
                }
+               risk.state.placement = false
                break;
             default:
             break;
@@ -114,6 +115,7 @@ export default {
       },
 
       finishPlacement: function() {
+         this.game.state.placement = false
          this.socket.emit('update', {
             updateType: "placeExtras",
             territories: this.user.territories
@@ -142,6 +144,7 @@ export default {
          console.log("Getting game state for setup...")
          let risk = this.game
          risk.state.running = true
+         risk.state.placement = true
          risk.state.turn = initData.turn
          risk.state.numPlayers = initData.numPlayers
          for (let key in initData.board) {

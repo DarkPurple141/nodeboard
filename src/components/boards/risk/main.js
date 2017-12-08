@@ -1,6 +1,7 @@
 export default {
    state: {
       running: false,
+      placement: false, // placement period
       numPlayers: 1,
       turn: 0,
       players: []

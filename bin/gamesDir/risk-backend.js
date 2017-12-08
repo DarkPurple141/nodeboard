@@ -34,8 +34,9 @@ function processUpdate(game, data) {
          break;
       case "placeExtras":
          game.placeExtras(game.currentPlayer, data.territories)
+         response.territories = data.territories
          break;
-      case: "attack"
+      case "attack":
          break;
       default:
    }
@@ -108,7 +109,7 @@ module.exports = (io) => {
         }
      })
 
-     // begin the game
+     // receive a begin the game call, and send to all
      client.on('start', () => {
         console.log("Beginning new game...")
         let roomObj = getRoom(client.room)
@@ -121,16 +122,16 @@ module.exports = (io) => {
         io.in(client.room).emit('start', gameData)
      })
 
-     // send a game update
+     // receive a game update and send to all
      client.on('update', data => {
        console.log(data)
 
        // FIXME process data
-       let game = getRoom(client.room).game
-       let gameData = processUpdate(game, data)
+       let room = getRoom(client.room)
+       let gameData = processUpdate(room.game, data)
 
        // eventually send only relevant update
-       io.in(client.room).emit('start', gameData)
+       io.in(client.room).emit('update', gameData)
      })
 
      // player has disconnected for an unknown reason, or they just quit
