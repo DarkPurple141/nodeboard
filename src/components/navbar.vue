@@ -46,14 +46,20 @@ export default {
     nodeboardLogo
   },
   mounted() {
-    HTTP.get(`user`)
-   .then(response => {
-      // just get firstName
-      this.user = response.data.displayName.split(" ")[0];
-   })
-   .catch(e => {
-      throw e;
-   })
+    if (this.$root.$data.user.name) {
+      this.user = $root.$data.user.name
+    } else {
+      HTTP.get(`user`)
+     .then(response => {
+        // get name, assign app state
+        this.user = response.data.displayName.split(" ")[0]
+        this.$root.$data.user.name = this.user
+        this.$root.$data.user.id = response.data.id
+     })
+     .catch(e => {
+        throw e;
+     })
+    }
   }
 }
 </script>

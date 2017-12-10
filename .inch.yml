@@ -1,7 +1,4 @@
 files:
   # define files included in the analysis (defaults to ["{app,lib}/**/*.rb"])
   included:
-    - bin/**/*.js
-  # define files excluded from the analysis (defaults to [])
-  #excluded:
-  #  - plugins/vendor/sparkr/sparkr.rb
+    - "{bin,routes,model,controllers}/**/*.js"

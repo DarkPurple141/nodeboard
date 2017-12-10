@@ -3,7 +3,7 @@ const supertest = require("supertest")(app);
 const mongoose = require("mongoose")
 mongoose.Promise = global.Promise
 
-describe("#Route testing", function() {
+describe("Route testing", function() {
    it("Test index", function(done) {
        supertest
            .get("/")
@@ -11,10 +11,10 @@ describe("#Route testing", function() {
            .end(done)
    })
 
-   it("Test api", function(done) {
+   it("Test api/logout", function(done) {
        supertest
-           .get("/api")
-           .expect(200)
+           .post("/api/logout")
+           .expect(302)
            .end(done)
    })
 
@@ -22,7 +22,7 @@ describe("#Route testing", function() {
    it("Test api/user", function(done) {
        supertest
            .get("/api/user")
-           .expect(209) // no user logged in
+           .expect(209) // no user logged in ? maybe should be 403
            .end(done)
    })
 
@@ -36,7 +36,7 @@ describe("#Route testing", function() {
    it("Test api/play", function(done) {
        supertest
            .get("/api/play")
-           .expect(200)
+           .expect(403) // while user is not logged in server should 403
            .end(done)
    })
 

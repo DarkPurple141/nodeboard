@@ -8,7 +8,7 @@
       v-bind:items="table.games"
       hide-actions
    >
-   <template slot="items" scope="props">
+   <template slot="items" slot-scope="props">
       <td class="text-xs-right">{{ props.item.name }}</td>
       <td class="text-xs-right">{{ props.item.host }}</td>
       <td class="text-xs-right">{{ props.item.numPlayers }}</td>

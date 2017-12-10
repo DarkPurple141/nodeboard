@@ -7,8 +7,8 @@ const auth = {
 
    // nodeboard/api/logout/
    logout : function(req, res, next) {
-     req.logout();
-     res.redirect('/');
+     req.logout()
+     res.redirect('/')
    },
 
    // nodeboard/api/error/

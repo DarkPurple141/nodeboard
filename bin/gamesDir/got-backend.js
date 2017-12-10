@@ -68,7 +68,7 @@ const gameServer = function (io) {
 
   const players = {};
   const games = [];
-  const nsp = io.of('/got');
+  const nsp = io;
 
   nsp.on('connection', function (socket) {
 

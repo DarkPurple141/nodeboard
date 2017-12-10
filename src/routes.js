@@ -2,6 +2,7 @@ import Play from './pages/Play'
 import playGame from './pages/playGame'
 import Home from './pages/Home'
 import About from './pages/About'
+import Risk from './pages/Risk'
 import ErrorPage from './pages/Error'
 import VueRouter from 'vue-router'
 import HTTP from './http-config'
@@ -16,8 +17,8 @@ function guardRoute (to, from, next) {
      }
   })
   .catch(err => {
-     next(`/error/?code=${err}`)
      console.error(err)
+     next(`/error/?code=${err}`)
   })
 }
 
@@ -35,6 +36,11 @@ const routes = [
       component: ErrorPage
    },
    {
+      // FIXME eventually (should have guard)
+      path: '/play/risk/:id',
+      component: Risk
+   },
+   {
       path : '/play/',
       component: Play,
       meta: { needGuard: true }
@@ -47,6 +53,10 @@ const routes = [
       path: '/play/:game/',
       component: playGame,
       meta: { needGuard: true }
+   },
+   {
+      path: '/*/',
+      redirect: '/'
    }
 ]
 

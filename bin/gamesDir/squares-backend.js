@@ -1,6 +1,7 @@
 const Squares = (socketObject) => {
 
-  const nsp = socketObject.of('/squares');
+  /*
+  const nsp = socketObject.of(name);
 
   nsp.on('connection', function(socket){
     console.log('SQUARES: someone connected');
@@ -12,10 +13,11 @@ const Squares = (socketObject) => {
     })
 
   });
+  */
   // singleton
   const game = {
     // other things that the game object should do
-    connection : nsp
+    connection : socketObject
   }
 
   return game;

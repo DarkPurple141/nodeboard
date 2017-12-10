@@ -12,11 +12,19 @@ Vue.use(VueResource)
 Vue.use(Vuetify)
 Vue.use(VueRouter)
 
+const store = {
+   user: {
+      name: "",
+      id: null
+   }
+}
+
 // create a root instance
 new Vue({
   router,
   template : `
   <v-app>
      <router-view></router-view>
-  </v-app>`
+  </v-app>`,
+  data: store
 }).$mount('#app');
